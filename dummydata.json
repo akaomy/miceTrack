@@ -1,0 +1,11 @@
+[
+    {
+      "pup_strain": "WT"
+    },
+    {
+      "pup_strain": "Akt2 cKO"
+    },
+    {
+        "pup_strain": "Mlst8 cKO"
+    }
+  ]
