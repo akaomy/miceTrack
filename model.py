@@ -1,23 +1,22 @@
-from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
 
-class Users(db.Model):
+class User(db.Model):
     """ Scientists """
 
     __tablename__ = "users"
 
     user_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    user_email = db.Column(db.String)
+    user_email = db.Column(db.String, unique=True)
     user_name = db.Column(db.String) 
 
     def __repr__(self):
         return f"<Users user_id={self.user_id} user_email={self.user_email} user_name={self.user_name}>"
 
 
-class Litters(db.Model):
+class Litter(db.Model):
     """ Litter """
 
     __tablename__ = "litters"
@@ -28,23 +27,25 @@ class Litters(db.Model):
         return f"<Litter litter_id={self.litter_id}>"
 
 
-class FemaleMice(db.Model):
+class FemaleMouse(db.Model):
     """ A mice for breeding """
 
+    __tablename_ = 'femalemice'
+
     female_mouse_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    litter_id = db.Column(db.String, db.ForeignKey("litters.litter_id"))
+    litter_id = db.Column(db.Integer, db.ForeignKey("litters.litter_id"))
     mating_date = db.Column(db.DateTime)
     days_in_breeding = db.Column(db.Integer)
     check_pregnancy = db.Column(db.Boolean)
     pregnant = db.Column(db.Boolean)
-    user_id = db.Column(db.String, db.ForeignKey("users.user_id"))
+    user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
 
     def __repr__(self):
         return f"<FemaleMice female_mouse_id={self.female_mouse_id}>"
 
 
 
-class Pups(db.Model):
+class Pup(db.Model):
     """ Puppies born by female mice """
 
     __tablename__ = "pups"
@@ -61,8 +62,6 @@ class Pups(db.Model):
         return f"<Pups pups_id={self.pups_id}>"
 
 def connect_to_db(flask_app, db_uri="postgresql:///miceTrack", echo=True):
-    """Connect to database."""
-
     flask_app.config["SQLALCHEMY_DATABASE_URI"] = db_uri
     flask_app.config["SQLALCHEMY_ECHO"] = echo
     flask_app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
