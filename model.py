@@ -40,6 +40,10 @@ class FemaleMouse(db.Model):
     pregnant = db.Column(db.Boolean)
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
 
+    user = db.relationship("User", backref="femalemice")
+    litter = db.relationship("Litter", backref="femalemice")
+
+
     def __repr__(self):
         return f"<FemaleMice female_mouse_id={self.female_mouse_id}>"
 
