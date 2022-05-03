@@ -43,6 +43,9 @@ class FemaleMouse(db.Model):
     user = db.relationship("User", backref="femalemice")
     litter = db.relationship("Litter", backref="femalemice")
 
+    def __repr__(self):
+        return f"<FemaleMouse female_mouse_id={self.female_mouse_id}>"
+
 
     def __repr__(self):
         return f"<FemaleMice female_mouse_id={self.female_mouse_id}>"
