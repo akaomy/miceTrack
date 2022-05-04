@@ -2,35 +2,37 @@
 {% block title %}Mice Breading Tracker Home{% endblock %}
 
 {% block body %}
-  <h1>Welcome!</h1>
+  <h1>MiceTrack</h1>
 
-  <h2>Create an Account</h2>
-  <form action="/users" method="POST">
-    <p>
-      Email <input type="text" name="email">
-    </p>
+  <form action="/track-mice" method="POST">
 
-    <p>
-      Password <input type="password" name="password">
-    </p>
+    <!-- femalemice -->
+    <h2>Female mice info</h2>
+    <label for="mating-date">Mating date</label>
+    <input type="date" id="mating-date" name="mating-date"><br>
 
-    <p>
-      <input type="submit">
-    </p>
+    <label for="days-in-breeding">Days in breeding</label>
+    <input type="text" id="days-in-breeding" name="days-in-breeding" value=""><br>
+
+    <label for="need-check-pregnancy">Need to check pregnancy?</label>
+    <input type="checkbox" id="need-check-pregnancy" name="need-check-pregnancy"><br>
+    <!-- add yes or no -->
+
+    <label for="pregnant">Pregnant?</label>
+    <input type="checkbox" id="pregnant" name="pregnant"><br>
+    <!-- add yes or no -->
+
+    <h2>Pups info</h2>
+    <label for="pups_stain">Pups stain</label>
+    <select name="pups-stain" id="pups_stain">
+      <option value="WT">WT</option>
+    </select> 
+    <input type="submit" value="Add new" /><br>
+    <label for="date_of_birth">Date of birth</label>
+    <input type="date" id="date_of_birth" name="date_of_birth"><br>
+
+    <input type="submit" value="Create" />
+
   </form>
 
-  <h2>Log In</h2>
-  <form action="/login" method="POST">
-    <p>
-      Email <input type="text" name="email">
-    </p>
-
-    <p>
-      Password <input type="password" name="password">
-    </p>
-
-    <p>
-      <input type="submit">
-    </p>
-  </form>
 {% endblock %}
