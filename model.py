@@ -61,7 +61,7 @@ class Pup(db.Model):
     need_to_id = db.Column(db.Boolean)
 
     def __repr__(self):
-        return f"<Pups pups_id={self.pups_id}>"
+        return f"<Pups pup_id={self.pup_id} pup_strain={self.pup_strain} date_of_birth={self.date_of_birth} days_old={self.days_old} wean_date={self.wean_date} need_to_id={self.need_to_id}>"
 
 
 def connect_to_db(flask_app, db_uri="postgresql:///miceTrack", echo=True):
