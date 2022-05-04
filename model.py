@@ -44,12 +44,7 @@ class FemaleMouse(db.Model):
     litter = db.relationship("Litter", backref="femalemice")
 
     def __repr__(self):
-        return f"<FemaleMouse female_mouse_id={self.female_mouse_id}>"
-
-
-    def __repr__(self):
-        return f"<FemaleMice female_mouse_id={self.female_mouse_id}>"
-
+        return f"<FemaleMouse female_mouse_id={self.female_mouse_id} mating_date={self.mating_date} days_in_breeding={self.days_in_breeding}>"
 
 
 class Pup(db.Model):
@@ -59,14 +54,15 @@ class Pup(db.Model):
 
     pup_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     litter_id = db.Column(db.Integer, db.ForeignKey("litters.litter_id"))
+    pup_strain = db.Column(db.String)
     date_of_birth = db.Column(db.DateTime)
     days_old = db.Column(db.Integer)
     wean_date = db.Column(db.Integer)
     need_to_id = db.Column(db.Boolean)
-    user_name = db.Column(db.String)
 
     def __repr__(self):
         return f"<Pups pups_id={self.pups_id}>"
+        
 
 def connect_to_db(flask_app, db_uri="postgresql:///miceTrack", echo=True):
     flask_app.config["SQLALCHEMY_DATABASE_URI"] = db_uri
