@@ -44,7 +44,7 @@ class FemaleMouse(db.Model):
     litter = db.relationship("Litter", backref="femalemice")
 
     def __repr__(self):
-        return f"<FemaleMouse female_mouse_id={self.female_mouse_id} mating_date={self.mating_date} days_in_breeding={self.days_in_breeding}>"
+        return f"<FemaleMouse female_mouse_id={self.female_mouse_id} mating_date={self.mating_date} days_in_breeding={self.days_in_breeding} check_pregnancy={self.check_pregnancy} pregnant={self.pregnant}>"
 
 
 class Pup(db.Model):

@@ -11,17 +11,17 @@ def create_user(email, name):
     return user
 
 
-# def create_female_mouse(mating_date, days_in_breeding, check_pregnancy, pregnant):
-#     """Create and return a new female mice."""
+def create_female_mouse(mating_date, days_in_breeding, check_pregnancy, pregnant):
+    """Create and return a new female mice."""
 
-#     female_mouse = FemaleMouse(
-#         mating_date=mating_date,
-#         days_in_breeding=days_in_breeding,
-#         check_pregnancy=check_pregnancy,
-#         pregnant=pregnant
-#     )
+    female_mouse = FemaleMouse(
+        mating_date=mating_date,
+        days_in_breeding=days_in_breeding,
+        check_pregnancy=check_pregnancy,
+        pregnant=pregnant
+    )
 
-#     return female_mouse
+    return female_mouse
 
 
 # def create_pup(date_of_birth, pup_strain, days_old, wean_date, need_to_id):
