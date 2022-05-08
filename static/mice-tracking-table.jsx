@@ -19,3 +19,5 @@ function MiceTrackingTable() {
             </ul>
         </React.Fragment>
     )}
+
+ReactDOM.render(<MiceTrackingTable />, document.querySelector('#root'));
