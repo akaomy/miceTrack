@@ -1,10 +1,9 @@
-function Homepage() {
-    return (
-      <React.Fragment>
-        <h1>MiceTrack</h1>
-        {/* <input type="submit" value="Track new mice" /> */}
-        
-        <form action="/track-mice" method="POST">
+
+function Modal() {
+  return (
+    <React.Fragment>
+      <div>
+          <form action="/track-mice" method="POST">
           <h2>Female mice info</h2>
           <label htmlFor="mating-date">Mating date</label>
           <input type="date" id="mating-date" name="mating-date" /><br/>
@@ -40,8 +39,28 @@ function Homepage() {
           <input type="submit" value="Create" />
 
         </form>
+      </div>
+    </React.Fragment>
+  );
+}
+
+function Homepage() {
+  const [popupModal, setpopupModal] = React.useState(false);
+
+  const toggleModal = () => {
+    setpopupModal(!popupModal)
+  }
+
+    return (
+      <React.Fragment>
+        <h1>MiceTrack</h1>
+        <button type="button" onClick={toggleModal} className="btn btn-primary">
+          Launch demo modal
+        </button>
+        {popupModal && <Modal />}
       </React.Fragment>
     );
   }
 
-ReactDOM.render(<Homepage />, document.querySelector('#root'));
+  ReactDOM.render(<Homepage />, document.querySelector('#root'));
+
