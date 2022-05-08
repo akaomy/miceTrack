@@ -1,48 +1,27 @@
-{% extends 'base.html' %}
-{% block title %}Mice Breading Tracker Home{% endblock %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+        <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+        <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+        <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js"></script>
+        
+        <!-- Load Bootstrap -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+        <!-- Load Bootstrap Icons -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 
-{% block body %}
-  <h1>MiceTrack</h1>
-
-  <form action="/track-mice" method="POST">
-
-    <!-- femalemice -->
-    <h2>Female mice info</h2>
-    <label for="mating-date">Mating date</label>
-    <input type="date" id="mating-date" name="mating-date"><br>
-
-    <label for="days-in-breeding">Days in breeding</label>
-    <input type="text" id="days-in-breeding" name="days-in-breeding" value=""><br>
-
-    <label for="need-check-pregnancy">Need to check pregnancy?</label>
-    <input type="checkbox" id="need-check-pregnancy" name="need-check-pregnancy"><br>
-
-    <label for="check-if-pregnant">Check if pregnant</label>
-    <input type="checkbox" id="check-if-pregnant" name="check-if-pregnant"><br>
-
-    <h2>Pups info</h2>
-
-    <label for="pups-stain">Pups stain</label>
-    <select name="pups-stain" id="pups-stain">
-      <option value="WT">WT</option>
-    </select> 
-    <!-- add new WEAN -->
-    <!-- <input type="submit" value="Add new" /><br> --><br>
-
-    <label for="date-of-birth">Date of birth</label>
-    <input type="date" id="date-of-birth" name="date-of-birth"><br>
-
-    <label for="days-old">Days old</label>
-    <span id="days-old">123</span><br>
-
-    <label for="wean-date">WEAN date</label>
-    <span id="wean-date">11-09-2020</span><br>
-
-    <label for="need-to-id">Need to id</label>
-    <input type="checkbox" id="need-to-id" name="need-to-id"><br>
-
-    <input type="submit" value="Create" />
-
-  </form>
-
-{% endblock %}
+        <!-- Load our stylesheet -->
+        <link rel="stylesheet" href="./bootstrap-styles.css">
+      </head>
+    <body>
+      <div id="root"></div>
+      <script type="text/jsx" src="/static/homepage.jsx"></script>
+    </body>
+</html>
