@@ -1,5 +1,15 @@
+function Modal(props) {
+  // get data once popup is submitted
+  // const [data, setData] = React.useState({})
 
-function Modal() {
+  // React.useEffect(() => {
+  //   fetch('/track-mice')
+  //   .then((response) => response.json())
+  //   .then((result) => {
+  //     setData(result);
+  //   });
+  
+  // }, [])
   return (
     <React.Fragment>
       <div>
@@ -36,6 +46,7 @@ function Modal() {
           <label htmlFor="need-to-id">Need to id</label>
           <input type="checkbox" id="need-to-id" name="need-to-id"/><br/><br/>
 
+          <button onClick={props.closeModal}>Cancel</button>
           <input type="submit" value="Create" />
 
         </form>
@@ -46,18 +57,22 @@ function Modal() {
 
 function Homepage() {
   const [popupModal, setpopupModal] = React.useState(false);
-
-  const toggleModal = () => {
-    setpopupModal(!popupModal)
+ 
+  const openModal = () => {
+    setpopupModal(true)
   }
 
+  const closeModal = () => {
+    setpopupModal(false)
+  }
+  
     return (
       <React.Fragment>
         <h1>MiceTrack</h1>
-        <button type="button" onClick={toggleModal} className="btn btn-primary">
-          Launch demo modal
+        <button type="button" onClick={openModal} className="btn btn-primary">
+          Track a mouse
         </button>
-        {popupModal && <Modal />}
+        {popupModal && <Modal closeModal={closeModal}/>}
       </React.Fragment>
     );
   }
