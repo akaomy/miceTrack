@@ -21,6 +21,9 @@ def create_female_mouse(mating_date, days_in_breeding, check_pregnancy, pregnant
         pregnant=pregnant
     )
 
+    db.session.add(female_mouse)
+    db.session.commit()
+
     return female_mouse
 
 
@@ -34,6 +37,9 @@ def create_pup(date_of_birth, pup_strain, days_old, wean_date, need_to_id):
         wean_date=wean_date,
         need_to_id=need_to_id,
     )
+
+    db.session.add(pup)
+    db.session.commit()
 
     return pup
 

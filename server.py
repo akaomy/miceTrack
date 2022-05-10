@@ -27,14 +27,15 @@ def display_micetrack_table():
     check_if_pregnant = request.form.get("check-if-pregnant")
 
     if (need_check_pregnancy == 'None'):
-        need_check_pregnancy = 'not needed'
+        need_check_pregnancy = False
     else:
-        need_check_pregnancy = 'needed'
+        need_check_pregnancy = True
+
     if (check_if_pregnant == 'on'):
-        check_if_pregnant = 'yes'
+        check_if_pregnant = True
     else:
-        check_if_pregnant = 'no'
-    
+        check_if_pregnant = False
+
     female_mouse = crud.create_female_mouse(mating_date, days_in_breeding, need_check_pregnancy, check_if_pregnant)
 
     # pups
@@ -44,13 +45,15 @@ def display_micetrack_table():
     wean_date = request.form.get("wean-date")
     need_to_id = request.form.get("need-to-id")
 
-    if (need_to_id == 'None'):
-        need_to_id = "not needed"
-    else:
-        need_to_id = "needed"
+    # if (need_to_id == 'None'):
+        # need_to_id = "not needed"
+    # else:
+        # need_to_id = "needed"
 
     pup = crud.create_pup(date_of_birth, pups_stain, days_old, wean_date, need_to_id)
 
+    print('female_mouse', female_mouse)
+    # returning an object with data about female and pup mice?
     return render_template('mice-tracking-table.html', female_mouse=female_mouse, pup=pup)
 
 
