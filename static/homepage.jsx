@@ -1,6 +1,8 @@
 function Modal(props) {
 
   const [status, setStatus] = React.useState(null)
+  const [showPupInputs, setsShowPupInputs] = React.useState(false)
+
   const submitData = (evt) => {
     evt.preventDefault()
 
@@ -28,6 +30,11 @@ function Modal(props) {
     document.querySelector('#track-mice-form').style.visibility = 'hidden';
     
   }
+
+  const displayPupsInputs = () => {
+    setsShowPupInputs(!showPupInputs)
+  }
+
   return (
     <React.Fragment>
       <div>
@@ -48,27 +55,29 @@ function Modal(props) {
         <input type="checkbox" id="need-check-pregnancy" name="need-check-pregnancy"/><br/>
 
         <label htmlFor="check-if-pregnant">Check if pregnant</label>
-        <input type="checkbox" id="check-if-pregnant" name="check-if-pregnant"/><br/>
+        <input type="checkbox" id="check-if-pregnant" name="check-if-pregnant" onClick={displayPupsInputs}/><br/>
 
-          {/* <h2>Pups info</h2>
+        {showPupInputs && 
+          <div>
+            <h2>Pups info</h2>
 
-          <label htmlFor="pups-stain">Pups stain</label>
-          <select name="pups-stain" id="pups-stain">
-            <option value="WT">WT</option>
-          </select><br/>
+            <label htmlFor="pups-stain">Pups stain</label>
+            <select name="pups-stain" id="pups-stain">
+              <option value="WT">WT</option>
+            </select><br/>
 
-          <label htmlFor="date-of-birth">Date of birth</label>
-          <input type="date" id="date-of-birth" name="date-of-birth"/><br/>
+            <label htmlFor="date-of-birth">Date of birth</label>
+            <input type="date" id="date-of-birth" name="date-of-birth"/><br/>
 
-          <label htmlFor="days-old">Days old</label>
-          <span id="days-old">123</span><br/>
+            <label htmlFor="days-old">Days old</label>
+            <span id="days-old">123</span><br/>
 
-          <label htmlFor="wean-date">WEAN date</label>
-          <span id="wean-date">11-09-2020</span><br/>
+            <label htmlFor="wean-date">WEAN date</label>
+            <span id="wean-date">11-09-2020</span><br/>
 
-          <label htmlFor="need-to-id">Need to id</label>
-          <input type="checkbox" id="need-to-id" name="need-to-id"/><br/><br/> */}
-
+            <label htmlFor="need-to-id">Need to id</label>
+            <input type="checkbox" id="need-to-id" name="need-to-id"/><br/><br/>
+          </div>}
           <button id="cancel-btn" onClick={props.closeModal}>Cancel</button>
           <input id="create-btn" type="submit" value="Create" />
         </form>
@@ -97,6 +106,23 @@ function Homepage() {
           Track a mouse
         </button>
         {popupModal && <Modal closeModal={closeModal}/>}
+
+        <table className="table table-striped">
+          <tr>
+            <th scope="col">id</th>
+            <th scope="col">mating_date</th>
+            <th scope="col">days_in_breeding</th>
+            <th scope="col">need_check_pregnancy</th>
+            <th scope="col">check_if_pregnant</th>
+          </tr>
+          <tr>
+            <th scope="row">1</th>
+            <td>date here</td>
+            <td>1234</td>
+            <td>yes</td>
+            <td>no</td>
+          </tr>
+        </table>
       </React.Fragment>
     );
   }
