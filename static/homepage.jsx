@@ -21,27 +21,34 @@ function Modal(props) {
     .then((response) => response.json())
     .then((responseData) => {
       setStatus(responseData.status)
-      console.log(responseData.status)
     })
-  }
 
+    document.querySelector('#cancel-btn').style.visibility = 'hidden';
+    document.querySelector('#create-btn').style.visibility = 'hidden';
+    document.querySelector('#track-mice-form').style.visibility = 'hidden';
+    
+  }
   return (
     <React.Fragment>
       <div>
-        {status ? <div>{status}</div> : null}
-          <form onSubmit={submitData}>
-          <h2>Female mice info</h2>
-          <label htmlFor="mating-date">Mating date</label>
-          <input type="date" id="mating-date" name="mating-date" /><br/>
+        {status ? 
+          <div className="alert alert-success">
+            {status}
+          <button onClick={props.closeModal}>Close</button>
+        </div> : null}
+        <form id="track-mice-form" onSubmit={submitData}>
+        <h2>Female mice info</h2>
+        <label htmlFor="mating-date">Mating date</label>
+        <input type="date" id="mating-date" name="mating-date" /><br/>
 
-          <label htmlFor="days-in-breeding">Days in breeding</label>
-          <input type="text" id="days-in-breeding" name="days-in-breeding"/><br/>
+        <label htmlFor="days-in-breeding">Days in breeding</label>
+        <input type="text" id="days-in-breeding" name="days-in-breeding"/><br/>
 
-          <label htmlFor="need-check-pregnancy">Need to check pregnancy?</label>
-          <input type="checkbox" id="need-check-pregnancy" name="need-check-pregnancy"/><br/>
+        <label htmlFor="need-check-pregnancy">Need to check pregnancy?</label>
+        <input type="checkbox" id="need-check-pregnancy" name="need-check-pregnancy"/><br/>
 
-          <label htmlFor="check-if-pregnant">Check if pregnant</label>
-          <input type="checkbox" id="check-if-pregnant" name="check-if-pregnant"/><br/>
+        <label htmlFor="check-if-pregnant">Check if pregnant</label>
+        <input type="checkbox" id="check-if-pregnant" name="check-if-pregnant"/><br/>
 
           {/* <h2>Pups info</h2>
 
@@ -62,9 +69,8 @@ function Modal(props) {
           <label htmlFor="need-to-id">Need to id</label>
           <input type="checkbox" id="need-to-id" name="need-to-id"/><br/><br/> */}
 
-          <button onClick={props.closeModal}>Cancel</button>
-          <input type="submit" value="Create" />
-
+          <button id="cancel-btn" onClick={props.closeModal}>Cancel</button>
+          <input id="create-btn" type="submit" value="Create" />
         </form>
       </div>
     </React.Fragment>
@@ -80,6 +86,8 @@ function Homepage() {
 
   const closeModal = () => {
     setpopupModal(false)
+    //  refresh the page once data is being submitted
+    window.location.reload()
   }
   
     return (
