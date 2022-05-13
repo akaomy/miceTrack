@@ -45,7 +45,7 @@ def add_new_micetrack_table_row():
 def display_mice_micetrack_table_rows():
     """Display micetrack table """
 
-    return render_template('mice-tracking-table.html')
+    return render_template("homepage.html")
 
 
 if __name__ == "__main__":

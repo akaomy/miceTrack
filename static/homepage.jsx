@@ -2,6 +2,8 @@ function Modal(props) {
 
   const [status, setStatus] = React.useState(null)
   const [showPupInputs, setsShowPupInputs] = React.useState(false)
+  const [toggleNeedToCheckPreg, setToggleNeedToCheckPreg] = React.useState(true)
+  const [data, setData] = React.useState({})
 
   const submitData = (evt) => {
     evt.preventDefault()
@@ -31,8 +33,22 @@ function Modal(props) {
     
   }
 
+  const displayData = () => {
+    fetch('/track-mice')
+    .then((response) => response.json())
+    .then((responseData) => {
+      // document.querySelector('#my-div').innerText = responseData;
+      setData(responseData)
+      console.log(responseData)
+    });
+  }
+
   const displayPupsInputs = () => {
     setsShowPupInputs(!showPupInputs)
+  }
+
+  const hideIfNeedToCheckPreg = () => {
+    setToggleNeedToCheckPreg(!toggleNeedToCheckPreg)
   }
 
   return (
@@ -52,13 +68,16 @@ function Modal(props) {
         <input type="text" id="days-in-breeding" name="days-in-breeding"/><br/>
 
         <label htmlFor="need-check-pregnancy">Need to check pregnancy?</label>
-        <input type="checkbox" id="need-check-pregnancy" name="need-check-pregnancy"/><br/>
+        <input type="checkbox" id="need-check-pregnancy" name="need-check-pregnancy" onClick={hideIfNeedToCheckPreg}/><br/>
 
-        <label htmlFor="check-if-pregnant">Check if pregnant</label>
-        <input type="checkbox" id="check-if-pregnant" name="check-if-pregnant" onClick={displayPupsInputs}/><br/>
+        {toggleNeedToCheckPreg && 
+          <React.Fragment>
+            <label htmlFor="check-if-pregnant">Check if pregnant</label>
+            <input type="checkbox" id="check-if-pregnant" name="check-if-pregnant" onClick={displayPupsInputs}/><br/>
+          </React.Fragment>}
 
         {showPupInputs && 
-          <div>
+          <React.Fragment>
             <h2>Pups info</h2>
 
             <label htmlFor="pups-stain">Pups stain</label>
@@ -77,7 +96,7 @@ function Modal(props) {
 
             <label htmlFor="need-to-id">Need to id</label>
             <input type="checkbox" id="need-to-id" name="need-to-id"/><br/><br/>
-          </div>}
+          </React.Fragment>}
           <button id="cancel-btn" onClick={props.closeModal}>Cancel</button>
           <input id="create-btn" type="submit" value="Create" />
         </form>
