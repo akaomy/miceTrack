@@ -1,19 +1,35 @@
 function Modal(props) {
-  // get data once popup is submitted
-  // const [data, setData] = React.useState({})
 
-  // React.useEffect(() => {
-  //   fetch('/track-mice')
-  //   .then((response) => response.json())
-  //   .then((result) => {
-  //     setData(result);
-  //   });
-  
-  // }, [])
+  const [status, setStatus] = React.useState(null)
+  const submitData = (evt) => {
+    evt.preventDefault()
+
+    const formInputs = {
+      mating_date: document.querySelector('#mating-date').value,
+      days_in_breeding: document.querySelector('#days-in-breeding').value,
+      need_check_pregnancy: document.querySelector('#need-check-pregnancy').value,
+      check_if_pregnant: document.querySelector('#check-if-pregnant').value,
+    }
+
+    fetch('/track-mice', {
+      method: 'POST',
+      body: JSON.stringify(formInputs),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then((response) => response.json())
+    .then((responseData) => {
+      setStatus(responseData.status)
+      console.log(responseData.status)
+    })
+  }
+
   return (
     <React.Fragment>
       <div>
-          <form action="/track-mice" method="POST">
+        {status ? <div>{status}</div> : null}
+          <form onSubmit={submitData}>
           <h2>Female mice info</h2>
           <label htmlFor="mating-date">Mating date</label>
           <input type="date" id="mating-date" name="mating-date" /><br/>
@@ -27,7 +43,7 @@ function Modal(props) {
           <label htmlFor="check-if-pregnant">Check if pregnant</label>
           <input type="checkbox" id="check-if-pregnant" name="check-if-pregnant"/><br/>
 
-          <h2>Pups info</h2>
+          {/* <h2>Pups info</h2>
 
           <label htmlFor="pups-stain">Pups stain</label>
           <select name="pups-stain" id="pups-stain">
@@ -44,7 +60,7 @@ function Modal(props) {
           <span id="wean-date">11-09-2020</span><br/>
 
           <label htmlFor="need-to-id">Need to id</label>
-          <input type="checkbox" id="need-to-id" name="need-to-id"/><br/><br/>
+          <input type="checkbox" id="need-to-id" name="need-to-id"/><br/><br/> */}
 
           <button onClick={props.closeModal}>Cancel</button>
           <input type="submit" value="Create" />

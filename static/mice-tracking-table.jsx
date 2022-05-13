@@ -1,4 +1,14 @@
 function MiceTrackingTable() {
+    const [data, setData] = React.useState([]);
+
+    //  call preven event defaul
+        // fetch('/track-mice')
+        // .then((response) => response.json())
+        // .then((responseData) => {
+        //     setData(responseData)
+        //     console.log('responseData',responseData)
+        // })
+
     return (
         <React.Fragment>
             <h1>MiceTrack table</h1>
@@ -17,6 +27,7 @@ function MiceTrackingTable() {
                 <li>wean_date {{pup.wean_date}}</li>
                 <li>need_to_id {{pup.need_to_id}}</li> */}
             </ul>
+            <button>Update</button> {/* popup with update info modal*/}
         </React.Fragment>
     )}
 
