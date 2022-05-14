@@ -45,7 +45,16 @@ def add_new_micetrack_table_row():
 def display_mice_micetrack_table_rows():
     """Display micetrack table """
 
-    return render_template("homepage.html")
+    female_mice = crud.get_all_female_mice()
+    mouse_data = {}
+    for mouse in female_mice:
+        mouse_data["female_mouse_id"] = mouse.female_mouse_id
+        mouse_data["mating_date"] = mouse.mating_date
+        mouse_data["days_in_breeding"] = mouse.days_in_breeding
+        mouse_data["check_pregnancy"] = mouse.check_pregnancy
+        mouse_data["pregnant"] = mouse.pregnant
+
+    return mouse_data
 
 
 if __name__ == "__main__":
