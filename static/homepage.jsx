@@ -3,7 +3,6 @@ function Modal(props) {
   const [status, setStatus] = React.useState(null)
   const [showPupInputs, setsShowPupInputs] = React.useState(false)
   const [isCheckIfPregDisabled, setIsCheckIfPregDisabled] = React.useState(false);
-  const [data, setData] = React.useState({})
 
   const submitData = (evt) => {
     evt.preventDefault()
@@ -31,16 +30,6 @@ function Modal(props) {
     document.querySelector('#create-btn').style.visibility = 'hidden';
     document.querySelector('#track-mice-form').style.visibility = 'hidden';
     
-  }
-
-  const displayData = () => {
-    fetch('/track-mice')
-    .then((response) => response.json())
-    .then((responseData) => {
-      // document.querySelector('#my-div').innerText = responseData;
-      setData(responseData)
-      console.log(responseData)
-    });
   }
 
   const displayPupsInputs = () => {
@@ -104,17 +93,42 @@ function Modal(props) {
 
 function Homepage() {
   const [popupModal, setpopupModal] = React.useState(false);
- 
+  const [mouseData, setMouseData] = React.useState({});
+
   const openModal = () => {
     setpopupModal(true)
   }
 
   const closeModal = () => {
     setpopupModal(false)
-    //  refresh the page once data is being submitted
     window.location.reload()
   }
   
+  React.useEffect(() => {
+    fetch('/track-mice')
+    .then((response) => response.json())
+    .then((responseData) => {
+      setMouseData(responseData)
+    });
+  }, [])
+
+  console.log('mouseData',mouseData)
+
+    const renderMouseData = () => {
+      const checkPreg = mouseData.check_pregnancy ? "needed" : "not needed"
+      const pregnant = mouseData.pregnant ? "yes" : "no"
+
+      return(
+        <tr>
+            <th scope="row">1</th>
+            <td>{mouseData.mating_date}</td>
+            <td>{mouseData.days_in_breeding}</td>
+            <td>{checkPreg}</td>
+            <td>{pregnant}</td>
+          </tr>
+      )
+    }
+
     return (
       <React.Fragment>
         <h1>MiceTrack</h1>
@@ -126,18 +140,12 @@ function Homepage() {
         <table className="table table-striped">
           <tr>
             <th scope="col">id</th>
-            <th scope="col">mating_date</th>
-            <th scope="col">days_in_breeding</th>
-            <th scope="col">need_check_pregnancy</th>
-            <th scope="col">check_if_pregnant</th>
+            <th scope="col">mating date</th>
+            <th scope="col">days in breeding</th>
+            <th scope="col">need to check pregnancy</th>
+            <th scope="col">pregnant?</th>
           </tr>
-          <tr>
-            <th scope="row">1</th>
-            <td>date here</td>
-            <td>1234</td>
-            <td>yes</td>
-            <td>no</td>
-          </tr>
+          {renderMouseData()}
         </table>
       </React.Fragment>
     );
