@@ -27,6 +27,13 @@ def create_female_mouse(mating_date, days_in_breeding, check_pregnancy, pregnant
     return female_mouse
 
 
+def get_all_female_mice():
+    """Return all female mice."""
+
+    return FemaleMouse.query.all()
+
+
+
 def create_pup(date_of_birth, pup_strain, days_old, wean_date, need_to_id):
     """ Create and return pup """
 
