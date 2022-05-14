@@ -2,7 +2,7 @@ function Modal(props) {
 
   const [status, setStatus] = React.useState(null)
   const [showPupInputs, setsShowPupInputs] = React.useState(false)
-  const [toggleNeedToCheckPreg, setToggleNeedToCheckPreg] = React.useState(true)
+  const [isCheckIfPregDisabled, setIsCheckIfPregDisabled] = React.useState(false);
   const [data, setData] = React.useState({})
 
   const submitData = (evt) => {
@@ -47,9 +47,9 @@ function Modal(props) {
     setsShowPupInputs(!showPupInputs)
   }
 
-  const hideIfNeedToCheckPreg = () => {
-    setToggleNeedToCheckPreg(!toggleNeedToCheckPreg)
-  }
+  const toggleCheckIfPregnant = () => {
+    setIsCheckIfPregDisabled(!isCheckIfPregDisabled)
+  };
 
   return (
     <React.Fragment>
@@ -68,13 +68,10 @@ function Modal(props) {
         <input type="text" id="days-in-breeding" name="days-in-breeding"/><br/>
 
         <label htmlFor="need-check-pregnancy">Need to check pregnancy?</label>
-        <input type="checkbox" id="need-check-pregnancy" name="need-check-pregnancy" onClick={hideIfNeedToCheckPreg}/><br/>
+        <input type="checkbox" id="need-check-pregnancy" name="need-check-pregnancy" onClick={toggleCheckIfPregnant}/><br/>
 
-        {toggleNeedToCheckPreg && 
-          <React.Fragment>
-            <label htmlFor="check-if-pregnant">Check if pregnant</label>
-            <input type="checkbox" id="check-if-pregnant" name="check-if-pregnant" onClick={displayPupsInputs}/><br/>
-          </React.Fragment>}
+        <label htmlFor="check-if-pregnant">Check if pregnant</label>
+        <input type="checkbox" id="check-if-pregnant" name="check-if-pregnant" disabled={isCheckIfPregDisabled} onClick={displayPupsInputs}/><br/>
 
         {showPupInputs && 
           <React.Fragment>
