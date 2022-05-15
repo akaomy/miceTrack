@@ -112,21 +112,23 @@ function Homepage() {
     });
   }, [])
 
-  console.log('mouseData',mouseData)
-
     const renderMouseData = () => {
-      const checkPreg = mouseData.check_pregnancy ? "needed" : "not needed"
-      const pregnant = mouseData.pregnant ? "yes" : "no"
 
-      return(
-        <tr>
-            <th scope="row">1</th>
-            <td>{mouseData.mating_date}</td>
-            <td>{mouseData.days_in_breeding}</td>
-            <td>{checkPreg}</td>
-            <td>{pregnant}</td>
-          </tr>
-      )
+      for (const mice in mouseData) {
+        const checkPreg = mouseData[mice].check_pregnancy ? "needed" : "not needed"
+        const pregnant = mouseData[mice].pregnant ? "yes" : "no"
+
+        console.log(mouseData)
+        return(
+          <tr>
+              <th scope="row">{mouseData[mice].female_mouse_id}</th>
+              <td>{mouseData[mice].mating_date}</td>
+              <td>{mouseData[mice].days_in_breeding}</td>
+              <td>{checkPreg}</td>
+              <td>{pregnant}</td>
+            </tr>
+        )
+      }
     }
 
     return (
