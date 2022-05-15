@@ -3,6 +3,7 @@
 from flask import (Flask, render_template, request, flash, session, redirect)
 from model import connect_to_db, db
 import crud
+import json
 from jinja2 import StrictUndefined
 from datetime import datetime 
 
@@ -46,15 +47,20 @@ def display_mice_micetrack_table_rows():
     """Display micetrack table """
 
     female_mice = crud.get_all_female_mice()
+
     mouse_data = {}
+    mouse_data_list = []
+
     for mouse in female_mice:
         mouse_data["female_mouse_id"] = mouse.female_mouse_id
         mouse_data["mating_date"] = mouse.mating_date
         mouse_data["days_in_breeding"] = mouse.days_in_breeding
         mouse_data["check_pregnancy"] = mouse.check_pregnancy
         mouse_data["pregnant"] = mouse.pregnant
+    
+        mouse_data_list.append(mouse_data)
 
-    return mouse_data
+    return json.dumps(mouse_data_list, default=str)
 
 
 if __name__ == "__main__":
