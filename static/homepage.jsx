@@ -91,9 +91,34 @@ function Modal(props) {
   );
 }
 
+function RenderMouseDataTable (props) {
+    return(
+      <table className="table table-striped">
+        <tr>
+          <th scope="col">id</th>
+          <th scope="col">mating date</th>
+          <th scope="col">days in breeding</th>
+          <th scope="col">need to check pregnancy</th>
+          <th scope="col">pregnant?</th>
+          </tr>
+       
+          {Object.values(props.mouseData).map(mice =>
+              <tr key={mice['female_mouse_id']}>
+                <th scope="row">{mice['female_mouse_id']}</th>
+                <td>{mice['mating_date']}</td>
+                <td>{mice['days_in_breeding']}</td>
+                <td>{mice['check_pregnancy'] ? "needed" : "not needed"}</td>
+                <td>{mice['pregnant'] ? "yes" : "no"}</td>
+              </tr>
+            )}
+      </table>
+    )
+  }
+
+
 function Homepage() {
   const [popupModal, setpopupModal] = React.useState(false);
-  const [mouseData, setMouseData] = React.useState({});
+  const [mouseData, setMouseData] = React.useState([]);
 
   const openModal = () => {
     setpopupModal(true)
@@ -112,24 +137,6 @@ function Homepage() {
     });
   }, [])
 
-    const renderMouseData = () => {
-
-      for (const mice in mouseData) {
-        const checkPreg = mouseData[mice].check_pregnancy ? "needed" : "not needed"
-        const pregnant = mouseData[mice].pregnant ? "yes" : "no"
-
-        console.log(mouseData)
-        return(
-          <tr>
-              <th scope="row">{mouseData[mice].female_mouse_id}</th>
-              <td>{mouseData[mice].mating_date}</td>
-              <td>{mouseData[mice].days_in_breeding}</td>
-              <td>{checkPreg}</td>
-              <td>{pregnant}</td>
-            </tr>
-        )
-      }
-    }
 
     return (
       <React.Fragment>
@@ -138,17 +145,7 @@ function Homepage() {
           Track a mouse
         </button>
         {popupModal && <Modal closeModal={closeModal}/>}
-
-        <table className="table table-striped">
-          <tr>
-            <th scope="col">id</th>
-            <th scope="col">mating date</th>
-            <th scope="col">days in breeding</th>
-            <th scope="col">need to check pregnancy</th>
-            <th scope="col">pregnant?</th>
-          </tr>
-          {renderMouseData()}
-        </table>
+        <RenderMouseDataTable mouseData={mouseData}/>  
       </React.Fragment>
     );
   }
