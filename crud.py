@@ -33,6 +33,11 @@ def get_all_female_mice():
     return FemaleMouse.query.all()
 
 
+def delete_female_row_data(mouse_id):
+    """Delete a female mice row data."""
+
+    return FemaleMouse.query.filter(FemaleMouse.female_mouse_id == mouse_id).delete()
+
 
 def create_pup(date_of_birth, pup_strain, days_old, wean_date, need_to_id):
     """ Create and return pup """
