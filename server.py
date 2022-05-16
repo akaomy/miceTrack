@@ -48,18 +48,15 @@ def display_mice_micetrack_table_rows():
 
     female_mice = crud.get_all_female_mice()
 
-    mouse_data = {}
     mouse_data_list = []
-
     for mouse in female_mice:
+        mouse_data = {}
         mouse_data["female_mouse_id"] = mouse.female_mouse_id
         mouse_data["mating_date"] = mouse.mating_date
         mouse_data["days_in_breeding"] = mouse.days_in_breeding
         mouse_data["check_pregnancy"] = mouse.check_pregnancy
         mouse_data["pregnant"] = mouse.pregnant
-    
         mouse_data_list.append(mouse_data)
-
     return json.dumps(mouse_data_list, default=str)
 
 
