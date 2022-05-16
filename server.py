@@ -18,6 +18,25 @@ def homepage():
     
     return render_template("homepage.html")
 
+
+@app.route('/track-mice')
+def display_mice_micetrack_table_rows():
+    """Display micetrack table """
+
+    female_mice = crud.get_all_female_mice()
+
+    mouse_data_list = []
+    for mouse in female_mice:
+        mouse_data = {}
+        mouse_data["female_mouse_id"] = mouse.female_mouse_id
+        mouse_data["mating_date"] = mouse.mating_date
+        mouse_data["days_in_breeding"] = mouse.days_in_breeding
+        mouse_data["check_pregnancy"] = mouse.check_pregnancy
+        mouse_data["pregnant"] = mouse.pregnant
+        mouse_data_list.append(mouse_data)
+    return json.dumps(mouse_data_list, default=str)
+
+
 @app.route('/track-mice', methods=['POST'])
 def add_new_micetrack_table_row():
     """Track a mice table"""
@@ -42,22 +61,18 @@ def add_new_micetrack_table_row():
     return { "status": "The info has been added to the table" }
 
 
-@app.route('/track-mice')
-def display_mice_micetrack_table_rows():
-    """Display micetrack table """
+@app.route('/track-mice', methods=['DELETE'])
+def delete_a_mouce_table_row():
+    """Delete a row in micetrack table """
+    
+    female_id = request.get_json("mouse_id")
 
-    female_mice = crud.get_all_female_mice()
+    print('female_id',female_id)
 
-    mouse_data_list = []
-    for mouse in female_mice:
-        mouse_data = {}
-        mouse_data["female_mouse_id"] = mouse.female_mouse_id
-        mouse_data["mating_date"] = mouse.mating_date
-        mouse_data["days_in_breeding"] = mouse.days_in_breeding
-        mouse_data["check_pregnancy"] = mouse.check_pregnancy
-        mouse_data["pregnant"] = mouse.pregnant
-        mouse_data_list.append(mouse_data)
-    return json.dumps(mouse_data_list, default=str)
+    crud.delete_female_row_data(female_id)
+    db.session.commit()
+
+    return { "status": "mice data has been deleted" }
 
 
 if __name__ == "__main__":
