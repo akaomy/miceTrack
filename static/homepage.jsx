@@ -1,3 +1,55 @@
+
+function RenderMouseDataTable (props) {
+  
+  const handleDeleteRowData = (e) => {
+    // gets id of clicked row
+    // fetches endpoint and sends data to delete to this endpoint
+    // reloads the page to show result
+
+      let mouse_id = e.target.getAttribute('id')
+    
+      fetch('/track-mice', {
+        method: 'DELETE',
+        body: JSON.stringify(mouse_id),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      window.location.reload()
+  }
+
+    return(
+      <table className="table table-striped">
+        <tr>
+          <th scope="col">id</th>
+          <th scope="col">mating date</th>
+          <th scope="col">days in breeding</th>
+          <th scope="col">need to check pregnancy</th>
+          <th scope="col">pregnant?</th>
+          </tr>
+          {Object.values(props.mouseData).map(mice =>
+              <tr key={mice['female_mouse_id']}>
+                <th id='female_mouse_id' scope="row">{mice['female_mouse_id']}</th>
+                <td>{mice['mating_date']}</td>
+                <td>{mice['days_in_breeding']}</td>
+                <td>{mice['check_pregnancy'] ? "needed" : "not needed"}</td>
+                <td>{mice['pregnant'] ? "yes" : "no"}</td>
+                <td><button>edit</button></td>
+                <td>
+                  <button 
+                    id={mice['female_mouse_id']} 
+                    onClick={handleDeleteRowData}
+                  >
+                    delete
+                  </button>
+                </td>
+              </tr>
+            )}
+            
+      </table>
+    )
+}
+
 function Modal(props) {
 
   const [status, setStatus] = React.useState(null)
@@ -29,7 +81,6 @@ function Modal(props) {
     document.querySelector('#cancel-btn').style.visibility = 'hidden';
     document.querySelector('#create-btn').style.visibility = 'hidden';
     document.querySelector('#track-mice-form').style.visibility = 'hidden';
-    
   }
 
   const displayPupsInputs = () => {
@@ -91,31 +142,6 @@ function Modal(props) {
   );
 }
 
-function RenderMouseDataTable (props) {
-    return(
-      <table className="table table-striped">
-        <tr>
-          <th scope="col">id</th>
-          <th scope="col">mating date</th>
-          <th scope="col">days in breeding</th>
-          <th scope="col">need to check pregnancy</th>
-          <th scope="col">pregnant?</th>
-          </tr>
-       
-          {Object.values(props.mouseData).map(mice =>
-              <tr key={mice['female_mouse_id']}>
-                <th scope="row">{mice['female_mouse_id']}</th>
-                <td>{mice['mating_date']}</td>
-                <td>{mice['days_in_breeding']}</td>
-                <td>{mice['check_pregnancy'] ? "needed" : "not needed"}</td>
-                <td>{mice['pregnant'] ? "yes" : "no"}</td>
-              </tr>
-            )}
-      </table>
-    )
-  }
-
-
 function Homepage() {
   const [popupModal, setpopupModal] = React.useState(false);
   const [mouseData, setMouseData] = React.useState([]);
@@ -148,7 +174,7 @@ function Homepage() {
         <RenderMouseDataTable mouseData={mouseData}/>  
       </React.Fragment>
     );
-  }
+}
 
-  ReactDOM.render(<Homepage />, document.querySelector('#root'));
+ReactDOM.render(<Homepage />, document.querySelector('#root'));
 
