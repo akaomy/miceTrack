@@ -44,7 +44,7 @@ function Header(props) {
   const [status, setStatus] = React.useState(null)
 
   // create a mice row
-  const submitData = (e) => {
+  const createMiceRow = (e) => {
     e.preventDefault()
     
     const formInputs = {
@@ -81,7 +81,7 @@ function Header(props) {
         <Modal 
           closeModal={props.closeModal} 
           status={status} 
-          submitData={submitData}
+          submitData={createMiceRow}
         />} 
       </React.Fragment>
     );
