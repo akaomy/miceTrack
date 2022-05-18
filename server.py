@@ -18,7 +18,6 @@ def homepage():
     
     return render_template("homepage.html")
 
-
 @app.route('/track-mice')
 def display_mice_micetrack_table_rows():
     """Display micetrack table """
@@ -37,9 +36,9 @@ def display_mice_micetrack_table_rows():
     return json.dumps(mouse_data_list, default=str)
 
 
-@app.route('/track-mice', methods=['POST'])
-def add_new_micetrack_table_row():
-    """Track a mice table"""
+@app.route('/track-mice/create', methods=['POST'])
+def create_mice_table_row():
+    """Track a mice"""
 
     mating_date = request.json.get("mating_date")
     days_in_breeding = request.json.get("days_in_breeding")
@@ -61,13 +60,36 @@ def add_new_micetrack_table_row():
     return { "status": "The info has been added to the table" }
 
 
+@app.route('/track-mice/update',  methods=['POST'])
+def update_mouse_table_row():
+    """Update mouse table row"""
+
+    female_mouse_id = request.json.get("female_mouse_id")
+    mating_date = request.json.get("mating_date")
+    days_in_breeding = request.json.get("days_in_breeding")
+    need_check_pregnancy = request.json.get("need_check_pregnancy")
+    check_if_pregnant = request.json.get("check_if_pregnant")
+
+    if (need_check_pregnancy == 'None'):
+        need_check_pregnancy = False
+    else:
+        need_check_pregnancy = True
+
+    if (check_if_pregnant == 'on'):
+        check_if_pregnant = True
+    else:
+        check_if_pregnant = False
+
+    crud.update_female_row_data(female_mouse_id, mating_date, days_in_breeding, need_check_pregnancy, check_if_pregnant)
+
+    return { "status": "The info has been updated" }
+
+
 @app.route('/track-mice', methods=['DELETE'])
-def delete_a_mouce_table_row():
+def delete_mouse_table_row():
     """Delete a row in micetrack table """
     
     female_id = request.get_json("mouse_id")
-
-    print('female_id',female_id)
 
     crud.delete_female_row_data(female_id)
     db.session.commit()
