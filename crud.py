@@ -26,6 +26,7 @@ def create_female_mouse(mating_date, days_in_breeding, check_pregnancy, pregnant
     return female_mouse
 
 def update_female_row_data(female_mouse_id, mating_date, days_in_breeding, check_pregnancy, pregnant):
+    """Uses id of a particular selected mouse to get the info to rewrite it"""
     
     mouse = get_female_row_data(female_mouse_id)
     
