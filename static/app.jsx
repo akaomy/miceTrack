@@ -1,16 +1,22 @@
 function App() {
-  const [popupModal, setpopupModal] = React.useState(false);
-  const [mouseData, setMouseData] = React.useState([]);
+  // add new state for current mouse initial value is null
+  // when you click edit set it to the mouse you are editing
+  const [status, setStatus] = React.useState(null)
+  const [popupModal, setpopupModal] = React.useState(false)
   
-  // get mice data 
-  React.useEffect(() => {
-    fetch('/track-mice')
-    .then((response) => response.json())
-    .then((responseData) => {
-      setMouseData(responseData)
-    });
-  }, [])
-  
+  const [mouseData, setMouseData] = React.useState([])
+
+  const [showPupInputs, setsShowPupInputs] = React.useState(false)
+  const [isCheckIfPregDisabled, setIsCheckIfPregDisabled] = React.useState(false);
+
+  const displayPupsInputs = () => {
+    setsShowPupInputs(!showPupInputs)
+  }
+
+  const toggleCheckIfPregnant = () => {
+    setIsCheckIfPregDisabled(!isCheckIfPregDisabled)
+  };
+
   const openModal = () => {
     setpopupModal(true)
   }
@@ -20,38 +26,37 @@ function App() {
     window.location.reload()
   }
 
-  return (
-    <React.Fragment>
-      <Header 
-        popupModal={popupModal} 
-        setpopupModal={setpopupModal} 
-        openModal={openModal}
-        closeModal={closeModal}
-      />
-      <RenderMouseDataTable 
-        openModal={openModal} 
-        mouseData={mouseData} 
-        setMouseData={setMouseData} 
-      /> 
-    </React.Fragment>
-  )
-}
+  // get mice data to populate the table
+  React.useEffect(() => {
+    fetch('/track-mice')
+    .then((response) => response.json())
+    .then((responseData) => {
+      setMouseData(responseData)
+    });
+  }, [])
 
-function Header(props) {
-  
-  // add new state for current mouse initial value is null
-  // when you click edit set it to the mouse you are editing
-  const [status, setStatus] = React.useState(null)
+  const [matingDate, setMatingDate] = React.useState('')
+  const [daysInBreeding, setDaysInBreeding] = React.useState(0)
+  const [needToCheckPregnancy, setNeedToCheckPregnancy] = React.useState(false)
+  const [checkIfPregnant, setCheckIfPregnant] = React.useState(false)
 
-  // create a mice row
-  const createMiceRow = (e) => {
+  const handleInput = e => {
+    setMatingDate(e.target.value)
+    setDaysInBreeding(e.target.value)
+    setNeedToCheckPregnancy(e.target.value)
+    setCheckIfPregnant(e.target.value)
+  }
+ 
+  const createMiceRow = e => {
     e.preventDefault()
+    openModal()
+    handleInput(e)
     
     const formInputs = {
-      mating_date: document.querySelector('#mating-date').value,
-      days_in_breeding: document.querySelector('#days-in-breeding').value,
-      need_check_pregnancy: document.querySelector('#need-check-pregnancy').value,
-      check_if_pregnant: document.querySelector('#check-if-pregnant').value,
+      mating_date: matingDate,
+      days_in_breeding: daysInBreeding,
+      need_check_pregnancy: needToCheckPregnancy,
+      check_if_pregnant: checkIfPregnant,
     }
 
     fetch('/track-mice/create', {
@@ -66,36 +71,16 @@ function Header(props) {
       setStatus(responseData.status)
     })
 
-    document.querySelector('#cancel-btn').style.visibility = 'hidden';
-    document.querySelector('#create-btn').style.visibility = 'hidden';
-    document.querySelector('#track-mice-form').style.visibility = 'hidden';
+    // document.querySelector('#cancel-btn').style.visibility = 'hidden';
+    // document.querySelector('#create-btn').style.visibility = 'hidden';
+    // document.querySelector('#track-mice-form').style.visibility = 'hidden';
   }
 
-    return (
-      <React.Fragment>
-        <h1>MiceTrack</h1>
-        <button type="button" onClick={props.openModal} className="btn btn-primary">
-          Track a mouse
-        </button>
-        {props.popupModal && 
-        <Modal 
-          closeModal={props.closeModal} 
-          status={status} 
-          submitData={createMiceRow}
-        />} 
-      </React.Fragment>
-    );
-}
-
-
-function RenderMouseDataTable (props) {
-  // state of input fields?
-  
-  const fetchDataToUpdateRow = (e) => {
+  const updateMiceRow = e => {
     
     // todo: display existing values inside the update form input fields
 
-    props.openModal()
+    openModal()
 
     let mouse_id = e.target.getAttribute('id')
     
@@ -122,7 +107,7 @@ function RenderMouseDataTable (props) {
 
   }
 
-  const handleDeleteRowData = (e) => {
+  const handleDeleteRowData = e => {
 
     let mouse_id = e.target.getAttribute('id')
   
@@ -135,88 +120,53 @@ function RenderMouseDataTable (props) {
     })
     window.location.reload()
   }
-    return(
-      <table className="table table-striped">
-        <tr>
-          <th scope="col">id</th>
-          <th scope="col">mating date</th>
-          <th scope="col">days in breeding</th>
-          <th scope="col">need to check pregnancy</th>
-          <th scope="col">pregnant?</th>
-          </tr>
-          {Object.values(props.mouseData).map(mice =>
-              <tr key={mice['female_mouse_id']}>
-                <th id='female_mouse_id' scope="row">{mice['female_mouse_id']}</th>
-                <td>{mice['mating_date']}</td>
-                <td>{mice['days_in_breeding']}</td>
-                <td>{mice['check_pregnancy'] ? "needed" : "not needed"}</td>
-                <td>{mice['pregnant'] ? "yes" : "no"}</td>
-                <td>
-                  <button onClick={fetchDataToUpdateRow}>edit</button>
-                  </td>
-                <td>
-                  <button 
-                    id={mice['female_mouse_id']} 
-                    onClick={handleDeleteRowData}
-                  >
-                    delete
-                  </button>
-                </td>
-              </tr>
-            )}
-            
-      </table>
-    )
-}
-
-
-function Modal(props) {
-
-  const [showPupInputs, setsShowPupInputs] = React.useState(false)
-  const [isCheckIfPregDisabled, setIsCheckIfPregDisabled] = React.useState(false);
-
-  const displayPupsInputs = () => {
-    setsShowPupInputs(!showPupInputs)
-  }
-
-  const toggleCheckIfPregnant = () => {
-    setIsCheckIfPregDisabled(!isCheckIfPregDisabled)
-  };
 
   return (
     <React.Fragment>
-      <div>
-        {console.log('status',props.status)}
-        {props.status ? 
-          <div className="alert alert-success">
-            {props.status}
-          <button onClick={props.closeModal}>Close</button>
-        </div> : null}
+      <h1>MiceTrack</h1>
+      <button 
+        type="button" 
+        onClick={createMiceRow} 
+        className="btn btn-primary">
+          Track a mouse
+        </button>
+      
 
-        <form id="track-mice-form" onSubmit={props.submitData}>
-          <h2>Female mice info</h2>
-          <label htmlFor="mating-date">Mating date</label>
-          {/* give it a value => date of the mouse that you are editing */}
-          <input type="date" id="mating-date" name="mating-date" /><br/>
+      {popupModal &&
+        <div>
+          {status ? 
+            
+            <div className="alert alert-success"> {status} 
+              <button onClick={closeModal}>
+                Close
+              </button>
+            </div> : null}
 
-          <label htmlFor="days-in-breeding">Days in breeding</label>
-          <input type="text" id="days-in-breeding" name="days-in-breeding" /><br/>
+          {/* <form id="track-mice-form" onSubmit={submitData}> */}
+          <form id="track-mice-form">
+            <h2>Female mice info</h2>
+            <label htmlFor="mating-date">Mating date</label>
+            {/* give it a value => date of the mouse that you are editing */}
+            <input type="date" id="mating-date" name="mating-date" /><br/>
 
-          <label htmlFor="need-check-pregnancy">Need to check pregnancy?</label>
-          <input 
-            type="checkbox" 
-            id="need-check-pregnancy" 
-            name="need-check-pregnancy" 
-            onClick={toggleCheckIfPregnant}
-          /><br/>
+            <label htmlFor="days-in-breeding">Days in breeding</label>
+            <input type="text" id="days-in-breeding" name="days-in-breeding" /><br/>
 
-          <label htmlFor="check-if-pregnant">Check if pregnant</label>
-          <input 
-            type="checkbox" id="check-if-pregnant" 
-            name="check-if-pregnant" 
-            disabled={isCheckIfPregDisabled} 
-            onClick={displayPupsInputs}
-          /><br/>
+            <label htmlFor="need-check-pregnancy">Need to check pregnancy?</label>
+            <input 
+              type="checkbox" 
+              id="need-check-pregnancy" 
+              name="need-check-pregnancy" 
+              onClick={toggleCheckIfPregnant}
+            /><br/>
+
+            <label htmlFor="check-if-pregnant">Check if pregnant</label>
+            <input 
+              type="checkbox" id="check-if-pregnant" 
+              name="check-if-pregnant" 
+              disabled={isCheckIfPregDisabled} 
+              onClick={displayPupsInputs}
+            /><br/>
 
         {showPupInputs && 
           <React.Fragment>
@@ -239,12 +189,45 @@ function Modal(props) {
             <label htmlFor="need-to-id">Need to id</label>
             <input type="checkbox" id="need-to-id" name="need-to-id"/><br/><br/>
           </React.Fragment>}
-          <button id="cancel-btn" onClick={props.closeModal}>Cancel</button>
-          <input id="create-btn" type="submit" value="Create" />
+          <button id="cancel-btn" onClick={closeModal}>Cancel</button>
+          <input id="create-btn" type="submit" value="Submit" />
         </form>
-      </div>
+      </div>} 
+
+      <table className="table table-striped">
+        <tr>
+          <th scope="col">id</th>
+          <th scope="col">mating date</th>
+          <th scope="col">days in breeding</th>
+          <th scope="col">need to check pregnancy</th>
+          <th scope="col">pregnant?</th>
+          </tr>
+          {Object.values(mouseData).map(mice =>
+              <tr key={mice['female_mouse_id']}>
+                <th id='female_mouse_id' scope="row">{mice['female_mouse_id']}</th>
+                <td>{mice['mating_date']}</td>
+                <td>{mice['days_in_breeding']}</td>
+                <td>{mice['check_pregnancy'] ? "needed" : "not needed"}</td>
+                <td>{mice['pregnant'] ? "yes" : "no"}</td>
+                <td>
+                  <button onClick={updateMiceRow} >
+                    edit
+                    </button>
+                  </td>
+                <td>
+                  <button 
+                    id={mice['female_mouse_id']} 
+                    onClick={handleDeleteRowData}
+                  >
+                    delete
+                  </button>
+                </td>
+              </tr>
+            )}
+            
+      </table>
     </React.Fragment>
-  );
+  )
 }
 
 
