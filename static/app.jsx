@@ -7,7 +7,17 @@ function App() {
   const [mouseData, setMouseData] = React.useState([])
 
   const [showPupInputs, setsShowPupInputs] = React.useState(false)
-  const [isCheckIfPregDisabled, setIsCheckIfPregDisabled] = React.useState(false);
+  const [isCheckIfPregDisabled, setIsCheckIfPregDisabled] = React.useState(false)
+
+  const [matingDate, setMatingDate] = React.useState('')
+  const [daysInBreeding, setDaysInBreeding] = React.useState(0)
+  const [needToCheckPregnancy, setNeedToCheckPregnancy] = React.useState(false)
+  const [checkIfPregnant, setCheckIfPregnant] = React.useState(false)
+
+  const [isUpdate, setIsUpdate] = React.useState(false)
+  const [isCreate, setIsCreate] = React.useState(false)
+
+  const [mouseId, setMouseId] = React.useState(null)
 
   const displayPupsInputs = () => {
     setsShowPupInputs(!showPupInputs)
@@ -35,23 +45,37 @@ function App() {
     });
   }, [])
 
-  const [matingDate, setMatingDate] = React.useState('')
-  const [daysInBreeding, setDaysInBreeding] = React.useState(0)
-  const [needToCheckPregnancy, setNeedToCheckPregnancy] = React.useState(false)
-  const [checkIfPregnant, setCheckIfPregnant] = React.useState(false)
-
-  const handleInput = e => {
-    setMatingDate(e.target.value)
-    setDaysInBreeding(e.target.value)
-    setNeedToCheckPregnancy(e.target.value)
-    setCheckIfPregnant(e.target.value)
-  }
- 
-  const createMiceRow = e => {
-    e.preventDefault()
-    openModal()
-    handleInput(e)
+  const deleteRowData = mouseId => {
     
+    fetch('/track-mice', {
+      method: 'DELETE',
+      body: JSON.stringify(mouseId),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    window.location.reload()
+  }
+
+  const handleCreateMiceBtn = () => {
+    openModal()
+    setIsCreate(true)
+  }
+
+  const handleUpdateMiceBtn = (mouse) => {
+    openModal()
+    setIsUpdate(true)
+    setMouseId(mouse['female_mouse_id'])
+  }
+
+  const submitData = e => {
+    e.preventDefault()
+    if (isCreate) createMiceRow(e)
+    if (isUpdate) updateMiceRow(mouseId)
+  }
+
+  const createMiceRow = () => {
+
     const formInputs = {
       mating_date: matingDate,
       days_in_breeding: daysInBreeding,
@@ -71,28 +95,25 @@ function App() {
       setStatus(responseData.status)
     })
 
-    // document.querySelector('#cancel-btn').style.visibility = 'hidden';
-    // document.querySelector('#create-btn').style.visibility = 'hidden';
-    // document.querySelector('#track-mice-form').style.visibility = 'hidden';
+    document.querySelector('#cancel-btn').style.visibility = 'hidden';
+    document.querySelector('#create-btn').style.visibility = 'hidden';
+    document.querySelector('#track-mice-form').style.visibility = 'hidden';
   }
+  
+  const updateMiceRow = (mouse_id) => {
 
-  const updateMiceRow = e => {
+    // get data from mouseData
+    // to values and checked atributes
     
-    // todo: display existing values inside the update form input fields
 
-    openModal()
-
-    let mouse_id = e.target.getAttribute('id')
-    
-    // todo: get current values from the row get this data directly from what I have sent by server (json)?
     const formInputs = {
       female_mouse_id: mouse_id,
-      mating_date: document.querySelector('#mating-date').value,
-      days_in_breeding: document.querySelector('#days-in-breeding').value,
-      need_check_pregnancy: document.querySelector('#need-check-pregnancy').value,
-      check_if_pregnant: document.querySelector('#check-if-pregnant').value,
+      mating_date: matingDate,
+      days_in_breeding: daysInBreeding,
+      need_check_pregnancy: needToCheckPregnancy,
+      check_if_pregnant: checkIfPregnant,
     }
-
+  
     fetch('/track-mice/update', {
       method: 'POST',
       body: JSON.stringify(formInputs),
@@ -104,53 +125,49 @@ function App() {
     .then((responseData) => {
       setStatus(responseData.status)
     })
-
-  }
-
-  const handleDeleteRowData = e => {
-
-    let mouse_id = e.target.getAttribute('id')
-  
-    fetch('/track-mice', {
-      method: 'DELETE',
-      body: JSON.stringify(mouse_id),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-    window.location.reload()
+    document.querySelector('#cancel-btn').style.visibility = 'hidden';
+    document.querySelector('#create-btn').style.visibility = 'hidden';
+    document.querySelector('#track-mice-form').style.visibility = 'hidden';
   }
 
   return (
     <React.Fragment>
       <h1>MiceTrack</h1>
-      <button 
-        type="button" 
-        onClick={createMiceRow} 
+      <button
+        type="button"
+        onClick={handleCreateMiceBtn} 
         className="btn btn-primary">
           Track a mouse
         </button>
       
-
       {popupModal &&
         <div>
           {status ? 
-            
             <div className="alert alert-success"> {status} 
               <button onClick={closeModal}>
                 Close
               </button>
             </div> : null}
 
-          {/* <form id="track-mice-form" onSubmit={submitData}> */}
-          <form id="track-mice-form">
+          <form id="track-mice-form" onSubmit={submitData}>
             <h2>Female mice info</h2>
             <label htmlFor="mating-date">Mating date</label>
-            {/* give it a value => date of the mouse that you are editing */}
-            <input type="date" id="mating-date" name="mating-date" /><br/>
+            <input 
+              type="date" 
+              id="mating-date" 
+              name="mating-date" 
+              value={matingDate}
+              onChange={e => setMatingDate(e.target.value)}
+            /><br/>
 
             <label htmlFor="days-in-breeding">Days in breeding</label>
-            <input type="text" id="days-in-breeding" name="days-in-breeding" /><br/>
+            <input 
+              type="text"
+              id="days-in-breeding" 
+              name="days-in-breeding" 
+              value={daysInBreeding}
+              onChange={e => setDaysInBreeding(e.target.value)}
+            /><br/>
 
             <label htmlFor="need-check-pregnancy">Need to check pregnancy?</label>
             <input 
@@ -158,6 +175,8 @@ function App() {
               id="need-check-pregnancy" 
               name="need-check-pregnancy" 
               onClick={toggleCheckIfPregnant}
+              checked={needToCheckPregnancy}
+              onChange={e => setNeedToCheckPregnancy(e.target.checked)}
             /><br/>
 
             <label htmlFor="check-if-pregnant">Check if pregnant</label>
@@ -166,6 +185,8 @@ function App() {
               name="check-if-pregnant" 
               disabled={isCheckIfPregDisabled} 
               onClick={displayPupsInputs}
+              checked={checkIfPregnant}
+              onChange={e => setCheckIfPregnant(e.target.checked)}
             /><br/>
 
         {showPupInputs && 
@@ -202,23 +223,20 @@ function App() {
           <th scope="col">need to check pregnancy</th>
           <th scope="col">pregnant?</th>
           </tr>
-          {Object.values(mouseData).map(mice =>
-              <tr key={mice['female_mouse_id']}>
-                <th id='female_mouse_id' scope="row">{mice['female_mouse_id']}</th>
-                <td>{mice['mating_date']}</td>
-                <td>{mice['days_in_breeding']}</td>
-                <td>{mice['check_pregnancy'] ? "needed" : "not needed"}</td>
-                <td>{mice['pregnant'] ? "yes" : "no"}</td>
+          {Object.values(mouseData).map(mouse =>
+              <tr key={mouse['female_mouse_id']}>
+                <th id={mouse['female_mouse_id']} scope="row">{mouse['female_mouse_id']}</th>
+                <td>{mouse['mating_date']}</td>
+                <td>{mouse['days_in_breeding']}</td>
+                <td>{mouse['check_pregnancy'] ? "needed" : "not needed"}</td>
+                <td>{mouse['pregnant'] ? "yes" : "no"}</td>
                 <td>
-                  <button onClick={updateMiceRow} >
+                  <button onClick={() => handleUpdateMiceBtn(mouse)}>
                     edit
                     </button>
                   </td>
                 <td>
-                  <button 
-                    id={mice['female_mouse_id']} 
-                    onClick={handleDeleteRowData}
-                  >
+                  <button onClick={() => deleteRowData(mouse['female_mouse_id'])}>
                     delete
                   </button>
                 </td>
@@ -232,4 +250,3 @@ function App() {
 
 
 ReactDOM.render(<App />, document.querySelector('#root'));
-
