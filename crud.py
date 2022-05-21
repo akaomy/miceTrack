@@ -29,7 +29,7 @@ def update_female_row_data(female_mouse_id, mating_date, days_in_breeding, check
     """Uses id of a particular selected mouse to get the info to rewrite it"""
     
     mouse = get_female_row_data(female_mouse_id)
-    
+
     if not mouse:
         raise ValueError("Mouse doesn't exist")
 
@@ -38,6 +38,7 @@ def update_female_row_data(female_mouse_id, mating_date, days_in_breeding, check
     mouse.check_pregnancy = check_pregnancy
     mouse.pregnant = pregnant
 
+    db.session.add(mouse)
     db.session.commit()
 
 
@@ -49,7 +50,8 @@ def get_all_female_mice():
 def get_female_row_data(mouse_id):
     """Get a female mice row data."""
 
-    return FemaleMouse.query.filter_by(FemaleMouse.female_mouse_id == mouse_id)
+    return FemaleMouse.query.filter(FemaleMouse.female_mouse_id == mouse_id).first()
+
 
 def delete_female_row_data(mouse_id):
     """Delete a female mice row data."""
