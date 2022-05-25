@@ -10,18 +10,23 @@ class User(db.Model):
 
     user_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     user_email = db.Column(db.String, unique=True)
-    user_name = db.Column(db.String) 
+    user_name = db.Column(db.String)
 
     def __repr__(self):
         return f"<Users user_id={self.user_id} user_email={self.user_email} user_name={self.user_name}>"
 
-
+    
 class Litter(db.Model):
     """ Litter """
 
     __tablename__ = "litters"
 
     litter_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    female_mouse_id = db.Column(db.Integer, db.ForeignKey("femalemice.female_mouse_id"))
+    pup_id =  db.Column(db.Integer,db.ForeignKey("pups.pup_id"))
+
+    user = db.relationship("FemaleMouse", backref="litters")
+    pup = db.relationship("Pup", backref="litters")
 
     def __repr__(self):
         return f"<Litter litter_id={self.litter_id}>"
@@ -33,15 +38,11 @@ class FemaleMouse(db.Model):
     __tablename_ = 'femalemice'
 
     female_mouse_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    litter_id = db.Column(db.Integer, db.ForeignKey("litters.litter_id"))
     mating_date = db.Column(db.DateTime)
     days_in_breeding = db.Column(db.Integer)
     check_pregnancy = db.Column(db.Boolean)
     pregnant = db.Column(db.Boolean)
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
-
-    user = db.relationship("User", backref="femalemice")
-    litter = db.relationship("Litter", backref="femalemice")
 
     def __repr__(self):
         return f"<FemaleMouse female_mouse_id={self.female_mouse_id} mating_date={self.mating_date} days_in_breeding={self.days_in_breeding} check_pregnancy={self.check_pregnancy} pregnant={self.pregnant}>"
@@ -53,7 +54,6 @@ class Pup(db.Model):
     __tablename__ = "pups"
 
     pup_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    litter_id = db.Column(db.Integer, db.ForeignKey("litters.litter_id"))
     pup_strain = db.Column(db.String)
     date_of_birth = db.Column(db.DateTime)
     days_old = db.Column(db.Integer)
