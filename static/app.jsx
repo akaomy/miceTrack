@@ -9,9 +9,9 @@ function App() {
   const [showPupInputs, setsShowPupInputs] = React.useState(false)
   const [isCheckIfPregDisabled, setIsCheckIfPregDisabled] = React.useState(false)
 
+  const [femaleMouseManualId, setFemaleMouseManualId] = React.useState('')
   const [matingDate, setMatingDate] = React.useState('')
-  const [daysInBreeding, setDaysInBreeding] = React.useState(0)
-  const [needToCheckPregnancy, setNeedToCheckPregnancy] = React.useState(false)
+  const [hasPups, setHasPups] = React.useState(0)
   const [checkIfPregnant, setCheckIfPregnant] = React.useState(false)
 
   const [isUpdate, setIsUpdate] = React.useState(false)
@@ -78,9 +78,8 @@ function App() {
 
     const formInputs = {
       mating_date: matingDate,
-      days_in_breeding: daysInBreeding,
-      need_check_pregnancy: needToCheckPregnancy,
       check_if_pregnant: checkIfPregnant,
+      has_pups: has_pups,
     }
 
     fetch('/track-mice/create', {
@@ -109,9 +108,8 @@ function App() {
     const formInputs = {
       female_mouse_id: mouse_id,
       mating_date: matingDate,
-      days_in_breeding: daysInBreeding,
-      need_check_pregnancy: needToCheckPregnancy,
       check_if_pregnant: checkIfPregnant,
+      has_pups: has_pups,
     }
   
     fetch('/track-mice/update', {
@@ -151,6 +149,15 @@ function App() {
 
           <form id="track-mice-form" onSubmit={submitData}>
             <h2>Female mice info</h2>
+            <label htmlFor="female-mouse-manual-id">Female ID</label>
+            <input 
+              type="text" 
+              id="female-mouse-manual-id" 
+              name="female-mouse-manual-id" 
+              value={femaleMouseManualId}
+              onChange={e => setFemaleMouseManualId(e.target.value)}
+            /><br/>
+            
             <label htmlFor="mating-date">Mating date</label>
             <input 
               type="date" 
@@ -160,33 +167,23 @@ function App() {
               onChange={e => setMatingDate(e.target.value)}
             /><br/>
 
-            <label htmlFor="days-in-breeding">Days in breeding</label>
-            <input 
-              type="text"
-              id="days-in-breeding" 
-              name="days-in-breeding" 
-              value={daysInBreeding}
-              onChange={e => setDaysInBreeding(e.target.value)}
-            /><br/>
-
-            <label htmlFor="need-check-pregnancy">Need to check pregnancy?</label>
-            <input 
-              type="checkbox" 
-              id="need-check-pregnancy" 
-              name="need-check-pregnancy" 
-              onClick={toggleCheckIfPregnant}
-              checked={needToCheckPregnancy}
-              onChange={e => setNeedToCheckPregnancy(e.target.checked)}
-            /><br/>
-
             <label htmlFor="check-if-pregnant">Check if pregnant</label>
             <input 
               type="checkbox" id="check-if-pregnant" 
               name="check-if-pregnant" 
               disabled={isCheckIfPregDisabled} 
-              onClick={displayPupsInputs}
               checked={checkIfPregnant}
               onChange={e => setCheckIfPregnant(e.target.checked)}
+            /><br/>
+
+            <label htmlFor="has-pups">Has pups</label>
+            <input 
+              type="checkbox"
+              id="has-pups" 
+              name="has-pups" 
+              value={hasPups}
+              onClick={displayPupsInputs}
+              onChange={e => setHasPups(e.target.value)}
             /><br/>
 
         {showPupInputs && 
@@ -217,19 +214,20 @@ function App() {
 
       <table className="table table-striped">
         <tr>
-          <th scope="col">id</th>
+          <th scope="col">female mouse id</th>
           <th scope="col">mating date</th>
-          <th scope="col">days in breeding</th>
           <th scope="col">need to check pregnancy</th>
           <th scope="col">pregnant?</th>
+          <th scope="col">has pups?</th>
           </tr>
           {Object.values(mouseData).map(mouse =>
               <tr key={mouse['female_mouse_id']}>
                 <th id={mouse['female_mouse_id']} scope="row">{mouse['female_mouse_id']}</th>
+                <td>{mouse['female_mouse_manual_id']}</td>
                 <td>{mouse['mating_date']}</td>
-                <td>{mouse['days_in_breeding']}</td>
                 <td>{mouse['check_pregnancy'] ? "needed" : "not needed"}</td>
                 <td>{mouse['pregnant'] ? "yes" : "no"}</td>
+                <td>{mouse['has_pups']}</td>
                 <td>
                   <button onClick={() => handleUpdateMiceBtn(mouse)}>
                     edit

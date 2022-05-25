@@ -23,6 +23,7 @@ def display_mice_micetrack_table_rows():
     """Display micetrack table """
 
     female_mice = crud.get_all_female_mice()
+    # pups = crud.get_all_pup()
 
     mouse_data_list = []
     for mouse in female_mice:
@@ -33,6 +34,17 @@ def display_mice_micetrack_table_rows():
         mouse_data["check_pregnancy"] = mouse.check_pregnancy
         mouse_data["pregnant"] = mouse.pregnant
         mouse_data_list.append(mouse_data)
+
+    # for pup in pups:
+    #     pup_data = {}
+    #     pup_data["litter_id"] = pup.litter_id
+    #     pup_data["pup_strain"] = pup.pup_strain
+    #     pup_data["date_of_birth"] = pup.date_of_birth
+    #     mouse_data_list.append(pup_data)
+
+    #  i wanna return all female mouse with corresponding pups
+    #  litter id
+        
     return json.dumps(mouse_data_list, default=str)
 
 
@@ -40,10 +52,11 @@ def display_mice_micetrack_table_rows():
 def create_mice_table_row():
     """Track a mice"""
 
+    female_mouse_manual_id = request.json.get("female_mouse_manual_id")
     mating_date = request.json.get("mating_date")
-    days_in_breeding = request.json.get("days_in_breeding")
     need_check_pregnancy = request.json.get("need_check_pregnancy")
     check_if_pregnant = request.json.get("check_if_pregnant")
+    has_pups = request.json.get("has_pups")
 
     if (need_check_pregnancy == 'None'):
         need_check_pregnancy = False
@@ -55,7 +68,7 @@ def create_mice_table_row():
     else:
         check_if_pregnant = False
 
-    crud.create_female_mouse(mating_date, days_in_breeding, need_check_pregnancy, check_if_pregnant)
+    crud.create_female_mouse(female_mouse_manual_id, mating_date, has_pups, need_check_pregnancy, check_if_pregnant)
 
     return { "status": "The info has been added to the table" }
 
@@ -64,11 +77,12 @@ def create_mice_table_row():
 def update_mouse_table_row():
     """Update mouse table row"""
 
+    female_mouse_manual_id = request.json.get("female_mouse_manual_id")
     female_mouse_id = request.json.get("female_mouse_id")
     mating_date = request.json.get("mating_date")
-    days_in_breeding = request.json.get("days_in_breeding")
     need_check_pregnancy = request.json.get("need_check_pregnancy")
     check_if_pregnant = request.json.get("check_if_pregnant")
+    has_pups = request.json.get("has_pups")
 
     if (need_check_pregnancy == 'None'):
         need_check_pregnancy = False
@@ -80,7 +94,7 @@ def update_mouse_table_row():
     else:
         check_if_pregnant = False
 
-    crud.update_female_row_data(female_mouse_id, mating_date, days_in_breeding, need_check_pregnancy, check_if_pregnant)
+    crud.update_female_row_data(female_mouse_manual_id, female_mouse_id, mating_date, need_check_pregnancy, check_if_pregnant, has_pups)
 
     return { "status": "The info has been updated" }
 
