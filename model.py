@@ -25,7 +25,7 @@ class Litter(db.Model):
     female_mouse_id = db.Column(db.Integer, db.ForeignKey("femalemice.female_mouse_id"))
     pup_id =  db.Column(db.Integer,db.ForeignKey("pups.pup_id"))
 
-    user = db.relationship("FemaleMouse", backref="litters")
+    female_mouse_id = db.relationship("FemaleMouse", backref="litters")
     pup = db.relationship("Pup", backref="litters")
 
     def __repr__(self):
@@ -35,17 +35,18 @@ class Litter(db.Model):
 class FemaleMouse(db.Model):
     """ A mice for breeding """
 
-    __tablename_ = 'femalemice'
+    __tablename__ = 'femalemice'
 
     female_mouse_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    litter_id = db.Column(db.Integer, db.ForeignKey("litters.litter_id"))
+    female_mouse_manual_id = db.Column(db.String)
     mating_date = db.Column(db.DateTime)
-    days_in_breeding = db.Column(db.Integer)
-    check_pregnancy = db.Column(db.Boolean)
     pregnant = db.Column(db.Boolean)
+    has_pups = db.Column(db.Boolean)
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
 
     def __repr__(self):
-        return f"<FemaleMouse female_mouse_id={self.female_mouse_id} mating_date={self.mating_date} days_in_breeding={self.days_in_breeding} check_pregnancy={self.check_pregnancy} pregnant={self.pregnant}>"
+        return f"<FemaleMouse female_mouse_id={self.female_mouse_id} mating_date={self.mating_date} check_pregnancy={self.check_pregnancy} pregnant={self.pregnant} has_pups={self.has_pups}>"
 
 
 class Pup(db.Model):
@@ -54,6 +55,7 @@ class Pup(db.Model):
     __tablename__ = "pups"
 
     pup_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    litter_id = db.Column(db.Integer, db.ForeignKey("litters.litter_id"))
     pup_strain = db.Column(db.String)
     date_of_birth = db.Column(db.DateTime)
     days_old = db.Column(db.Integer)
