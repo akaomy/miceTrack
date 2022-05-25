@@ -10,42 +10,44 @@ def create_user(email, name):
     return user
 
 
-def create_female_mouse(mating_date, days_in_breeding, check_pregnancy, pregnant):
+def create_female_mouse(female_mouse_manual_id, mating_date, has_pups, check_pregnancy, pregnant):
     """Create and return a new female mice."""
 
     female_mouse = FemaleMouse(
-        mating_date=mating_date,
-        days_in_breeding=days_in_breeding,
-        check_pregnancy=check_pregnancy,
-        pregnant=pregnant
+        female_mouse_manual_id = female_mouse_manual_id,
+        mating_date = mating_date,
+        has_pups = has_pups,
+        check_pregnancy = check_pregnancy,
+        pregnant = pregnant
     )
-
     db.session.add(female_mouse)
     db.session.commit()
 
     return female_mouse
-
-def update_female_row_data(female_mouse_id, mating_date, days_in_breeding, check_pregnancy, pregnant):
-    """Uses id of a particular selected mouse to get the info to rewrite it"""
-    
-    mouse = get_female_row_data(female_mouse_id)
-
-    if not mouse:
-        raise ValueError("Mouse doesn't exist")
-
-    mouse.mating_date = mating_date
-    mouse.days_in_breeding = days_in_breeding
-    mouse.check_pregnancy = check_pregnancy
-    mouse.pregnant = pregnant
-
-    db.session.add(mouse)
-    db.session.commit()
 
 
 def get_all_female_mice():
     """Return all female mice."""
 
     return FemaleMouse.query.all()
+
+
+def update_female_row_data(female_mouse_manual_id, female_mouse_id, mating_date, has_pups, check_pregnancy, pregnant):
+    """Uses id of a particular selected mouse to get the info to rewrite it"""
+    
+    mouse = get_female_row_data(female_mouse_id)
+
+    if not mouse:
+        raise ValueError("Mouse doesn't exist")
+    mouse.female_mouse_manual_id = female_mouse_manual_id
+    mouse.mating_date = mating_date
+    mouse.check_pregnancy = check_pregnancy
+    mouse.pregnant = pregnant
+    mouse.has_pups = has_pups
+
+    db.session.add(mouse)
+    db.session.commit()
+
 
 def get_female_row_data(mouse_id):
     """Get a female mice row data."""
