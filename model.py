@@ -3,70 +3,23 @@ from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 
 
-class User(db.Model):
-    """ Scientists """
-
-    __tablename__ = "users"
-
-    user_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    user_email = db.Column(db.String, unique=True)
-    user_name = db.Column(db.String)
-
-    def __repr__(self):
-        return f"<Users user_id={self.user_id} user_email={self.user_email} user_name={self.user_name}>"
-
-    
-class Litter(db.Model):
-    """ Litter """
-
-    __tablename__ = "litters"
-
-    litter_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    female_mouse_id = db.Column(db.Integer, db.ForeignKey("femalemice.female_mouse_id"))
-    pup_id =  db.Column(db.Integer,db.ForeignKey("pups.pup_id"))
-
-    female_mouse_id = db.relationship("FemaleMouse", backref="litters")
-    pup = db.relationship("Pup", backref="litters")
-
-    def __repr__(self):
-        return f"<Litter litter_id={self.litter_id}>"
-
-
 class FemaleMouse(db.Model):
-    """ A mice for breeding """
+    """A mice for breeding"""
 
     __tablename__ = 'femalemice'
 
     female_mouse_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    litter_id = db.Column(db.Integer, db.ForeignKey("litters.litter_id"))
     female_mouse_manual_id = db.Column(db.String)
     mating_date = db.Column(db.DateTime)
     pregnant = db.Column(db.Boolean)
     has_pups = db.Column(db.Boolean)
-    user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
 
     def __repr__(self):
-        return f"<FemaleMouse female_mouse_id={self.female_mouse_id} mating_date={self.mating_date} check_pregnancy={self.check_pregnancy} pregnant={self.pregnant} has_pups={self.has_pups}>"
+        return f"<FemaleMouse female_mouse_id={self.female_mouse_id} female_mouse_manual_id={self.female_mouse_manual_id} mating_date={self.mating_date} pregnant={self.pregnant} has_pups={self.has_pups}>"
 
 
-class Pup(db.Model):
-    """ Puppies born by female mice """
-
-    __tablename__ = "pups"
-
-    pup_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    litter_id = db.Column(db.Integer, db.ForeignKey("litters.litter_id"))
-    pup_strain = db.Column(db.String)
-    date_of_birth = db.Column(db.DateTime)
-    days_old = db.Column(db.Integer)
-    wean_date = db.Column(db.DateTime)
-    need_to_id = db.Column(db.Boolean)
-
-    def __repr__(self):
-        return f"<Pups pup_id={self.pup_id} pup_strain={self.pup_strain} date_of_birth={self.date_of_birth} days_old={self.days_old} wean_date={self.wean_date} need_to_id={self.need_to_id}>"
-
-
-def connect_to_db(flask_app, db_uri="postgresql:///miceTrack", echo=True):
+def connect_to_db(flask_app, db_uri="postgresql:///miceTrack2", echo=True):
+    """ connect to db """
     flask_app.config["SQLALCHEMY_DATABASE_URI"] = db_uri
     flask_app.config["SQLALCHEMY_ECHO"] = echo
     flask_app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
