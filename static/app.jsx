@@ -132,12 +132,8 @@ function App() {
         let today = new Date()
         let mating_date_object = new Date(mating_date) 
         const diffIndays = Math.abs(mating_date_object-today)
-        
+
         return Math.floor(diffIndays / ((1000 * 60 * 60 * 24)))
-    }
-    
-    const checkPregnancy = (mating_date) => {
-        console.log(mating_date)
     }
 
     return (
@@ -231,7 +227,7 @@ function App() {
                 <th scope="col">female mouse id</th>
                 <th scope="col">mating date</th>
                 <th scope="col">days in breeding</th>
-                {/* <th scope="col">need to check pregnancy</th> */}
+                <th scope="col">need to check pregnancy</th>
                 <th scope="col">pregnant?</th>
                 <th scope="col">has pups?</th>
                 <th scope="col">pups dob</th>
@@ -243,7 +239,7 @@ function App() {
                         </th>
                         <td>{mouse['mating_date']}</td>
                         <td>{daysInBreeding(mouse['mating_date'])}</td>
-                        {/* <td>{checkPregnancy(mouse['mating_date'])}</td> */}
+                        <td>{daysInBreeding(mouse['mating_date']) >= 15 ? 'yes' : 'no'}</td>
                         <td>{mouse['pregnant'] ? 'yes' : 'no'}</td>
                         <td>{mouse['has_pups'] ? 'yes' : 'no'}</td>
                         <td>{mouse['pups_dob']}</td>
