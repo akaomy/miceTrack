@@ -140,6 +140,26 @@ function App() {
         return daysInBreeding(mating_date) >= 15 ? 'yes' : '-'
     }
 
+    const checkIfHasPups = (has_pups) => {
+        return has_pups ? 'yes' : 'no'
+    }
+
+    const addZero = (num) => {
+        if (num >= 0 && num <= 9) {
+            return '0' + num;
+        } else {
+            return num;
+        }
+    }
+
+    const formatDate = (db_date) => {
+        if (db_date[0] === null) return
+
+        const db_date_object = new Date(db_date)
+        const t = (addZero(db_date_object.getFullYear()) + '-' + addZero(db_date_object.getMonth() + 1) + '-' + addZero(db_date_object.getDate()))
+        return t
+    }
+
     return (
         <div className="container">
             <h1>MiceTrack</h1>
@@ -224,20 +244,23 @@ function App() {
                 <th scope="col">days in breeding</th>
                 <th scope="col">need to check pregnancy / remove male</th>
                 <th scope="col">pregnant?</th>
-                {/* <th scope="col">has pups?</th> */}
-                {/* <th scope="col">pups dob</th> */}
+                <th scope="col">has pups?</th>
+                <th scope="col">pups dob</th>
+                <th scope="col">pups days old</th>
                 </tr>
                 {mouseData.map(mouse =>
                     <tr key={mouse['female_mouse_id']}>
                         <th id={mouse['female_mouse_manual_id']} scope="row">
                             {mouse['female_mouse_manual_id']}
                         </th>
-                        <td>{mouse['mating_date']}</td>
+                        <td>{formatDate(mouse['mating_date'])}</td>
                         <td>{daysInBreeding(mouse['mating_date'])}</td>
                         <td>{needToCheckIfPregnant(mouse['mating_date'])}</td>
-                        <td>{needToCheckIfPregnant(mouse['mating_date']) === 'yes' ? 'yes':'no'}</td>
-                        {/* <td>{mouse['has_pups'] ? 'yes' : 'no'}</td> */}
-                        {/* <td>{mouse['pups_dob']}</td> */}
+                        {/* if (has pups or need to check preg) ? 'no' : 'yes' */}
+                        <td>{'todo'}</td>
+                        <td>{checkIfHasPups(mouse['has_pups'])}</td>
+                        <td>{formatDate(mouse['pups_dob'])}</td>
+                        <td>{'todo'}</td>
                         <td>
                         <button
                             className="btn btn-warning" 
