@@ -1,7 +1,7 @@
 function App() {
 
     const [status, setStatus] = React.useState(null)
-    const [popupModal, setpopupModal] = React.useState(false)
+    const [popupModal, setPopupModal] = React.useState(false)
     
     const [mouseData, setMouseData] = React.useState([])
 
@@ -31,11 +31,11 @@ function App() {
       }
 
     const openModal = () => {
-        setpopupModal(true)
+        setPopupModal(true)
     }
 
     const closeModal = () => {
-        setpopupModal(false)
+        setPopupModal(false)
         window.location.reload()
     }
 
@@ -52,7 +52,7 @@ function App() {
     }
 
     const handleCreateMiceBtn = () => {
-        openModal()
+        setPopupModal(!popupModal)
         setIsCreate(true)
     }
 
