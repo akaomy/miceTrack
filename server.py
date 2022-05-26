@@ -29,7 +29,6 @@ def display_mice_micetrack_table_rows():
         mouse_data["female_mouse_id"] = mouse.female_mouse_id
         mouse_data["female_mouse_manual_id"] = mouse.female_mouse_manual_id
         mouse_data["mating_date"] = mouse.mating_date
-        mouse_data["pregnant"] = mouse.pregnant
         mouse_data["has_pups"] = mouse.has_pups
         mouse_data["pups_dob"] = mouse.pups_dob,
         mouse_data_list.append(mouse_data)
@@ -43,7 +42,6 @@ def create_mice_table_row():
 
     female_mouse_manual_id = request.json.get("female_mouse_manual_id")
     mating_date = request.json.get("mating_date")
-    check_if_pregnant = request.json.get("check_if_pregnant")
     has_pups = request.json.get("has_pups")
     pups_dob = request.json.get("pups_dob")
 
@@ -52,7 +50,7 @@ def create_mice_table_row():
     else:
         has_pups = False
 
-    crud.create_female_mouse(female_mouse_manual_id, mating_date, check_if_pregnant, has_pups, pups_dob)
+    crud.create_female_mouse(female_mouse_manual_id, mating_date, has_pups, pups_dob)
 
     return { "status": "The info has been added to the table" }
 
@@ -64,7 +62,6 @@ def update_mouse_table_row():
     female_mouse_id = request.json.get("female_mouse_id")
     female_mouse_manual_id = request.json.get("female_mouse_manual_id")
     mating_date = request.json.get("mating_date")
-    check_if_pregnant = request.json.get("check_if_pregnant")
     has_pups = request.json.get("has_pups")
     pups_dob = request.json.get("pups_dob")
 
@@ -73,7 +70,7 @@ def update_mouse_table_row():
     else:
         check_if_pregnant = False
 
-    crud.update_female_row_data(female_mouse_id, female_mouse_manual_id, mating_date, check_if_pregnant, has_pups, pups_dob)
+    crud.update_female_row_data(female_mouse_id, female_mouse_manual_id, mating_date, has_pups, pups_dob)
 
     return { "status": "The info has been updated" }
 

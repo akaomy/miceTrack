@@ -136,6 +136,10 @@ function App() {
         return Math.floor(diffIndays / ((1000 * 60 * 60 * 24)))
     }
 
+    const needToCheckIfPregnant = (mating_date) => {
+        return daysInBreeding(mating_date) >= 15 ? 'yes' : '-'
+    }
+
     return (
         <div className="container">
             <h1>MiceTrack</h1>
@@ -150,7 +154,7 @@ function App() {
             {popupModal &&
             <div>
                 {status ? 
-                <div className="alert alert-success"> {status} 
+                <div className="alert alert-success">{status} 
                     <button onClick={closeModal}>
                         Close
                     </button>
@@ -174,15 +178,6 @@ function App() {
                             name="mating-date" 
                             value={matingDate}
                             onChange={e => setMatingDate(e.target.value)}
-                        /><br/>
-
-                        <label htmlFor="check-if-pregnant">Check if pregnant</label>
-                        <input 
-                            type="checkbox" 
-                            id="check-if-pregnant" 
-                            name="check-if-pregnant" 
-                            checked={isPregnant}
-                            onChange={e => setIsPregnant(e.target.checked)}
                         /><br/>
 
                         <label htmlFor="has-pups">Has pups</label>
@@ -227,10 +222,10 @@ function App() {
                 <th scope="col">female mouse id</th>
                 <th scope="col">mating date</th>
                 <th scope="col">days in breeding</th>
-                <th scope="col">need to check pregnancy</th>
+                <th scope="col">need to check pregnancy / remove male</th>
                 <th scope="col">pregnant?</th>
-                <th scope="col">has pups?</th>
-                <th scope="col">pups dob</th>
+                {/* <th scope="col">has pups?</th> */}
+                {/* <th scope="col">pups dob</th> */}
                 </tr>
                 {mouseData.map(mouse =>
                     <tr key={mouse['female_mouse_id']}>
@@ -239,10 +234,10 @@ function App() {
                         </th>
                         <td>{mouse['mating_date']}</td>
                         <td>{daysInBreeding(mouse['mating_date'])}</td>
-                        <td>{daysInBreeding(mouse['mating_date']) >= 15 ? 'yes' : 'no'}</td>
-                        <td>{mouse['pregnant'] ? 'yes' : 'no'}</td>
-                        <td>{mouse['has_pups'] ? 'yes' : 'no'}</td>
-                        <td>{mouse['pups_dob']}</td>
+                        <td>{needToCheckIfPregnant(mouse['mating_date'])}</td>
+                        <td>{needToCheckIfPregnant(mouse['mating_date']) === 'yes' ? 'yes':'no'}</td>
+                        {/* <td>{mouse['has_pups'] ? 'yes' : 'no'}</td> */}
+                        {/* <td>{mouse['pups_dob']}</td> */}
                         <td>
                         <button
                             className="btn btn-warning" 

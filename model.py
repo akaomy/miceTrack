@@ -11,7 +11,6 @@ class FemaleMouse(db.Model):
     female_mouse_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     female_mouse_manual_id = db.Column(db.String)
     mating_date = db.Column(db.DateTime)
-    pregnant = db.Column(db.Boolean)
     has_pups = db.Column(db.Boolean)
     pups_dob = db.Column(db.DateTime)
 
@@ -19,7 +18,6 @@ class FemaleMouse(db.Model):
         return f"""<FemaleMouse female_mouse_id={self.female_mouse_id} 
         female_mouse_manual_id={self.female_mouse_manual_id} 
         mating_date={self.mating_date} 
-        pregnant={self.pregnant} 
         has_pups={self.has_pups} 
         pups_dob={self.pups_dob} 
         >"""

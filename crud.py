@@ -3,13 +3,12 @@
 # from model import db, FemaleMouse, Pup, Litter, User, connect_to_db
 from model import db, FemaleMouse, connect_to_db
 
-def create_female_mouse(female_mouse_manual_id, mating_date, has_pups, pregnant, pups_dob):
+def create_female_mouse(female_mouse_manual_id, mating_date, has_pups, pups_dob):
     """Create and return a new female mice."""
 
     female_mouse = FemaleMouse(
         female_mouse_manual_id = female_mouse_manual_id,
         mating_date = mating_date,
-        pregnant = pregnant,
         has_pups = has_pups,
         pups_dob = pups_dob,
     )
@@ -32,7 +31,7 @@ def get_female_row_data(mouse_id):
     return FemaleMouse.query.filter(FemaleMouse.female_mouse_id == mouse_id).first()
 
 
-def update_female_row_data(female_mouse_id, female_mouse_manual_id, mating_date, pregnant, has_pups, pups_dob):
+def update_female_row_data(female_mouse_id, female_mouse_manual_id, mating_date, has_pups, pups_dob):
     """Uses id of a particular selected mouse to get the info to rewrite it"""
     
     mouse = get_female_row_data(female_mouse_id)
@@ -42,7 +41,6 @@ def update_female_row_data(female_mouse_id, female_mouse_manual_id, mating_date,
 
     mouse.female_mouse_manual_id = female_mouse_manual_id
     mouse.mating_date = mating_date
-    mouse.pregnant = pregnant
     mouse.has_pups = has_pups
     mouse.pups_strain = pups_dob,
 
