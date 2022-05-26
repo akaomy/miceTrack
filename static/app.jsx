@@ -8,7 +8,7 @@ function App() {
     const [showPupInputs, setsShowPupInputs] = React.useState(false)
 
     const [femaleMouseManualId, setFemaleMouseManualId] = React.useState('')
-    const [matingDate, setMatingDate] = React.useState('')
+    const [matingDate, setMatingDate] = React.useState(null)
     const [isPregnant, setIsPregnant] = React.useState(false)
     const [hasPups, setHasPups] = React.useState(false)
     // const [pupsStrain, setPupsStrain] = React.useState(false)
@@ -105,7 +105,7 @@ function App() {
         mating_date: matingDate,
         check_if_pregnant: isPregnant,
         has_pups: hasPups,
-        pups_dob: pups_dob,
+        pups_dob: pupsDob,
     }
     
     fetch('/track-mice/update', {
