@@ -11,7 +11,6 @@ function App() {
     const [matingDate, setMatingDate] = React.useState(null)
     const [isPregnant, setIsPregnant] = React.useState(false)
     const [hasPups, setHasPups] = React.useState(false)
-    // const [pupsStrain, setPupsStrain] = React.useState(false)
     const [pupsDob, setPupsDob] = React.useState(null)
 
     const [isUpdate, setIsUpdate] = React.useState(false)
@@ -128,7 +127,18 @@ function App() {
         const strains = ['WT', 'Pard3 cKO', 'Mlst8 KI', 'Cryba1 cKO', 'Akt2 cKo']
         return strains.map(strain => { return <option key={strain}>{strain}</option> })
     }
+
+    const daysInBreeding = (mating_date) => {
+        let today = new Date()
+        let mating_date_object = new Date(mating_date) 
+        const diffIndays = Math.abs(mating_date_object-today)
+        
+        return Math.floor(diffIndays / ((1000 * 60 * 60 * 24)))
+    }
     
+    const checkPregnancy = (mating_date) => {
+        console.log(mating_date)
+    }
 
     return (
         <div className="container">
@@ -197,7 +207,6 @@ function App() {
                             <select 
                                 name="pups-strain" 
                                 id="pups-strain"
-                                // onChange={e => setPupsStrain(e.target.value)}
                                 >
                                     {strainOptionsDisplay()}
                             </select><br/>
@@ -221,6 +230,8 @@ function App() {
                 <tr>
                 <th scope="col">female mouse id</th>
                 <th scope="col">mating date</th>
+                <th scope="col">days in breeding</th>
+                {/* <th scope="col">need to check pregnancy</th> */}
                 <th scope="col">pregnant?</th>
                 <th scope="col">has pups?</th>
                 <th scope="col">pups dob</th>
@@ -231,6 +242,8 @@ function App() {
                             {mouse['female_mouse_manual_id']}
                         </th>
                         <td>{mouse['mating_date']}</td>
+                        <td>{daysInBreeding(mouse['mating_date'])}</td>
+                        {/* <td>{checkPregnancy(mouse['mating_date'])}</td> */}
                         <td>{mouse['pregnant'] ? 'yes' : 'no'}</td>
                         <td>{mouse['has_pups'] ? 'yes' : 'no'}</td>
                         <td>{mouse['pups_dob']}</td>
