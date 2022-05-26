@@ -12,7 +12,7 @@ function App() {
     const [isPregnant, setIsPregnant] = React.useState(false)
     const [hasPups, setHasPups] = React.useState(false)
     // const [pupsStrain, setPupsStrain] = React.useState(false)
-    const [pupsDob, setPupsDob] = React.useState('')
+    const [pupsDob, setPupsDob] = React.useState(null)
 
     const [isUpdate, setIsUpdate] = React.useState(false)
     const [isCreate, setIsCreate] = React.useState(false)
@@ -77,7 +77,7 @@ function App() {
             mating_date: matingDate,
             check_if_pregnant: isPregnant,
             has_pups: hasPups,
-            pups_dob: pupsDob == '' ? 'none' : pupsDob,
+            pups_dob: pupsDob,
         }
         console.log('formInputs', formInputs)
         fetch('/track-mice/create', {
@@ -105,7 +105,7 @@ function App() {
         mating_date: matingDate,
         check_if_pregnant: isPregnant,
         has_pups: hasPups,
-        pups_dob: pups_dob == '' ? 'none' : pups_dob,
+        pups_dob: pups_dob,
     }
     
     fetch('/track-mice/update', {
