@@ -11,6 +11,8 @@ function App() {
     const [matingDate, setMatingDate] = React.useState('')
     const [isPregnant, setIsPregnant] = React.useState(false)
     const [hasPups, setHasPups] = React.useState(false)
+    // const [pupsStrain, setPupsStrain] = React.useState(false)
+    const [pupsDob, setPupsDob] = React.useState('')
 
     const [isUpdate, setIsUpdate] = React.useState(false)
     const [isCreate, setIsCreate] = React.useState(false)
@@ -74,7 +76,8 @@ function App() {
             female_mouse_manual_id: femaleMouseManualId,
             mating_date: matingDate,
             check_if_pregnant: isPregnant,
-            has_pups: hasPups
+            has_pups: hasPups,
+            pups_dob: pupsDob == '' ? 'none' : pupsDob,
         }
         console.log('formInputs', formInputs)
         fetch('/track-mice/create', {
@@ -101,7 +104,8 @@ function App() {
         female_mouse_manual_id: femaleMouseManualId,
         mating_date: matingDate,
         check_if_pregnant: isPregnant,
-        has_pups: hasPups
+        has_pups: hasPups,
+        pups_dob: pups_dob == '' ? 'none' : pups_dob,
     }
     
     fetch('/track-mice/update', {
@@ -120,15 +124,23 @@ function App() {
     document.querySelector('#track-mice-form').style.visibility = 'hidden';
     }
 
+    const strainOptionsDisplay = () => {
+        const strains = ['WT', 'Pard3 cKO', 'Mlst8 KI', 'Cryba1 cKO', 'Akt2 cKo']
+        return strains.map(strain => { return <option key={strain}>{strain}</option> })
+    }
+    
+
     return (
-        <React.Fragment>
+        <div className="container">
             <h1>MiceTrack</h1>
             <button
                 type="button"
                 onClick={handleCreateMiceBtn} 
-                className="btn btn-primary">
-                    Track a mouse
+                className="btn btn-primary"
+            >
+                Track a mouse
             </button>
+
             {popupModal &&
             <div>
                 {status ? 
@@ -137,61 +149,72 @@ function App() {
                         Close
                     </button>
                     </div> : null}
+                <div className="custom-modal">
+                    <form id="track-mice-form" onSubmit={submitData}>
+                        <h2>Female mice info</h2>
+                        <label htmlFor="female-mouse-manual-id">Female ID</label>
+                        <input 
+                            type="text" 
+                            id="female-mouse-manual-id" 
+                            name="female-mouse-manual-id" 
+                            value={femaleMouseManualId}
+                            onChange={e => setFemaleMouseManualId(e.target.value)}
+                        /><br/>
 
-                <form id="track-mice-form" onSubmit={submitData}>
-                    <h2>Female mice info</h2>
-                    <label htmlFor="female-mouse-manual-id">Female ID</label>
-                    <input 
-                        type="text" 
-                        id="female-mouse-manual-id" 
-                        name="female-mouse-manual-id" 
-                        value={femaleMouseManualId}
-                        onChange={e => setFemaleMouseManualId(e.target.value)}
-                    /><br/>
+                        <label htmlFor="mating-date">Mating date</label>
+                        <input 
+                            type="date" 
+                            id="mating-date" 
+                            name="mating-date" 
+                            value={matingDate}
+                            onChange={e => setMatingDate(e.target.value)}
+                        /><br/>
 
-                    <label htmlFor="mating-date">Mating date</label>
-                    <input 
-                        type="date" 
-                        id="mating-date" 
-                        name="mating-date" 
-                        value={matingDate}
-                        onChange={e => setMatingDate(e.target.value)}
-                    /><br/>
+                        <label htmlFor="check-if-pregnant">Check if pregnant</label>
+                        <input 
+                            type="checkbox" 
+                            id="check-if-pregnant" 
+                            name="check-if-pregnant" 
+                            checked={isPregnant}
+                            onChange={e => setIsPregnant(e.target.checked)}
+                        /><br/>
 
-                    <label htmlFor="check-if-pregnant">Check if pregnant</label>
-                    <input 
-                        type="checkbox" 
-                        id="check-if-pregnant" 
-                        name="check-if-pregnant" 
-                        checked={isPregnant}
-                        onChange={e => setIsPregnant(e.target.checked)}
-                    /><br/>
+                        <label htmlFor="has-pups">Has pups</label>
+                        <input 
+                            type="checkbox" 
+                            id="has-pups" 
+                            name="has-pups"
+                            onClick={displayPupsInputs}
+                            checked={hasPups}
+                            onChange={e => setHasPups(e.target.value)}
+                        /><br/>
 
-                    <label htmlFor="has-pups">Has pups</label>
-                    <input 
-                        type="checkbox" 
-                        id="has-pups" 
-                        name="has-pups"
-                        onClick={displayPupsInputs}
-                        checked={hasPups}
-                        onChange={e => setHasPups(e.target.value)}
-                    /><br/>
+                        {showPupInputs && 
+                        <React.Fragment>
+                            <h2>Pups info</h2>
 
-                    {showPupInputs && 
-                    <React.Fragment>
-                        <h2>Pups info</h2>
+                            <label htmlFor="pups-strain">Pups strain</label>
+                            <select 
+                                name="pups-strain" 
+                                id="pups-strain"
+                                // onChange={e => setPupsStrain(e.target.value)}
+                                >
+                                    {strainOptionsDisplay()}
+                            </select><br/>
 
-                        <label htmlFor="pups-stain">Pups stain</label>
-                        <select name="pups-stain" id="pups-stain">
-                            <option value="WT">WT</option>
-                        </select><br/>
-
-                        <label htmlFor="date-of-birth">Date of birth</label>
-                        <input type="date" id="date-of-birth" name="date-of-birth"/><br/>
-                    </React.Fragment>}
-                    <button id="cancel-btn" onClick={closeModal}>Cancel</button>
-                    <input id="create-btn" type="submit" value="Submit" />
-                </form>
+                            <label htmlFor="date-of-birth">Date of birth</label>
+                            <input 
+                                type="date" 
+                                id="date-of-birth" 
+                                name="date-of-birth"
+                                value={setPupsDob} 
+                                onChange={e => setPupsDob(e.target.value)}
+                            /><br/>
+                        </React.Fragment>}
+                        <button id="cancel-btn" className="btn btn-secondary" onClick={closeModal}>Cancel</button>
+                        <input id="create-btn" className="btn btn-success" type="submit" value="Submit" />
+                    </form>
+                </div>
             </div>}
 
             <table className="table table-striped">
@@ -200,6 +223,7 @@ function App() {
                 <th scope="col">mating date</th>
                 <th scope="col">pregnant?</th>
                 <th scope="col">has pups?</th>
+                <th scope="col">pups dob</th>
                 </tr>
                 {mouseData.map(mouse =>
                     <tr key={mouse['female_mouse_id']}>
@@ -209,15 +233,20 @@ function App() {
                         <td>{mouse['mating_date']}</td>
                         <td>{mouse['pregnant'] ? 'yes' : 'no'}</td>
                         <td>{mouse['has_pups'] ? 'yes' : 'no'}</td>
+                        <td>{mouse['pups_dob']}</td>
                         <td>
-                        <button 
+                        <button
+                            className="btn btn-warning" 
                             onClick={() => handleUpdateMiceBtn(mouse)}
                             >
                             edit
                             </button>
                         </td>
                         <td>
-                        <button onClick={() => deleteRowData(mouse['female_mouse_id'])}>
+                        <button 
+                            className="btn btn-danger"
+                            onClick={() => deleteRowData(mouse['female_mouse_id'])}
+                        >
                             delete
                         </button>
                         </td>
@@ -225,7 +254,7 @@ function App() {
                     )}
                     
             </table> 
-        </React.Fragment>
+        </div>
     )
 }
 
