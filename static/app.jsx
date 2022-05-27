@@ -153,11 +153,11 @@ function App() {
     }
 
     const formatDate = (db_date) => {
-        if (db_date[0] === null) return
-
         const db_date_object = new Date(db_date)
-        const t = (addZero(db_date_object.getFullYear()) + '-' + addZero(db_date_object.getMonth() + 1) + '-' + addZero(db_date_object.getDate()))
-        return t
+
+        if (db_date_object instanceof Date && !isNaN(db_date_object.valueOf()) === false) return 
+        
+        return (addZero(db_date_object.getFullYear()) + '-' + addZero(db_date_object.getMonth() + 1) + '-' + addZero(db_date_object.getDate()))
     }
 
     return (
