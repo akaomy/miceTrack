@@ -1,3 +1,4 @@
+
 function App() {
 
     const [status, setStatus] = React.useState(null)
@@ -239,14 +240,15 @@ function App() {
 
             <table className="table table-striped">
                 <tr>
-                <th scope="col">female mouse id</th>
-                <th scope="col">mating date</th>
-                <th scope="col">days in breeding</th>
-                <th scope="col">need to check pregnancy / remove male</th>
-                <th scope="col">pregnant?</th>
-                <th scope="col">has pups?</th>
-                <th scope="col">pups dob</th>
-                <th scope="col">pups days old</th>
+                    <th scope="col">female mouse id</th>
+                    <th scope="col">mating date</th>
+                    <th scope="col">days in breeding</th>
+                    <th scope="col">need to check pregnancy / remove male</th>
+                    <th scope="col">pregnant?</th>
+                    <th scope="col">pups strain</th>
+                    <th scope="col">has pups?</th>
+                    <th scope="col">pups dob</th>
+                    <th scope="col">pups days old</th>
                 </tr>
                 {mouseData.map(mouse =>
                     <tr key={mouse['female_mouse_id']}>
@@ -258,6 +260,8 @@ function App() {
                         <td>{needToCheckIfPregnant(mouse['mating_date'])}</td>
                         {/* if (has pups or need to check preg) ? 'no' : 'yes' */}
                         <td>{'todo'}</td>
+                        <td>{'todo'}</td>
+                        
                         <td>{checkIfHasPups(mouse['has_pups'])}</td>
                         <td>{formatDate(mouse['pups_dob'])}</td>
                         <td>{'todo'}</td>
