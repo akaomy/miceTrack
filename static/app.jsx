@@ -275,7 +275,7 @@ function App() {
                         </td>
                         <td>
                         <button 
-                            className="btn btn-danger"
+                            className="btn bl btn-danger"
                             onClick={() => deleteRowData(mouse['female_mouse_id'])}
                         >
                             delete
