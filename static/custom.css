@@ -6,3 +6,22 @@
 .table {
   height: 55%;
 }
+
+#app-root {
+  backdrop-filter: blur(100px);
+}
+
+.popup {
+  position: absolute;
+  margin: auto;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 40%;
+  height: 60%;
+  padding: 20px;
+  border: 1px solid grey;
+  background: #fff;
+  box-shadow: 4px 4px 2px 1px rgba(0, 0, 0, .2)
+}
