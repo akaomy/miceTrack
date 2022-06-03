@@ -171,72 +171,22 @@ function App() {
             >
                 Track a mouse
             </button>
-
-            {popupModal &&
-            <div>
-                {status ? 
-                <div className="alert alert-success">{status} 
-                    <button onClick={closeModal}>
-                        Close
-                    </button>
-                    </div> : null}
-                <div className="custom-modal">
-                    <form id="track-mice-form" onSubmit={submitData}>
-                        <h2>Female mice info</h2>
-                        <label htmlFor="female-mouse-manual-id">Female ID</label>
-                        <input 
-                            type="text" 
-                            id="female-mouse-manual-id" 
-                            name="female-mouse-manual-id" 
-                            value={femaleMouseManualId}
-                            onChange={e => setFemaleMouseManualId(e.target.value)}
-                        /><br/>
-
-                        <label htmlFor="mating-date">Mating date</label>
-                        <input 
-                            type="date" 
-                            id="mating-date" 
-                            name="mating-date" 
-                            value={matingDate}
-                            onChange={e => setMatingDate(e.target.value)}
-                        /><br/>
-
-                        <label htmlFor="has-pups">Has pups</label>
-                        <input 
-                            type="checkbox" 
-                            id="has-pups" 
-                            name="has-pups"
-                            onClick={displayPupsInputs}
-                            checked={hasPups}
-                            onChange={e => setHasPups(e.target.value)}
-                        /><br/>
-
-                        {showPupInputs && 
-                        <React.Fragment>
-                            <h2>Pups info</h2>
-
-                            <label htmlFor="pups-strain">Pups strain</label>
-                            <select 
-                                name="pups-strain" 
-                                id="pups-strain"
-                                >
-                                    {strainOptionsDisplay()}
-                            </select><br/>
-
-                            <label htmlFor="date-of-birth">Date of birth</label>
-                            <input 
-                                type="date" 
-                                id="date-of-birth" 
-                                name="date-of-birth"
-                                value={setPupsDob} 
-                                onChange={e => setPupsDob(e.target.value)}
-                            /><br/>
-                        </React.Fragment>}
-                        <button id="cancel-btn" className="btn btn-secondary" onClick={closeModal}>Cancel</button>
-                        <input id="create-btn" className="btn btn-success" type="submit" value="Submit" />
-                    </form>
-                </div>
-            </div>}
+            {popupModal && 
+            <Modal 
+                status={status}
+                closeModal={closeModal}
+                submitData={submitData}
+                femaleMouseManualId={femaleMouseManualId}
+                setFemaleMouseManualId={setFemaleMouseManualId}
+                matingDate={matingDate}
+                setMatingDate={setMatingDate}
+                displayPupsInputs={displayPupsInputs}
+                hasPups={hasPups}
+                setHasPups={setHasPups}
+                showPupInputs={showPupInputs}
+                strainOptionsDisplay={strainOptionsDisplay}
+                setPupsDob={setPupsDob}
+            />}
 
             <table className="table table-striped">
                 <tr>
