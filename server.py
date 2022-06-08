@@ -57,7 +57,7 @@ def export_table_data():
     # same with to_excel
     resp = make_response(df.to_csv())
     resp.headers['Content-Disposition'] = 'attachment; filename=export.csv'
-    resp.headers["Content-Type"] = 'text/csv'
+    resp.headers['Content-Type'] = 'text/csv'
 
     return resp
 
