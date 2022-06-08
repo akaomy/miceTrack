@@ -1,9 +1,10 @@
 """Server for miceTrack  app."""
 
-from flask import (Flask, render_template, request, flash, session, redirect)
+from flask import (Flask, render_template, request, flash, session, redirect, send_file, make_response)
 from model import connect_to_db, db
 import crud
 import json
+import pandas as pd
 # from datetime import datetime 
 
 app = Flask(__name__)
@@ -35,6 +36,31 @@ def display_mice_micetrack_table_rows():
 
     return json.dumps(mouse_data_list, default=str)
     
+@app.route('/track-mice/export')
+def export_table_data():
+    """Export xls data"""
+
+    female_mice = crud.get_all_female_mice()
+
+    mouse_data_list = []
+    for mouse in female_mice:
+        mouse_data = {}
+        mouse_data["female_mouse_id"] = mouse.female_mouse_id
+        mouse_data["female_mouse_manual_id"] = mouse.female_mouse_manual_id
+        mouse_data["mating_date"] = mouse.mating_date
+        mouse_data["has_pups"] = mouse.has_pups
+        mouse_data["pups_dob"] = mouse.pups_dob,
+        mouse_data_list.append(mouse_data)
+
+    df = pd.DataFrame(mouse_data_list, columns = ['female_mouse_id', 'female_mouse_manual_id', 'mating_date', 'has_pups', 'pups_dob'])
+    
+    # same with to_excel
+    resp = make_response(df.to_csv())
+    resp.headers['Content-Disposition'] = 'attachment; filename=export.csv'
+    resp.headers["Content-Type"] = 'text/csv'
+
+    return resp
+
 
 @app.route('/track-mice/create', methods=['POST'])
 def create_mice_table_row():
