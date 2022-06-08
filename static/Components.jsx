@@ -19,6 +19,7 @@ function Modal(props) {
                             name="female-mouse-manual-id" 
                             value={props.femaleMouseManualId}
                             onChange={e => props.setFemaleMouseManualId(e.target.value)}
+                            required
                         /><br/>
 
                         <label htmlFor="mating-date">Mating date</label>
@@ -28,6 +29,7 @@ function Modal(props) {
                             name="mating-date" 
                             value={props.matingDate}
                             onChange={e => props.setMatingDate(e.target.value)}
+                            required
                         /><br/>
 
                         <label htmlFor="has-pups">Has pups</label>
@@ -48,6 +50,7 @@ function Modal(props) {
                             <select 
                                 name="pups-strain" 
                                 id="pups-strain"
+                                required
                                 >
                                     {props.strainOptionsDisplay()}
                             </select><br/>
@@ -59,6 +62,7 @@ function Modal(props) {
                                 name="date-of-birth"
                                 value={props.setPupsDob} 
                                 onChange={e => props.setPupsDob(e.target.value)}
+                                required
                             /><br/>
                         </React.Fragment>}
                         <button id="cancel-btn" className="btn btn-secondary" onClick={props.closeModal}>Cancel</button>
