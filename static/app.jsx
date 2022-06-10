@@ -1,4 +1,3 @@
-
 function App() {
 
     const [status, setStatus] = React.useState(null)
@@ -18,6 +17,7 @@ function App() {
     const [isCreate, setIsCreate] = React.useState(false)
 
     const [mouseId, setMouseId] = React.useState(null)
+    const [exportData, setExportData] = React.useState('')
 
     // get mice data to populate the table
     React.useEffect(() => {
@@ -79,7 +79,6 @@ function App() {
             has_pups: hasPups,
             pups_dob: pupsDob,
         }
-        console.log('formInputs', formInputs)
         fetch('/track-mice/create', {
             method: 'POST',
             body: JSON.stringify(formInputs),
@@ -99,29 +98,29 @@ function App() {
     
     const updateMiceRow = (mouse_id) => {
 
-    const formInputs = {
-        female_mouse_id: mouse_id,
-        female_mouse_manual_id: femaleMouseManualId,
-        mating_date: matingDate,
-        check_if_pregnant: isPregnant,
-        has_pups: hasPups,
-        pups_dob: pupsDob,
-    }
-    
-    fetch('/track-mice/update', {
-        method: 'POST',
-        body: JSON.stringify(formInputs),
-        headers: {
-        'Content-Type': 'application/json'
+        const formInputs = {
+            female_mouse_id: mouse_id,
+            female_mouse_manual_id: femaleMouseManualId,
+            mating_date: matingDate,
+            check_if_pregnant: isPregnant,
+            has_pups: hasPups,
+            pups_dob: pupsDob,
         }
-    })
-    .then((response) => response.json())
-    .then((responseData) => {
-        setStatus(responseData.status)
-    })
-    document.querySelector('#cancel-btn').style.visibility = 'hidden';
-    document.querySelector('#create-btn').style.visibility = 'hidden';
-    document.querySelector('#track-mice-form').style.visibility = 'hidden';
+        
+        fetch('/track-mice/update', {
+            method: 'POST',
+            body: JSON.stringify(formInputs),
+            headers: {
+            'Content-Type': 'application/json'
+            }
+        })
+        .then((response) => response.json())
+        .then((responseData) => {
+            setStatus(responseData.status)
+        })
+        document.querySelector('#cancel-btn').style.visibility = 'hidden';
+        document.querySelector('#create-btn').style.visibility = 'hidden';
+        document.querySelector('#track-mice-form').style.visibility = 'hidden';
     }
 
     const strainOptionsDisplay = () => {
@@ -164,13 +163,22 @@ function App() {
     return (
         <div className="container">
             <h1>MiceTrack</h1>
-            <button
-                type="button"
-                onClick={handleCreateMiceBtn} 
-                className="btn btn-primary"
-            >
-                Track a mouse
-            </button>
+            <div className="buttons-wrapper">
+                <button
+                    type="button"
+                    onClick={handleCreateMiceBtn} 
+                    className="btn btn-primary"
+                >
+                    track a mouse
+                </button>
+                <br/>
+                <a
+                    href="/track-mice/export"
+                    className="btn btn-warning btn-csv"
+                >
+                    download table data as .csv
+                </a>
+            </div>
             {popupModal && 
             <Modal 
                 status={status}
