@@ -163,7 +163,7 @@ function App() {
     }
 
     const openUploadFile = () => {
-        setUploadFilePopup(true)
+        setUploadFilePopup(!uploadFilePopup)
     }
 
     return (
@@ -191,7 +191,7 @@ function App() {
                         upload table data as .csv
                     </a>
                 </div>
-                {uploadFilePopup && <UploadFile />}
+                {uploadFilePopup && <UploadFile openUploadFile={openUploadFile} />}
             </div>
             {popupModal && 
             <Modal 
