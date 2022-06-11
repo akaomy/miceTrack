@@ -1,5 +1,4 @@
 function Modal(props) {
-    console.log(props.status)
     return (
       <div className="popup">
         <div>
@@ -72,4 +71,46 @@ function Modal(props) {
             </div>
       </div>
     );
-  }
+}
+
+function UploadFile(props) {
+
+    const [selectedFile, setSelectedFile] = React.useState();
+    const [status, setStatus] = React.useState(null)
+
+    const changeHandler = (e) => {
+		setSelectedFile(e.target.files[0]);
+	}
+
+    const handleSubmission = () => {
+        const formData = new FormData();
+        formData.append('file', selectedFile)
+        
+        console.log('formData', formData)
+        console.log('selectedFile', selectedFile)
+
+        fetch('/track-mice/import', {
+            method: 'POST',
+            body: formData
+        })
+        .then((response) => response.json())
+        .then((responseData) => {
+            setStatus(responseData.status)
+        })
+    }
+
+    return (
+        <div className="upload-file">
+            {status ? 
+                <div className="alert alert-success">{status} 
+                    <button onClick={props.openUploadFile}>
+                        Close
+                    </button>
+                    </div> : null}
+            <div id="file">
+                <input type="file" name="file" onChange={changeHandler} />
+                <button onClick={handleSubmission}>Submit</button>
+            </div>
+        </div>
+    )
+}
