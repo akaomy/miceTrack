@@ -2,6 +2,7 @@ function App() {
 
     const [status, setStatus] = React.useState(null)
     const [popupModal, setPopupModal] = React.useState(false)
+    const [uploadFilePopup, setUploadFilePopup] = React.useState(false)
     
     const [mouseData, setMouseData] = React.useState([])
 
@@ -18,6 +19,7 @@ function App() {
 
     const [mouseId, setMouseId] = React.useState(null)
     const [exportData, setExportData] = React.useState('')
+
 
     // get mice data to populate the table
     React.useEffect(() => {
@@ -160,6 +162,10 @@ function App() {
         return (addZero(db_date_object.getFullYear()) + '-' + addZero(db_date_object.getMonth() + 1) + '-' + addZero(db_date_object.getDate()))
     }
 
+    const openUploadFile = () => {
+        setUploadFilePopup(true)
+    }
+
     return (
         <div className="container">
             <h1>MiceTrack</h1>
@@ -171,13 +177,21 @@ function App() {
                 >
                     track a mouse
                 </button>
-                <br/>
-                <a
-                    href="/track-mice/export"
-                    className="btn btn-warning btn-csv"
-                >
-                    download table data as .csv
-                </a>
+                <div className="buttons-wrapper">
+                    <a
+                        href="/track-mice/export"
+                        className="btn btn-warning btn-csv"
+                    >
+                        download table data as .csv
+                    </a>
+                    <a
+                        onClick={openUploadFile}
+                        className="btn btn-warning btn-csv"
+                    >
+                        upload table data as .csv
+                    </a>
+                </div>
+                {uploadFilePopup && <UploadFile />}
             </div>
             {popupModal && 
             <Modal 
