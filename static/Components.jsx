@@ -108,7 +108,7 @@ function UploadFile(props) {
                     </button>
                     </div> : null}
             <div id="file">
-                <input type="file" name="file" onChange={changeHandler} />
+                <input type="file" name="file" onChange={changeHandler} required />
                 <button onClick={handleSubmission}>Submit</button>
             </div>
         </div>
