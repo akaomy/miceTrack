@@ -5,7 +5,8 @@ from model import connect_to_db, db
 import crud
 import json
 import pandas as pd
-# from datetime import datetime 
+from datetime import datetime 
+import re
 
 app = Flask(__name__)
 app.secret_key = "dev"
@@ -36,9 +37,38 @@ def display_mice_micetrack_table_rows():
 
     return json.dumps(mouse_data_list, default=str)
     
+
+@app.route('/track-mice/import', methods=['POST'])
+def import_table_data():
+    """Import csv data:
+    recives the file
+    reads it with panda and parses only fields that are needed
+    creates the new records in the db using those fileds
+    sends response to notify that csv was uploaded successfully
+    """
+    file = request.files['file']
+    dataFrame = pd.read_csv(file)
+    data = dataFrame.to_records()
+
+    for each in data:
+        reg = r"(\d{4}, \d{1}, \d{2})|(\d{4}, \d{2}, \d{1})|(None)"
+        match = re.search(reg, each[6])
+        pups_dob = ''
+
+        if match is not None:
+            pups_dob = match.group(0)
+            
+            if match.group(0)=='None':
+                pups_dob = '1980-01-01'  # todo to fix: what to put inside when there are no data?
+        
+        crud.create_female_mouse(str(each[3]), str(each[4]), bool(each[5]), pups_dob)
+    
+    return { "status": "File was uploaded successfully" }
+
+
 @app.route('/track-mice/export')
 def export_table_data():
-    """Export xls data"""
+    """Export csv data"""
 
     female_mice = crud.get_all_female_mice()
 
