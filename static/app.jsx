@@ -177,19 +177,41 @@ function App() {
                 >
                     track a mouse
                 </button>
-                <div className="buttons-wrapper">
-                    <a
-                        href="/track-mice/export"
-                        className="btn btn-warning btn-csv"
-                    >
-                        download table data as .csv
-                    </a>
-                    <a
-                        onClick={openUploadFile}
-                        className="btn btn-warning btn-csv"
-                    >
-                        upload table data as .csv
-                    </a>
+                <div className="dropdown-wrapper">
+                    <div class="dropdown">
+                        <span className="btn">Export as</span>
+                        <div class="dropdown-content">
+                            <a
+                                href="/track-mice/export"
+                                className="btn btn-warning btn-csv"
+                            >
+                                CSV
+                            </a>
+                            <a
+                                href="/track-mice/export"
+                                className="btn btn-warning btn-csv"
+                            >
+                                XLS
+                            </a>
+                        </div>
+                    </div>
+                    <div class="dropdown">
+                        <span className="btn">Import as</span>
+                        <div class="dropdown-content">
+                            <a
+                                onClick={openUploadFile}
+                                className="btn btn-warning btn-csv"
+                            >
+                                CSV
+                            </a>
+                            <a
+                                onClick={openUploadFile}
+                                className="btn btn-warning btn-csv"
+                            >
+                                XLS
+                            </a>
+                        </div>
+                    </div>  
                 </div>
                 {uploadFilePopup && <UploadFile openUploadFile={openUploadFile} />}
             </div>

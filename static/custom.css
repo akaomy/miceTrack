@@ -36,3 +36,30 @@
   border: 1px solid blue;
   margin-right: 10px;
 }
+
+.dropdown-wrapper {
+  width: 300px;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+  border: 2px solid blue;
+  border-radius: 4px;
+  padding: 0 5% 0 5%;
+  margin: 2%;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  padding: 12px 16px;
+  z-index: 1;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
