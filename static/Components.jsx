@@ -89,7 +89,7 @@ function UploadFile(props) {
         console.log('formData', formData)
         console.log('selectedFile', selectedFile)
 
-        fetch('/track-mice/import', {
+        fetch('/track-mice/import-csv', {
             method: 'POST',
             body: formData
         })

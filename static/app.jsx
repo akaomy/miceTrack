@@ -182,13 +182,13 @@ function App() {
                         <span className="btn">Export as</span>
                         <div class="dropdown-content">
                             <a
-                                href="/track-mice/export"
+                                href="/track-mice/export-csv"
                                 className="btn btn-warning btn-csv"
                             >
                                 CSV
                             </a>
                             <a
-                                href="/track-mice/export"
+                                href="/track-mice/export-xls"
                                 className="btn btn-warning btn-csv"
                             >
                                 XLS
@@ -257,7 +257,7 @@ function App() {
                         <td>{'todo'}</td>
                         
                         <td>{checkIfHasPups(mouse['has_pups'])}</td>
-                        <td>{formatDate(mouse['pups_dob'])}</td>
+                        <td>{formatDate(mouse['pups_dob']) === '1980-01-01' ? '' : formatDate(mouse['pups_dob'])}</td>
                         <td>{'todo'}</td>
                         <td>
                         <button

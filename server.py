@@ -38,7 +38,7 @@ def display_mice_micetrack_table_rows():
     return json.dumps(mouse_data_list, default=str)
     
 
-@app.route('/track-mice/import', methods=['POST'])
+@app.route('/track-mice/import-csv', methods=['POST'])
 def import_table_data():
     """Import csv data:
     recives the file
@@ -66,7 +66,7 @@ def import_table_data():
     return { "status": "File was uploaded successfully" }
 
 
-@app.route('/track-mice/export')
+@app.route('/track-mice/export-csv')
 def export_table_data():
     """Export csv data"""
 
