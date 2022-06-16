@@ -59,7 +59,7 @@ def import_table_data():
             pups_dob = match.group(0)
             
             if match.group(0)=='None':
-                pups_dob = '1980-01-01'  # todo to fix: what to put inside when there are no data?
+                pups_dob = '1980-01-01'  # todo to fix: what to put inside when there is no data?
         
         crud.create_female_mouse(str(each[3]), str(each[4]), bool(each[5]), pups_dob)
     

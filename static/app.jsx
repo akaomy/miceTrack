@@ -177,42 +177,18 @@ function App() {
                 >
                     track a mouse
                 </button>
-                <div className="dropdown-wrapper">
-                    <div class="dropdown">
-                        <span className="btn">Export as</span>
-                        <div class="dropdown-content">
-                            <a
-                                href="/track-mice/export-csv"
-                                className="btn btn-warning btn-csv"
-                            >
-                                CSV
-                            </a>
-                            <a
-                                href="/track-mice/export-xls"
-                                className="btn btn-warning btn-csv"
-                            >
-                                XLS
-                            </a>
-                        </div>
-                    </div>
-                    <div class="dropdown">
-                        <span className="btn">Import as</span>
-                        <div class="dropdown-content">
-                            <a
-                                onClick={openUploadFile}
-                                className="btn btn-warning btn-csv"
-                            >
-                                CSV
-                            </a>
-                            <a
-                                onClick={openUploadFile}
-                                className="btn btn-warning btn-csv"
-                            >
-                                XLS
-                            </a>
-                        </div>
-                    </div>  
-                </div>
+                <a
+                    href="/track-mice/export-csv"
+                    className="btn"
+                >
+                    export as CSV
+                </a>
+                <a
+                    onClick={openUploadFile}
+                    className="btn"
+                >
+                    import as CSV
+                </a>
                 {uploadFilePopup && <UploadFile openUploadFile={openUploadFile} />}
             </div>
             {popupModal && 
