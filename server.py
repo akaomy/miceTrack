@@ -7,6 +7,7 @@ import json
 import pandas as pd
 from datetime import datetime 
 import re
+from io import BytesIO
 
 app = Flask(__name__)
 app.secret_key = "dev"
@@ -67,7 +68,7 @@ def import_table_data():
 
 
 @app.route('/track-mice/export-csv')
-def export_table_data():
+def export_table_data_as_csv():
     """Export csv data"""
 
     female_mice = crud.get_all_female_mice()
@@ -90,6 +91,39 @@ def export_table_data():
     resp.headers['Content-Type'] = 'text/csv'
 
     return resp
+
+@app.route('/track-mice/export-xls')
+def export_table_data_as_xls():
+    """Export xls data"""
+
+    female_mice = crud.get_all_female_mice()
+
+    mouse_data_list = []
+    for mouse in female_mice:
+        mouse_data = {}
+        mouse_data["female_mouse_id"] = mouse.female_mouse_id
+        mouse_data["female_mouse_manual_id"] = mouse.female_mouse_manual_id
+        mouse_data["mating_date"] = mouse.mating_date
+        mouse_data["has_pups"] = mouse.has_pups
+        mouse_data["pups_dob"] = mouse.pups_dob,
+        mouse_data_list.append(mouse_data)
+
+    df = pd.DataFrame(mouse_data_list, columns = ['female_mouse_id', 'female_mouse_manual_id', 'mating_date', 'has_pups', 'pups_dob'])
+    # reg = r"(\d{4}, \d{1}, \d{2})|(\d{4}, \d{2}, \d{1})|(None)"
+    # match = re.search(reg, searched_element)
+    output = BytesIO()
+    writer = pd.ExcelWriter(output)
+    # worksheet = writer.sheets['Sheet_1']
+    df.to_excel(writer, startrow = 0, sheet_name = 'Sheet_1')
+    writer.close()
+    output.seek(0)
+    # resp = make_response(df.to_excel(writer))
+    # resp.headers['Content-Disposition'] = 'attachment; filename=export.xls'
+    # resp.headers['Content-Type'] = 'text/xls'
+
+    return send_file(output, attachment_filename = "data.xls", as_attachment = True)
+
+
 
 
 @app.route('/track-mice/create', methods=['POST'])
