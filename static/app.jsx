@@ -187,6 +187,8 @@ function App() {
                     track a mouse
                 </button>
                 <div className="dropdown-wrapper">
+                    <a onClick={openUploadCSVFile} className="btn">Import as CSV</a>
+                    {uploadXLSFilePopup && <UploadFile openUploadXLSFile={openUploadXLSFile} />}
                     <div className="dropdown">
                         <a className="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                             Export as
@@ -196,16 +198,6 @@ function App() {
                             <li><a href="/track-mice/export-xls" className="btn">XLS</a></li>
                         </ul>
                         {uploadCSVFilePopup && <UploadFile openUploadCSVFile={openUploadCSVFile} />}
-                    </div>
-                    <div className="dropdown">
-                        <a className="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                            Import as
-                        </a>
-                        <ul className="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <li><a onClick={openUploadCSVFile} className="btn">CSV</a></li>
-                            <li><a onClick={openUploadXLSFile} className="btn">XLS</a></li>
-                        </ul>
-                        {uploadXLSFilePopup && <UploadFile openUploadXLSFile={openUploadXLSFile} />}
                     </div>
                 </div>
             </div>
