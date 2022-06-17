@@ -103,7 +103,7 @@ function UploadFile(props) {
         <div className="upload-file">
             {status ? 
                 <div className="alert alert-success">{status} 
-                    <button onClick={props.openUploadFile}>
+                    <button onClick={props.openUploadCSVFile}>
                         Close
                     </button>
                     </div> : null}

@@ -2,7 +2,8 @@ function App() {
 
     const [status, setStatus] = React.useState(null)
     const [popupModal, setPopupModal] = React.useState(false)
-    const [uploadFilePopup, setUploadFilePopup] = React.useState(false)
+    const [uploadCSVFilePopup, setUploadCSVFilePopup] = React.useState(false)
+    const [uploadXLSFilePopup, setUploadXLSFilePopup] = React.useState(false)
     
     const [mouseData, setMouseData] = React.useState([])
 
@@ -162,13 +163,21 @@ function App() {
         return (addZero(db_date_object.getFullYear()) + '-' + addZero(db_date_object.getMonth() + 1) + '-' + addZero(db_date_object.getDate()))
     }
 
-    const openUploadFile = () => {
-        setUploadFilePopup(!uploadFilePopup)
+    const openUploadCSVFile = () => {
+        setUploadCSVFilePopup(!uploadCSVFilePopup)
+    }
+
+    const openUploadXLSFile = () => {
+        console.log('openUploadXLSFile')
     }
 
     return (
         <div className="container">
-            <h1>MiceTrack</h1>
+            <div className="logo-wrapper">
+                {/* todo */}
+                <img src="./assets/img/mouse-lg.png" alt="mouse-logo"/> 
+                <h1>MiceTrack</h1>
+            </div>
             <div className="buttons-wrapper">
                 <button
                     type="button"
@@ -177,19 +186,28 @@ function App() {
                 >
                     track a mouse
                 </button>
-                <a
-                    href="/track-mice/export-csv"
-                    className="btn"
-                >
-                    export as CSV
-                </a>
-                <a
-                    onClick={openUploadFile}
-                    className="btn"
-                >
-                    import as CSV
-                </a>
-                {uploadFilePopup && <UploadFile openUploadFile={openUploadFile} />}
+                <div className="dropdown-wrapper">
+                    <div className="dropdown">
+                        <a className="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                            Export as
+                        </a>
+                        <ul className="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <li><a href="/track-mice/export-csv" className="btn">CSV</a></li>
+                            <li><a href="/track-mice/export-xls" className="btn">XLS</a></li>
+                        </ul>
+                        {uploadCSVFilePopup && <UploadFile openUploadCSVFile={openUploadCSVFile} />}
+                    </div>
+                    <div className="dropdown">
+                        <a className="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                            Import as
+                        </a>
+                        <ul className="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <li><a onClick={openUploadCSVFile} className="btn">CSV</a></li>
+                            <li><a onClick={openUploadXLSFile} className="btn">XLS</a></li>
+                        </ul>
+                        {uploadXLSFilePopup && <UploadFile openUploadXLSFile={openUploadXLSFile} />}
+                    </div>
+                </div>
             </div>
             {popupModal && 
             <Modal 

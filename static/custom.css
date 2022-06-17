@@ -29,4 +29,14 @@
 .buttons-wrapper {
   display: flex;
   justify-content: space-between;
+  width: 99%;
+  margin-bottom: 10px;
+}
+
+.dropdown-wrapper {
+  display: flex;
+}
+
+.dropdown {
+  margin-left: 2%;
 }
