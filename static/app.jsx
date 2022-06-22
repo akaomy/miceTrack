@@ -68,7 +68,8 @@ function App() {
         setFemaleMouseManualId(mouse['female_mouse_manual_id'])
         setMatingDate(formatDate(mouse['mating_date']))
         setHasPups(mouse['has_pups'])
-      }
+        setPupsDob(formatDate(mouse['pups_dob'][0]))
+    }
 
     const submitData = e => {
         e.preventDefault()
@@ -218,6 +219,8 @@ function App() {
                 setHasPups={setHasPups}
                 showPupInputs={showPupInputs}
                 strainOptionsDisplay={strainOptionsDisplay}
+                pupsDob={pupsDob}
+                formatDate={formatDate}
                 setPupsDob={setPupsDob}
             />}
 

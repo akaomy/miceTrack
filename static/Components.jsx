@@ -59,7 +59,7 @@ function Modal(props) {
                                 type="date" 
                                 id="date-of-birth" 
                                 name="date-of-birth"
-                                value={props.setPupsDob} 
+                                value={props.formatDate(props.pupsDob)} 
                                 onChange={e => props.setPupsDob(e.target.value)}
                                 required
                             /><br/>
