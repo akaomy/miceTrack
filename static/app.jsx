@@ -171,9 +171,6 @@ function App() {
         setUploadCSVFilePopup(!uploadCSVFilePopup)
     }
 
-    const openUploadXLSFile = () => {
-        console.log('openUploadXLSFile')
-    }
 
     return (
         <div className="container">
@@ -192,7 +189,6 @@ function App() {
                 </button>
                 <div className="dropdown-wrapper">
                     <a onClick={openUploadCSVFile} className="btn">Import as CSV</a>
-                    {uploadXLSFilePopup && <UploadFile openUploadXLSFile={openUploadXLSFile} />}
                     <div className="dropdown">
                         <a className="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                             Export as
