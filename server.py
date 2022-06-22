@@ -60,7 +60,7 @@ def import_table_data():
             pups_dob = match.group(0)
             
             if match.group(0)=='None':
-                pups_dob = '1980-01-01'  # todo to fix: what to put inside when there is no data?
+                pups_dob = '1980-01-01'
         
         crud.create_female_mouse(str(each[3]), str(each[4]), bool(each[5]), pups_dob)
     
@@ -145,10 +145,17 @@ def create_mice_table_row():
 def update_mouse_table_row():
     """Update mouse table row"""
 
+
     female_mouse_id = request.json.get("female_mouse_id")
     female_mouse_manual_id = request.json.get("female_mouse_manual_id")
     mating_date = request.json.get("mating_date")
     has_pups = request.json.get("has_pups")
+
+    if (has_pups == 'on'):
+        has_pups = True
+    else:
+        has_pups = False
+
     pups_dob = request.json.get("pups_dob")
 
     crud.update_female_row_data(female_mouse_id, female_mouse_manual_id, mating_date, has_pups, pups_dob)
