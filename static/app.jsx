@@ -65,6 +65,9 @@ function App() {
         openModal()
         setIsUpdate(true)
         setMouseId(mouse['female_mouse_id'])
+        setFemaleMouseManualId(mouse['female_mouse_manual_id'])
+        setMatingDate(formatDate(mouse['mating_date']))
+        setHasPups(mouse['has_pups'])
       }
 
     const submitData = e => {
