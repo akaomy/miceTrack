@@ -103,23 +103,19 @@ def export_table_data_as_xls():
         mouse_data = {}
         mouse_data["female_mouse_id"] = mouse.female_mouse_id
         mouse_data["female_mouse_manual_id"] = mouse.female_mouse_manual_id
+        # convert date into string strftime
         mouse_data["mating_date"] = mouse.mating_date
         mouse_data["has_pups"] = mouse.has_pups
+        # convert date into string strftime
         mouse_data["pups_dob"] = mouse.pups_dob,
         mouse_data_list.append(mouse_data)
 
     df = pd.DataFrame(mouse_data_list, columns = ['female_mouse_id', 'female_mouse_manual_id', 'mating_date', 'has_pups', 'pups_dob'])
-    # reg = r"(\d{4}, \d{1}, \d{2})|(\d{4}, \d{2}, \d{1})|(None)"
-    # match = re.search(reg, searched_element)
     output = BytesIO()
     writer = pd.ExcelWriter(output)
-    # worksheet = writer.sheets['Sheet_1']
     df.to_excel(writer, startrow = 0, sheet_name = 'Sheet_1')
     writer.close()
     output.seek(0)
-    # resp = make_response(df.to_excel(writer))
-    # resp.headers['Content-Disposition'] = 'attachment; filename=export.xls'
-    # resp.headers['Content-Type'] = 'text/xls'
 
     return send_file(output, attachment_filename = "data.xls", as_attachment = True)
 
@@ -154,11 +150,6 @@ def update_mouse_table_row():
     mating_date = request.json.get("mating_date")
     has_pups = request.json.get("has_pups")
     pups_dob = request.json.get("pups_dob")
-
-    if (check_if_pregnant == 'on'):
-        check_if_pregnant = True
-    else:
-        check_if_pregnant = False
 
     crud.update_female_row_data(female_mouse_id, female_mouse_manual_id, mating_date, has_pups, pups_dob)
 
