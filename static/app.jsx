@@ -14,13 +14,12 @@ function App() {
     const [isPregnant, setIsPregnant] = React.useState(false)
     const [hasPups, setHasPups] = React.useState(false)
     const [pupsDob, setPupsDob] = React.useState(null)
+    const [pupStrain, setPupStrain] = React.useState('')
 
     const [isUpdate, setIsUpdate] = React.useState(false)
     const [isCreate, setIsCreate] = React.useState(false)
 
     const [mouseId, setMouseId] = React.useState(null)
-    const [exportData, setExportData] = React.useState('')
-
 
     // get mice data to populate the table
     React.useEffect(() => {
@@ -130,11 +129,6 @@ function App() {
         document.querySelector('#track-mice-form').style.visibility = 'hidden';
     }
 
-    const strainOptionsDisplay = () => {
-        const strains = ['WT', 'Pard3 cKO', 'Mlst8 KI', 'Cryba1 cKO', 'Akt2 cKo']
-        return strains.map(strain => { return <option key={strain}>{strain}</option> })
-    }
-
     const daysInBreeding = (mating_date) => {
         let today = new Date()
         let mating_date_object = new Date(mating_date) 
@@ -167,10 +161,19 @@ function App() {
         return (addZero(db_date_object.getFullYear()) + '-' + addZero(db_date_object.getMonth() + 1) + '-' + addZero(db_date_object.getDate()))
     }
 
+    const calculatePupsDaysOld = (mouse) => {
+        let res = '-';
+        if (mouse['has_pups']) {
+            const now = new Date()
+            const pupsDob = new Date(mouse['pups_dob'])
+            res = Math.floor((now - pupsDob) / (1000 * 60 * 60 * 24))
+        }
+        return res
+    }
+
     const openUploadCSVFile = () => {
         setUploadCSVFilePopup(!uploadCSVFilePopup)
     }
-
 
     return (
         <div className="container">
@@ -211,13 +214,14 @@ function App() {
                 matingDate={matingDate}
                 setMatingDate={setMatingDate}
                 displayPupsInputs={displayPupsInputs}
+                showPupInputs={showPupInputs}
                 hasPups={hasPups}
                 setHasPups={setHasPups}
-                showPupInputs={showPupInputs}
-                strainOptionsDisplay={strainOptionsDisplay}
                 pupsDob={pupsDob}
                 formatDate={formatDate}
                 setPupsDob={setPupsDob}
+                pupStrain={pupStrain}
+                setPupStrain={setPupStrain}
             />}
 
             <table className="table table-striped">
@@ -242,11 +246,11 @@ function App() {
                         <td>{needToCheckIfPregnant(mouse['mating_date'])}</td>
                         {/* if (has pups or need to check preg) ? 'no' : 'yes' */}
                         <td>{'todo'}</td>
-                        <td>{'todo'}</td>
+                        <td>{pupStrain}</td>
                         
                         <td>{checkIfHasPups(mouse['has_pups'])}</td>
-                        <td>{formatDate(mouse['pups_dob']) === '1980-01-01' ? '' : formatDate(mouse['pups_dob'])}</td>
-                        <td>{'todo'}</td>
+                        <td>{formatDate(mouse['pups_dob']) === '1980-01-01' || mouse['pups_dob'] === null ? '' : formatDate(mouse['pups_dob'])}</td>
+                        <td>{calculatePupsDaysOld(mouse)}</td>
                         <td>
                         <button
                             className="btn btn-warning" 
