@@ -3,7 +3,6 @@ function App() {
     const [status, setStatus] = React.useState(null)
     const [popupModal, setPopupModal] = React.useState(false)
     const [uploadCSVFilePopup, setUploadCSVFilePopup] = React.useState(false)
-    const [uploadXLSFilePopup, setUploadXLSFilePopup] = React.useState(false)
     
     const [mouseData, setMouseData] = React.useState([])
 
@@ -84,6 +83,7 @@ function App() {
             check_if_pregnant: isPregnant,
             has_pups: hasPups,
             pups_dob: pupsDob,
+            pups_strain: pupStrain
         }
         fetch('/track-mice/create', {
             method: 'POST',
@@ -111,6 +111,7 @@ function App() {
             check_if_pregnant: isPregnant,
             has_pups: hasPups,
             pups_dob: pupsDob,
+            pups_strain: pupStrain
         }
         
         fetch('/track-mice/update', {
@@ -226,7 +227,7 @@ function App() {
 
             <table className="table table-striped">
                 <tr>
-                    <th scope="col">female mouse id</th>
+                    <th scope="col">female id</th>
                     <th scope="col">mating date</th>
                     <th scope="col">days in breeding</th>
                     <th scope="col">need to check pregnancy / remove male</th>
@@ -246,8 +247,7 @@ function App() {
                         <td>{needToCheckIfPregnant(mouse['mating_date'])}</td>
                         {/* if (has pups or need to check preg) ? 'no' : 'yes' */}
                         <td>{'todo'}</td>
-                        <td>{pupStrain}</td>
-                        
+                        <td>{mouse['pups_strain']}</td>
                         <td>{checkIfHasPups(mouse['has_pups'])}</td>
                         <td>{formatDate(mouse['pups_dob']) === '1980-01-01' || mouse['pups_dob'] === null ? '' : formatDate(mouse['pups_dob'])}</td>
                         <td>{calculatePupsDaysOld(mouse)}</td>
