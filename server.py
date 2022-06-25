@@ -104,10 +104,8 @@ def export_table_data_as_xls():
         mouse_data = {}
         mouse_data["female_mouse_id"] = mouse.female_mouse_id
         mouse_data["female_mouse_manual_id"] = mouse.female_mouse_manual_id
-        # convert date into string strftime
         mouse_data["mating_date"] = mouse.mating_date
         mouse_data["has_pups"] = mouse.has_pups
-        # convert date into string strftime
         mouse_data["pups_dob"] = mouse.pups_dob
         mouse_data["pups_strain"] = mouse.pups_strain
         mouse_data_list.append(mouse_data)
