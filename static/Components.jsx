@@ -75,6 +75,56 @@ function Modal(props) {
     );
 }
 
+function Table(props) {
+    return (
+        <table className="table table-striped">
+                <tr>
+                    <th scope="col">female id</th>
+                    <th scope="col">mating date</th>
+                    <th scope="col">days in breeding</th>
+                    <th scope="col">check pregnancy</th>
+                    <th scope="col">pregnant?</th>
+                    <th scope="col">pups strain</th>
+                    <th scope="col">has pups?</th>
+                    <th scope="col">pups dob</th>
+                    <th scope="col">pups days old</th>
+                </tr>
+                {props.mouseData.map(mouse =>
+                    <tr key={mouse['female_mouse_id']}>
+                        <th id={mouse['female_mouse_manual_id']} scope="row">
+                            {mouse['female_mouse_manual_id']}
+                        </th>
+                        <td>{props.formatDate(mouse['mating_date'])}</td>
+                        <td>{props.daysInBreeding(mouse['mating_date'])}</td>
+                        <td>{props.needToCheckIfPregnant(mouse['mating_date'])}</td>
+                        <td>{props.needToCheckIfPregnant(mouse['mating_date']) == 'check' ? '-' : 'yes'}</td>
+                        <td>{mouse['pups_strain']}</td>
+                        <td>{props.needToCheckIfPregnant(mouse['mating_date']) == 'check' ? '' : props.checkIfHasPups(mouse['has_pups'])}</td>
+                        <td>{props.formatDate(mouse['pups_dob']) === '1980-01-01' || mouse['pups_dob'] === null ? '' : props.formatDate(mouse['pups_dob'])}</td>
+                        <td>{props.calculatePupsDaysOld(mouse)}</td>
+                        <td>
+                        <button
+                            className="btn btn-warning" 
+                            onClick={() => props.handleUpdateMiceBtn(mouse)}
+                            >
+                            edit
+                            </button>
+                        </td>
+                        <td>
+                        <button 
+                            className="btn bl btn-danger"
+                            onClick={() => props.deleteRowData(mouse['female_mouse_id'])}
+                        >
+                            delete
+                        </button>
+                        </td>
+                    </tr>
+                    )}
+                    
+            </table> 
+    )
+}
+
 function UploadFile(props) {
 
     const [selectedFile, setSelectedFile] = React.useState();

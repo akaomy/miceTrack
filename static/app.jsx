@@ -225,51 +225,16 @@ function App() {
                 setPupStrain={setPupStrain}
             />}
 
-            <table className="table table-striped">
-                <tr>
-                    <th scope="col">female id</th>
-                    <th scope="col">mating date</th>
-                    <th scope="col">days in breeding</th>
-                    <th scope="col">check pregnancy</th>
-                    <th scope="col">pregnant?</th>
-                    <th scope="col">pups strain</th>
-                    <th scope="col">has pups?</th>
-                    <th scope="col">pups dob</th>
-                    <th scope="col">pups days old</th>
-                </tr>
-                {mouseData.map(mouse =>
-                    <tr key={mouse['female_mouse_id']}>
-                        <th id={mouse['female_mouse_manual_id']} scope="row">
-                            {mouse['female_mouse_manual_id']}
-                        </th>
-                        <td>{formatDate(mouse['mating_date'])}</td>
-                        <td>{daysInBreeding(mouse['mating_date'])}</td>
-                        <td>{needToCheckIfPregnant(mouse['mating_date'])}</td>
-                        <td>{needToCheckIfPregnant(mouse['mating_date']) == 'check' ? '-' : 'yes'}</td>
-                        <td>{mouse['pups_strain']}</td>
-                        <td>{checkIfHasPups(mouse['has_pups'])}</td>
-                        <td>{formatDate(mouse['pups_dob']) === '1980-01-01' || mouse['pups_dob'] === null ? '' : formatDate(mouse['pups_dob'])}</td>
-                        <td>{calculatePupsDaysOld(mouse)}</td>
-                        <td>
-                        <button
-                            className="btn btn-warning" 
-                            onClick={() => handleUpdateMiceBtn(mouse)}
-                            >
-                            edit
-                            </button>
-                        </td>
-                        <td>
-                        <button 
-                            className="btn bl btn-danger"
-                            onClick={() => deleteRowData(mouse['female_mouse_id'])}
-                        >
-                            delete
-                        </button>
-                        </td>
-                    </tr>
-                    )}
-                    
-            </table> 
+            <Table 
+                mouseData={mouseData}
+                formatDate={formatDate}
+                daysInBreeding={daysInBreeding}
+                needToCheckIfPregnant={needToCheckIfPregnant}
+                calculatePupsDaysOld={calculatePupsDaysOld}
+                checkIfHasPups={checkIfHasPups}
+                handleUpdateMiceBtn={handleUpdateMiceBtn}
+                deleteRowData={deleteRowData}
+            />
         </div>
     )
 }
