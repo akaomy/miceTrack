@@ -139,7 +139,7 @@ function App() {
     }
 
     const needToCheckIfPregnant = (mating_date) => {
-        return daysInBreeding(mating_date) >= 15 ? 'yes' : '-'
+        return daysInBreeding(mating_date) >= 15 ? 'check' : '-'
     }
 
     const checkIfHasPups = (has_pups) => {
@@ -230,7 +230,7 @@ function App() {
                     <th scope="col">female id</th>
                     <th scope="col">mating date</th>
                     <th scope="col">days in breeding</th>
-                    <th scope="col">need to check pregnancy / remove male</th>
+                    <th scope="col">check pregnancy</th>
                     <th scope="col">pregnant?</th>
                     <th scope="col">pups strain</th>
                     <th scope="col">has pups?</th>
@@ -245,8 +245,7 @@ function App() {
                         <td>{formatDate(mouse['mating_date'])}</td>
                         <td>{daysInBreeding(mouse['mating_date'])}</td>
                         <td>{needToCheckIfPregnant(mouse['mating_date'])}</td>
-                        {/* if (has pups or need to check preg) ? 'no' : 'yes' */}
-                        <td>{'todo'}</td>
+                        <td>{needToCheckIfPregnant(mouse['mating_date']) == 'check' ? '-' : 'yes'}</td>
                         <td>{mouse['pups_strain']}</td>
                         <td>{checkIfHasPups(mouse['has_pups'])}</td>
                         <td>{formatDate(mouse['pups_dob']) === '1980-01-01' || mouse['pups_dob'] === null ? '' : formatDate(mouse['pups_dob'])}</td>
