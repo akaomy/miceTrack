@@ -1,4 +1,6 @@
 function Modal(props) {
+    const pupsStrains = ['WT', 'Pard3 cKO', 'Mlst8 KI', 'Cryba1 cKO', 'Akt2 cKo']
+
     return (
       <div className="popup">
         <div>
@@ -44,15 +46,15 @@ function Modal(props) {
                         {props.showPupInputs && 
                         <React.Fragment>
                             <h2>Pups info</h2>
-
                             <label htmlFor="pups-strain">Pups strain</label>
-                            <select 
+                            <input 
+                                type="text" 
                                 name="pups-strain" 
                                 id="pups-strain"
+                                value={props.pupStrain}
+                                onChange={e => props.setPupStrain(e.target.value)}
                                 required
-                                >
-                                    {props.strainOptionsDisplay()}
-                            </select><br/>
+                            /><br/>
 
                             <label htmlFor="date-of-birth">Date of birth</label>
                             <input 
