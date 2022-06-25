@@ -13,13 +13,15 @@ class FemaleMouse(db.Model):
     mating_date = db.Column(db.DateTime)
     has_pups = db.Column(db.Boolean)
     pups_dob = db.Column(db.DateTime)
+    pups_strain = db.Column(db.String)
 
     def __repr__(self):
         return f"""<FemaleMouse female_mouse_id={self.female_mouse_id} 
         female_mouse_manual_id={self.female_mouse_manual_id} 
         mating_date={self.mating_date} 
         has_pups={self.has_pups} 
-        pups_dob={self.pups_dob} 
+        pups_dob={self.pups_dob}
+        pups_strain={self.pups_strain}
         >"""
 
 

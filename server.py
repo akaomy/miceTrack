@@ -33,7 +33,7 @@ def display_mice_micetrack_table_rows():
         mouse_data["female_mouse_manual_id"] = mouse.female_mouse_manual_id
         mouse_data["mating_date"] = mouse.mating_date
         mouse_data["has_pups"] = mouse.has_pups
-        mouse_data["pups_dob"] = mouse.pups_dob,
+        mouse_data["pups_dob"] = mouse.pups_dob
         mouse_data_list.append(mouse_data)
 
     return json.dumps(mouse_data_list, default=str)
@@ -60,7 +60,7 @@ def import_table_data():
             pups_dob = match.group(0)
             
             if match.group(0)=='None':
-                pups_dob = '1980-01-01'
+                pups_dob = '1980-01-01' # default 
         
         crud.create_female_mouse(str(each[3]), str(each[4]), bool(each[5]), pups_dob)
     
@@ -80,7 +80,7 @@ def export_table_data_as_csv():
         mouse_data["female_mouse_manual_id"] = mouse.female_mouse_manual_id
         mouse_data["mating_date"] = mouse.mating_date
         mouse_data["has_pups"] = mouse.has_pups
-        mouse_data["pups_dob"] = mouse.pups_dob,
+        mouse_data["pups_dob"] = mouse.pups_dob
         mouse_data_list.append(mouse_data)
 
     df = pd.DataFrame(mouse_data_list, columns = ['female_mouse_id', 'female_mouse_manual_id', 'mating_date', 'has_pups', 'pups_dob'])
@@ -107,10 +107,11 @@ def export_table_data_as_xls():
         mouse_data["mating_date"] = mouse.mating_date
         mouse_data["has_pups"] = mouse.has_pups
         # convert date into string strftime
-        mouse_data["pups_dob"] = mouse.pups_dob,
+        mouse_data["pups_dob"] = mouse.pups_dob
+        mouse_data["pups_strain"] = mouse.pups_strain
         mouse_data_list.append(mouse_data)
 
-    df = pd.DataFrame(mouse_data_list, columns = ['female_mouse_id', 'female_mouse_manual_id', 'mating_date', 'has_pups', 'pups_dob'])
+    df = pd.DataFrame(mouse_data_list, columns = ['female_mouse_id', 'female_mouse_manual_id', 'mating_date', 'has_pups', 'pups_dob', 'pups_strain'])
     output = BytesIO()
     writer = pd.ExcelWriter(output)
     df.to_excel(writer, startrow = 0, sheet_name = 'Sheet_1')
@@ -118,8 +119,6 @@ def export_table_data_as_xls():
     output.seek(0)
 
     return send_file(output, attachment_filename = "data.xls", as_attachment = True)
-
-
 
 
 @app.route('/track-mice/create', methods=['POST'])
@@ -130,13 +129,14 @@ def create_mice_table_row():
     mating_date = request.json.get("mating_date")
     has_pups = request.json.get("has_pups")
     pups_dob = request.json.get("pups_dob")
+    pups_strain = request.json.get("pups_strain")
 
     if (has_pups == 'on'):
         has_pups = True
     else:
         has_pups = False
 
-    crud.create_female_mouse(female_mouse_manual_id, mating_date, has_pups, pups_dob)
+    crud.create_female_mouse(female_mouse_manual_id, mating_date, has_pups, pups_dob, pups_strain)
 
     return { "status": "The info has been added to the table" }
 
@@ -150,6 +150,7 @@ def update_mouse_table_row():
     female_mouse_manual_id = request.json.get("female_mouse_manual_id")
     mating_date = request.json.get("mating_date")
     has_pups = request.json.get("has_pups")
+    pups_strain = request.json.get("pups_strain")
 
     if (has_pups == 'on'):
         has_pups = True
@@ -158,7 +159,7 @@ def update_mouse_table_row():
 
     pups_dob = request.json.get("pups_dob")
 
-    crud.update_female_row_data(female_mouse_id, female_mouse_manual_id, mating_date, has_pups, pups_dob)
+    crud.update_female_row_data(female_mouse_id, female_mouse_manual_id, mating_date, has_pups, pups_dob, pups_strain)
 
     return { "status": "The info has been updated" }
 
