@@ -65,22 +65,23 @@ function App() {
         setMouseId(mouse['female_mouse_id'])
         setFemaleMouseManualId(mouse['female_mouse_manual_id'])
         setMatingDate(formatDate(mouse['mating_date']))
+        setIsPregnant(mouse['is_pregnant'])
         setHasPups(mouse['has_pups'])
-        setPupsDob(formatDate(mouse['pups_dob'][0]))
+        setPupsDob(mouse['pups_dob'][0] !== null ? formatDate(mouse['pups_dob'][0]) : '-')
     }
 
     const submitData = e => {
         e.preventDefault()
         if (isCreate) createMiceRow(e)
         if (isUpdate) updateMiceRow(mouseId)
-      }
+    }
 
     const createMiceRow = () => {
 
         const formInputs = {
             female_mouse_manual_id: femaleMouseManualId,
             mating_date: matingDate,
-            check_if_pregnant: isPregnant,
+            is_pregnant: isPregnant,
             has_pups: hasPups,
             pups_dob: pupsDob,
             pups_strain: pupStrain
@@ -108,7 +109,7 @@ function App() {
             female_mouse_id: mouse_id,
             female_mouse_manual_id: femaleMouseManualId,
             mating_date: matingDate,
-            check_if_pregnant: isPregnant,
+            is_pregnant: isPregnant,
             has_pups: hasPups,
             pups_dob: pupsDob,
             pups_strain: pupStrain
@@ -139,7 +140,7 @@ function App() {
     }
 
     const needToCheckIfPregnant = (mating_date) => {
-        return daysInBreeding(mating_date) >= 15 ? 'check' : '-'
+        return daysInBreeding(mating_date) < 15 || isPregnant ? '-' : 'check'
     }
 
     const checkIfHasPups = (has_pups) => {
@@ -178,11 +179,7 @@ function App() {
 
     return (
         <div className="container">
-            <div className="logo-wrapper">
-                {/* todo */}
-                <img src="./assets/img/mouse-lg.png" alt="mouse-logo"/> 
-                <h1>MiceTrack</h1>
-            </div>
+            <h1>MiceTrack</h1>
             <div className="buttons-wrapper">
                 <button
                     type="button"
@@ -223,6 +220,8 @@ function App() {
                 setPupsDob={setPupsDob}
                 pupStrain={pupStrain}
                 setPupStrain={setPupStrain}
+                isPregnant={isPregnant}
+                setIsPregnant={setIsPregnant}
             />}
 
             <Table 
