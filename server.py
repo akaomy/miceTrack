@@ -32,6 +32,7 @@ def display_mice_micetrack_table_rows():
         mouse_data["female_mouse_id"] = mouse.female_mouse_id
         mouse_data["female_mouse_manual_id"] = mouse.female_mouse_manual_id
         mouse_data["mating_date"] = mouse.mating_date
+        mouse_data["is_pregnant"] = mouse.is_pregnant
         mouse_data["has_pups"] = mouse.has_pups
         mouse_data["pups_dob"] = mouse.pups_dob
         mouse_data["pups_strain"] = mouse.pups_strain
@@ -80,12 +81,13 @@ def export_table_data_as_csv():
         mouse_data["female_mouse_id"] = mouse.female_mouse_id
         mouse_data["female_mouse_manual_id"] = mouse.female_mouse_manual_id
         mouse_data["mating_date"] = mouse.mating_date
+        mouse_data["is_pregnant"] = mouse.is_pregnant
         mouse_data["has_pups"] = mouse.has_pups
         mouse_data["pups_dob"] = mouse.pups_dob
         mouse_data["pups_strain"] = mouse.pups_strain
         mouse_data_list.append(mouse_data)
 
-    df = pd.DataFrame(mouse_data_list, columns = ['female_mouse_id', 'female_mouse_manual_id', 'mating_date', 'has_pups', 'pups_dob', 'pups_strain'])
+    df = pd.DataFrame(mouse_data_list, columns = ['female_mouse_id', 'female_mouse_manual_id', 'mating_date', 'is_pregnant', 'has_pups', 'pups_dob', 'pups_strain'])
     
     # same with to_excel
     resp = make_response(df.to_csv())
@@ -105,12 +107,13 @@ def export_table_data_as_xls():
         mouse_data["female_mouse_id"] = mouse.female_mouse_id
         mouse_data["female_mouse_manual_id"] = mouse.female_mouse_manual_id
         mouse_data["mating_date"] = mouse.mating_date
+        mouse_data["is_pregnant"] = mouse.is_pregnant
         mouse_data["has_pups"] = mouse.has_pups
         mouse_data["pups_dob"] = mouse.pups_dob
         mouse_data["pups_strain"] = mouse.pups_strain
         mouse_data_list.append(mouse_data)
 
-    df = pd.DataFrame(mouse_data_list, columns = ['female_mouse_id', 'female_mouse_manual_id', 'mating_date', 'has_pups', 'pups_dob', 'pups_strain'])
+    df = pd.DataFrame(mouse_data_list, columns = ['female_mouse_id', 'female_mouse_manual_id', 'mating_date', 'is_pregnant', 'has_pups', 'pups_dob', 'pups_strain'])
     output = BytesIO()
     writer = pd.ExcelWriter(output)
     df.to_excel(writer, startrow = 0, sheet_name = 'Sheet_1')
@@ -126,16 +129,12 @@ def create_mice_table_row():
 
     female_mouse_manual_id = request.json.get("female_mouse_manual_id")
     mating_date = request.json.get("mating_date")
-    has_pups = request.json.get("has_pups")
+    is_pregnant = crud.convertToBool(request.json.get("is_pregnant"))
+    has_pups = crud.convertToBool(request.json.get("has_pups"))
     pups_dob = request.json.get("pups_dob")
     pups_strain = request.json.get("pups_strain")
 
-    if (has_pups == 'on'):
-        has_pups = True
-    else:
-        has_pups = False
-
-    crud.create_female_mouse(female_mouse_manual_id, mating_date, has_pups, pups_dob, pups_strain)
+    crud.create_female_mouse(female_mouse_manual_id, mating_date, is_pregnant, has_pups, pups_dob, pups_strain)
 
     return { "status": "The info has been added to the table" }
 
@@ -148,16 +147,12 @@ def update_mouse_table_row():
     female_mouse_id = request.json.get("female_mouse_id")
     female_mouse_manual_id = request.json.get("female_mouse_manual_id")
     mating_date = request.json.get("mating_date")
-    has_pups = request.json.get("has_pups")
-    if (has_pups == 'on'):
-        has_pups = True
-    else:
-        has_pups = False
-
+    is_pregnant = crud.convertToBool(request.json.get("is_pregnant"))
+    has_pups = crud.convertToBool(request.json.get("has_pups"))
     pups_dob = request.json.get("pups_dob")
     pups_strain = request.json.get("pups_strain")
 
-    crud.update_female_row_data(female_mouse_id, female_mouse_manual_id, mating_date, has_pups, pups_dob, pups_strain)
+    crud.update_female_row_data(female_mouse_id, female_mouse_manual_id, mating_date, is_pregnant, has_pups, pups_dob, pups_strain)
 
     return { "status": "The info has been updated" }
 
