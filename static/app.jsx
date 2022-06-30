@@ -67,7 +67,7 @@ function App() {
         setMatingDate(formatDate(mouse['mating_date']))
         setIsPregnant(mouse['is_pregnant'])
         setHasPups(mouse['has_pups'])
-        setPupsDob(mouse['pups_dob'][0] !== null ? formatDate(mouse['pups_dob'][0]) : '-')
+        setPupsDob(mouse['pups_dob'] !== null ? formatDate(mouse['pups_dob']) : null)
     }
 
     const submitData = e => {
@@ -233,6 +233,7 @@ function App() {
                 checkIfHasPups={checkIfHasPups}
                 handleUpdateMiceBtn={handleUpdateMiceBtn}
                 deleteRowData={deleteRowData}
+                isPregnant={isPregnant}
             />
         </div>
     )
