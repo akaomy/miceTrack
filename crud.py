@@ -58,6 +58,8 @@ def delete_female_row_data(mouse_id):
     return FemaleMouse.query.filter(FemaleMouse.female_mouse_id == mouse_id).delete()
 
 def convertToBool(prop):
+    """Convert checkbox value into boolean value"""
+
     if (prop == 'on'):
         prop = True
     else:
