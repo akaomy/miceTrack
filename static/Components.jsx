@@ -88,7 +88,7 @@ function Table(props) {
 
     return (
         <table className="table table-striped">
-                <tr>
+                <tr className="table-header" >
                     <th scope="col">female id</th>
                     <th scope="col">mating date</th>
                     <th scope="col">days in breeding</th>
@@ -101,35 +101,37 @@ function Table(props) {
                 </tr>
                 {props.mouseData.map(mouse =>
                     <tr key={mouse['female_mouse_id']}>
-                        <th id={mouse['female_mouse_manual_id']} scope="row">
+                        <td id={mouse['female_mouse_manual_id']} scope="row">
                             {mouse['female_mouse_manual_id']}
-                        </th>
+                        </td>
                         <td>{props.formatDate(mouse['mating_date'])}</td>
                         <td>{props.daysInBreeding(mouse['mating_date'])}</td>
                         <td>{props.needToCheckIfPregnant(mouse['mating_date'])}</td>
                         {/* vystavlyaetsya rukami chto mysh' beremennaya */}
                         {/* esli beremennaya check propadaet */}
                         <td>{props.isPregnant ? 'yes' : 'no'}</td>
-                        <td>{mouse['pups_strain']}</td>
-                        <td>{props.needToCheckIfPregnant(mouse['mating_date']) == 'check' ? '' : props.checkIfHasPups(mouse['has_pups'])}</td>
-                        <td>{props.formatDate(mouse['pups_dob']) === '1980-01-01' || mouse['pups_dob'] === null ? '' : props.formatDate(mouse['pups_dob'])}</td>
+                        <td>{mouse['pups_strain'] !== '' ? mouse['pups_strain'] : '-'}</td>
+                        <td>{props.needToCheckIfPregnant(mouse['mating_date']) == 'check' ? '-' : props.checkIfHasPups(mouse['has_pups'])}</td>
+                        <td>{props.formatDate(mouse['pups_dob']) === '1980-01-01' || mouse['pups_dob'] === null ? '-' : props.formatDate(mouse['pups_dob'])}</td>
                         <td>{props.calculatePupsDaysOld(mouse)}</td>
-                        <td>
-                        <button
-                            className="btn btn-warning" 
-                            onClick={() => props.handleUpdateMiceBtn(mouse)}
-                            >
-                            edit
-                            </button>
-                        </td>
-                        <td>
-                        <button 
-                            className="btn bl btn-danger"
-                            onClick={() => props.deleteRowData(mouse['female_mouse_id'])}
-                        >
-                            delete
-                        </button>
-                        </td>
+                        <div className="btns-wrapper btn">
+                            {/* <td className="btns"> */}
+                                <button
+                                    className="btn btn-warning" 
+                                    onClick={() => props.handleUpdateMiceBtn(mouse)}
+                                    >
+                                    edit
+                                </button>
+                            {/* </td> */}
+                            {/* <td className="btns"> */}
+                                <button 
+                                    className="btn bl btn-danger"
+                                    onClick={() => props.deleteRowData(mouse['female_mouse_id'])}
+                                >
+                                    delete
+                                </button>
+                            {/* </td> */}
+                        </div>
                     </tr>
                     )}
                     
