@@ -38,21 +38,19 @@ function Modal(props) {
                             id="is-pregnant" 
                             name="is-pregnant"
                             checked={props.isPregnant}
-                            onClick={e => props.setIsPregnant(e.target.value)}
+                            onChange={e => props.setIsPregnant(!props.isPregnant)}
                         /><br/>
-                        {console.log('props.isPregnant',props.isPregnant)}
 
                         <label htmlFor="has-pups">Has pups</label>
                         <input 
                             type="checkbox" 
                             id="has-pups" 
                             name="has-pups"
-                            onClick={props.displayPupsInputs}
                             checked={props.hasPups}
-                            onChange={e => props.setHasPups(e.target.value)}
+                            onChange={e => props.setHasPups(!props.hasPups)}
                         /><br/>
-
-                        {props.showPupInputs && 
+                        
+                        {props.hasPups && 
                         <React.Fragment>
                             <h2>Pups info</h2>
                             <label htmlFor="pups-strain">Pups strain</label>
@@ -72,7 +70,6 @@ function Modal(props) {
                                 name="date-of-birth"
                                 value={props.formatDate(props.pupsDob)} 
                                 onChange={e => props.setPupsDob(e.target.value)}
-                                required
                             /><br/>
                         </React.Fragment>}
                         <button id="cancel-btn" className="btn btn-secondary" onClick={props.closeModal}>Cancel</button>
@@ -111,26 +108,23 @@ function Table(props) {
                         {/* esli beremennaya check propadaet */}
                         <td>{props.isPregnant ? 'yes' : 'no'}</td>
                         <td>{mouse['pups_strain'] !== '' ? mouse['pups_strain'] : '-'}</td>
-                        <td>{props.needToCheckIfPregnant(mouse['mating_date']) == 'check' ? '-' : props.checkIfHasPups(mouse['has_pups'])}</td>
+                        {/* if pregnant has pups but */}
+                        <td>{props.needToCheckIfPregnant(mouse['mating_date']) == 'check' ? 'yes' : props.checkIfHasPups(mouse['has_pups'])}</td>
                         <td>{props.formatDate(mouse['pups_dob']) === '1980-01-01' || mouse['pups_dob'] === null ? '-' : props.formatDate(mouse['pups_dob'])}</td>
-                        <td>{props.calculatePupsDaysOld(mouse)}</td>
+                        <td>{mouse['pups_dob'] == null ? '-' : props.calculatePupsDaysOld(mouse)}</td>
                         <div className="btns-wrapper btn">
-                            {/* <td className="btns"> */}
-                                <button
-                                    className="btn btn-warning" 
-                                    onClick={() => props.handleUpdateMiceBtn(mouse)}
-                                    >
-                                    edit
-                                </button>
-                            {/* </td> */}
-                            {/* <td className="btns"> */}
-                                <button 
-                                    className="btn bl btn-danger"
-                                    onClick={() => props.deleteRowData(mouse['female_mouse_id'])}
+                            <button
+                                className="btn " 
+                                onClick={() => props.handleUpdateMiceBtn(mouse)}
                                 >
-                                    delete
-                                </button>
-                            {/* </td> */}
+                                edit
+                            </button>
+                            <button 
+                                className="btn "
+                                onClick={() => props.deleteRowData(mouse['female_mouse_id'])}
+                            >
+                                delete
+                            </button>
                         </div>
                     </tr>
                     )}
