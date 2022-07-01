@@ -1,5 +1,4 @@
 function Modal(props) {
-    const pupsStrains = ['WT', 'Pard3 cKO', 'Mlst8 KI', 'Cryba1 cKO', 'Akt2 cKo']
 
     return (
       <div className="popup">
@@ -32,6 +31,16 @@ function Modal(props) {
                             onChange={e => props.setMatingDate(e.target.value)}
                             required
                         /><br/>
+
+                        <label htmlFor="is-pregnant">Pregnant?</label>
+                        <input 
+                            type="checkbox" 
+                            id="is-pregnant" 
+                            name="is-pregnant"
+                            checked={props.isPregnant}
+                            onClick={e => props.setIsPregnant(e.target.value)}
+                        /><br/>
+                        {console.log('props.isPregnant',props.isPregnant)}
 
                         <label htmlFor="has-pups">Has pups</label>
                         <input 
@@ -76,6 +85,7 @@ function Modal(props) {
 }
 
 function Table(props) {
+
     return (
         <table className="table table-striped">
                 <tr>
@@ -97,7 +107,9 @@ function Table(props) {
                         <td>{props.formatDate(mouse['mating_date'])}</td>
                         <td>{props.daysInBreeding(mouse['mating_date'])}</td>
                         <td>{props.needToCheckIfPregnant(mouse['mating_date'])}</td>
-                        <td>{props.needToCheckIfPregnant(mouse['mating_date']) == 'check' ? '-' : 'yes'}</td>
+                        {/* vystavlyaetsya rukami chto mysh' beremennaya */}
+                        {/* esli beremennaya check propadaet */}
+                        <td>{props.isPregnant ? 'yes' : 'no'}</td>
                         <td>{mouse['pups_strain']}</td>
                         <td>{props.needToCheckIfPregnant(mouse['mating_date']) == 'check' ? '' : props.checkIfHasPups(mouse['has_pups'])}</td>
                         <td>{props.formatDate(mouse['pups_dob']) === '1980-01-01' || mouse['pups_dob'] === null ? '' : props.formatDate(mouse['pups_dob'])}</td>
@@ -138,9 +150,6 @@ function UploadFile(props) {
         const formData = new FormData();
         formData.append('file', selectedFile)
         
-        console.log('formData', formData)
-        console.log('selectedFile', selectedFile)
-
         fetch('/track-mice/import-csv', {
             method: 'POST',
             body: formData

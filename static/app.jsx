@@ -31,7 +31,7 @@ function App() {
 
     const displayPupsInputs = () => {
         setsShowPupInputs(!showPupInputs)
-      }
+    }
 
     const openModal = () => {
         setPopupModal(true)
