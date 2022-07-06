@@ -11,67 +11,73 @@ function Modal(props) {
                     </div> : null}
                 <div className="custom-modal">
                     <form id="track-mice-form" onSubmit={props.submitData}>
-                        <h2>Female mice info</h2>
-                        <label htmlFor="female-mouse-manual-id">Female ID</label>
-                        <input 
-                            type="text" 
-                            id="female-mouse-manual-id"
-                            name="female-mouse-manual-id" 
-                            value={props.femaleMouseManualId}
-                            onChange={e => props.setFemaleMouseManualId(e.target.value)}
-                            required
-                        /><br/>
-
-                        <label htmlFor="mating-date">Mating date</label>
-                        <input 
-                            type="date" 
-                            id="mating-date" 
-                            name="mating-date" 
-                            value={props.matingDate}
-                            onChange={e => props.setMatingDate(e.target.value)}
-                            required
-                        /><br/>
-
-                        <label htmlFor="is-pregnant">Pregnant?</label>
-                        <input 
-                            type="checkbox" 
-                            id="is-pregnant" 
-                            name="is-pregnant"
-                            checked={props.isPregnant}
-                            onChange={() => props.setIsPregnant(!props.isPregnant)}
-                        /><br/>
-                        <label htmlFor="has-pups">Has pups</label>
-                        <input 
-                            type="checkbox"
-                            id="has-pups" 
-                            name="has-pups"
-                            checked={props.hasPups}
-                            onChange={() => props.setHasPups(!props.hasPups)}
-                        /><br/>
-                        {props.hasPups && 
-                        <React.Fragment>
-                            <h2>Pups info</h2>
-                            <label htmlFor="pups-strain">Pups strain</label>
+                        <div class="modal-header">
+                            <h2 class="modal-title">Female mice info</h2>
+                        </div>
+                        <div class="modal-body">
+                            <label htmlFor="female-mouse-manual-id">Female ID</label>
                             <input 
                                 type="text" 
-                                name="pups-strain" 
-                                id="pups-strain"
-                                value={props.pupStrain}
-                                onChange={e => props.setPupStrain(e.target.value)}
+                                id="female-mouse-manual-id"
+                                name="female-mouse-manual-id" 
+                                value={props.femaleMouseManualId}
+                                onChange={e => props.setFemaleMouseManualId(e.target.value)}
                                 required
                             /><br/>
 
-                            <label htmlFor="date-of-birth">Date of birth</label>
+                            <label htmlFor="mating-date">Mating date</label>
                             <input 
                                 type="date" 
-                                id="date-of-birth" 
-                                name="date-of-birth"
-                                value={props.formatDate(props.pupsDob)} 
-                                onChange={e => props.setPupsDob(e.target.value)}
+                                id="mating-date" 
+                                name="mating-date" 
+                                value={props.matingDate}
+                                onChange={e => props.setMatingDate(e.target.value)}
+                                required
                             /><br/>
-                        </React.Fragment>}
-                        <button id="cancel-btn" className="btn btn-secondary" onClick={props.closeModal}>Cancel</button>
-                        <input id="create-btn" className="btn btn-success" type="submit" value="Submit" />
+
+                            <label htmlFor="is-pregnant">Pregnant?</label>
+                            <input 
+                                type="checkbox" 
+                                id="is-pregnant" 
+                                name="is-pregnant"
+                                checked={props.isPregnant}
+                                onChange={() => props.setIsPregnant(!props.isPregnant)}
+                            /><br/>
+                            <label htmlFor="has-pups">Has pups</label>
+                            <input 
+                                type="checkbox"
+                                id="has-pups" 
+                                name="has-pups"
+                                checked={props.hasPups}
+                                onChange={() => props.setHasPups(!props.hasPups)}
+                            /><br/>
+                            {props.hasPups && 
+                            <React.Fragment>
+                                <h5>Pups info</h5>
+                                <label htmlFor="pups-strain">Pups strain</label>
+                                <input 
+                                    type="text" 
+                                    name="pups-strain" 
+                                    id="pups-strain"
+                                    value={props.pupStrain}
+                                    onChange={e => props.setPupStrain(e.target.value)}
+                                    required
+                                /><br/>
+
+                                <label htmlFor="date-of-birth">Date of birth</label>
+                                <input 
+                                    type="date" 
+                                    id="date-of-birth" 
+                                    name="date-of-birth"
+                                    value={props.formatDate(props.pupsDob)} 
+                                    onChange={e => props.setPupsDob(e.target.value)}
+                                /><br/>
+                            </React.Fragment>}
+                        </div>
+                        <div class="modal-footer">
+                            <button id="cancel-btn" className="btn btn-secondary" onClick={props.closeModal}>Cancel</button>
+                            <input id="create-btn" className="btn btn-success" type="submit" value="Submit" />
+                        </div>
                     </form>
                 </div>
             </div>
@@ -161,12 +167,20 @@ function UploadFile(props) {
             {status ? 
                 <div className="alert alert-success">{status} 
                     <button onClick={closeUploader}>Close</button>
-                </div> : 
-                <div id="file" className="upload-file__wrapper">
-                    <input className="upload-file__input_file" type="file" name="file" onChange={changeHandler} required />
-                    <button className="upload-file__btn btn" onClick={handleSubmission}>Submit</button>
+                </div> :
+                <div id="file">
                     <button className="upload-file__btn btn-close" onClick={props.toggleUploadCSVFile}></button>
-                </div>}
+                    <div class="modal-header">
+                        <h2 class="modal-title">Upload CSV here</h2>
+                    </div>
+                    <div class="modal-body">
+                        <input className="upload-file__input_file" type="file" name="file" onChange={changeHandler} required />
+                    </div>
+                    <div class="modal-footer">
+                        <button className="upload-file__btn btn btn-secondary" onClick={handleSubmission}>Submit</button>
+                    </div>
+                </div>
+                }
         </div>
     )
 }
