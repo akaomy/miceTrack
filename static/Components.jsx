@@ -156,12 +156,12 @@ function UploadFile(props) {
             {status ? 
                 <div className="alert alert-success">{status} 
                     <button onClick={props.openUploadCSVFile}> Close </button>
-                    </div> : null}
-            <div id="file" className="upload-file__wrapper">
-                <input className="upload-file__input_file" type="file" name="file" onChange={changeHandler} required />
-                <button className="upload-file__btn btn" onClick={handleSubmission}>Submit</button>
-                <button className="upload-file__btn btn-close" onClick={props.openUploadCSVFile}></button>
-            </div>
+                </div> : 
+                <div id="file" className="upload-file__wrapper">
+                    <input className="upload-file__input_file" type="file" name="file" onChange={changeHandler} required />
+                    <button className="upload-file__btn btn" onClick={handleSubmission}>Submit</button>
+                    <button className="upload-file__btn btn-close" onClick={props.openUploadCSVFile}></button>
+                </div>}
         </div>
     )
 }
