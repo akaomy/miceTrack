@@ -16,8 +16,13 @@
   width: 192px;
   padding: 7px;
   border-radius: 3px;
-  margin: 50px 0 20px 0;
+  margin: 85px 0 20px -52px;
   font-size: 80px;
+}
+
+.btn-csv-import {
+  width: 133px;
+  height: 38px;
 }
 
 .popup {
@@ -60,7 +65,8 @@
   display: flex;
   justify-content: space-between;
   width: 97%;
-  margin: 91px 0 43px 0;
+  height: 46px;
+  margin: 61px 0 53px 0;
 }
 
 .dropdown-wrapper {
@@ -69,6 +75,10 @@
 
 .dropdown {
   margin-left: 2%;
+}
+
+.dropdown-menu {
+  background-color: lightgrey;
 }
 
 /* responsive data table */

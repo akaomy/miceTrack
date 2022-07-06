@@ -186,7 +186,7 @@ function App() {
                         track a mouse
                     </button>
                     <div className="dropdown-wrapper">
-                        <a onClick={toggleUploadCSVFile} className="btn">Import CSV</a>
+                        <a onClick={toggleUploadCSVFile} className="btn btn-csv-import btn-secondary">Import CSV</a>
                         {uploadCSVFilePopup && <UploadFile toggleUploadCSVFile={toggleUploadCSVFile} />}
                         <div className="dropdown">
                             <a className="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">

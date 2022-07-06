@@ -111,7 +111,7 @@ function Table(props) {
                             <button
                                 className="btn " 
                                 onClick={() => props.handleUpdateMiceBtn(mouse)}
-                                >
+                            >
                                 edit
                             </button>
                             <button 
