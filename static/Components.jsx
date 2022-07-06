@@ -151,16 +151,21 @@ function UploadFile(props) {
         })
     }
 
+    const closeUploader = () => {
+        props.toggleUploadCSVFile()
+        window.location.reload()
+    }
+
     return (
         <div className="upload-file">
             {status ? 
                 <div className="alert alert-success">{status} 
-                    <button onClick={props.openUploadCSVFile}> Close </button>
+                    <button onClick={closeUploader}>Close</button>
                 </div> : 
                 <div id="file" className="upload-file__wrapper">
                     <input className="upload-file__input_file" type="file" name="file" onChange={changeHandler} required />
                     <button className="upload-file__btn btn" onClick={handleSubmission}>Submit</button>
-                    <button className="upload-file__btn btn-close" onClick={props.openUploadCSVFile}></button>
+                    <button className="upload-file__btn btn-close" onClick={props.toggleUploadCSVFile}></button>
                 </div>}
         </div>
     )
