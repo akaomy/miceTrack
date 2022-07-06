@@ -129,8 +129,8 @@ def create_mice_table_row():
 
     female_mouse_manual_id = request.json.get("female_mouse_manual_id")
     mating_date = request.json.get("mating_date")
-    is_pregnant = crud.convertToBool(request.json.get("is_pregnant"))
-    has_pups = crud.convertToBool(request.json.get("has_pups"))
+    is_pregnant = request.json.get("is_pregnant")
+    has_pups = request.json.get("has_pups")
     pups_dob = request.json.get("pups_dob")
     pups_strain = request.json.get("pups_strain")
 
@@ -139,7 +139,7 @@ def create_mice_table_row():
     return { "status": "The info has been added to the table" }
 
 
-@app.route('/track-mice/update',  methods=['POST'])
+@app.route('/track-mice/update', methods=['POST'])
 def update_mouse_table_row():
     """Update mouse table row"""
 
@@ -147,11 +147,10 @@ def update_mouse_table_row():
     female_mouse_id = request.json.get("female_mouse_id")
     female_mouse_manual_id = request.json.get("female_mouse_manual_id")
     mating_date = request.json.get("mating_date")
-    is_pregnant = crud.convertToBool(request.json.get("is_pregnant"))
-    has_pups = crud.convertToBool(request.json.get("has_pups"))
+    is_pregnant = request.json.get("is_pregnant")
+    has_pups = request.json.get("has_pups")
     pups_dob = request.json.get("pups_dob")
     pups_strain = request.json.get("pups_strain")
-
     crud.update_female_row_data(female_mouse_id, female_mouse_manual_id, mating_date, is_pregnant, has_pups, pups_dob, pups_strain)
 
     return { "status": "The info has been updated" }
