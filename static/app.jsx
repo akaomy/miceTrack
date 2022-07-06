@@ -61,6 +61,7 @@ function App() {
         setMatingDate(formatDate(mouse['mating_date']))
         setIsPregnant(mouse['is_pregnant'])
         setHasPups(mouse['has_pups'])
+        setPupStrain(mouse['pups_strain'])
         setPupsDob(mouse['pups_dob'] !== null ? formatDate(mouse['pups_dob']) : null)
     }
 
