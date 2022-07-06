@@ -40,7 +40,6 @@ function Modal(props) {
                             checked={props.isPregnant}
                             onChange={() => props.setIsPregnant(!props.isPregnant)}
                         /><br/>
-                        {console.log('props.isPregnant', props.isPregnant)}
                         <label htmlFor="has-pups">Has pups</label>
                         <input 
                             type="checkbox"
@@ -49,7 +48,6 @@ function Modal(props) {
                             checked={props.hasPups}
                             onChange={() => props.setHasPups(!props.hasPups)}
                         /><br/>
-                        {console.log('props.hasPups', props.hasPups)}
                         {props.hasPups && 
                         <React.Fragment>
                             <h2>Pups info</h2>
