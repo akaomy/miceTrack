@@ -66,7 +66,6 @@ def export_table_data_as_csv():
     mouse_data_list = crud.get_mouse_data_list(female_mice)
     df = pd.DataFrame(mouse_data_list, columns = ['female_mouse_id', 'female_mouse_manual_id', 'mating_date', 'is_pregnant', 'has_pups', 'pups_dob', 'pups_strain'])
     
-    # same with to_excel
     resp = make_response(df.to_csv())
     resp.headers['Content-Disposition'] = 'attachment; filename=export.csv'
     resp.headers['Content-Type'] = 'text/csv'
