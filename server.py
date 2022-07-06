@@ -45,7 +45,8 @@ def import_table_data():
     for each in data:
         reg = br"(\d{4}, \d{1}, \d{2})|(\d{4}, \d{2}, \d{1})|(None)"
         match = re.search(reg, each[6])
-        pups_dob = ''
+        pups_dob = None
+        pups_strain = None
 
         if match is not None:
             pups_dob = match.group(0)
