@@ -3,6 +3,7 @@
 # from model import db, FemaleMouse, Pup, Litter, User, connect_to_db
 from model import db, FemaleMouse, connect_to_db
 
+
 def create_female_mouse(female_mouse_manual_id, mating_date, is_pregnant, has_pups, pups_dob, pups_strain):
     """Create and return a new female mice."""
 
@@ -56,6 +57,7 @@ def delete_female_row_data(mouse_id):
     """Delete a female mice row data."""
 
     return FemaleMouse.query.filter(FemaleMouse.female_mouse_id == mouse_id).delete()
+
 
 def get_mouse_data_list(female_mice):
     """Parse objects from model.py and return a json like object"""
