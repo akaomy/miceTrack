@@ -101,7 +101,7 @@ function Table(props) {
                         </td>
                         <td>{props.formatDate(mouse['mating_date'])}</td>
                         <td>{props.daysInBreeding(mouse['mating_date'])}</td>
-                        <td>{props.needToCheckIfPregnant(mouse['mating_date'])}</td>
+                        <td>{props.needToCheckIfPregnant(mouse['mating_date'], mouse['is_pregnant'])}</td>
                         <td>{mouse['is_pregnant'] ? 'yes' : 'no'}</td>
                         <td>{mouse['pups_strain'] !== '' ? mouse['pups_strain'] : '-'}</td>
                         <td>{mouse['has_pups'] ? 'yes' : 'no'}</td>

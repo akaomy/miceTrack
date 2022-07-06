@@ -135,8 +135,8 @@ function App() {
         return Math.floor(diffIndays / ((1000 * 60 * 60 * 24)))
     }
 
-    const needToCheckIfPregnant = (mating_date) => {
-        return daysInBreeding(mating_date) < 15 || isPregnant ? '-' : 'check'
+    const needToCheckIfPregnant = (mating_date, is_pregnant) => {
+        return daysInBreeding(mating_date) < 15 || is_pregnant == true ? '-' : 'check'
     }
 
     const checkIfHasPups = (has_pups) => {
