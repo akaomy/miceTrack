@@ -6,8 +6,6 @@ function App() {
     
     const [mouseData, setMouseData] = React.useState([])
 
-    const [showPupInputs, setsShowPupInputs] = React.useState(false)
-
     const [femaleMouseManualId, setFemaleMouseManualId] = React.useState('')
     const [matingDate, setMatingDate] = React.useState(null)
     const [isPregnant, setIsPregnant] = React.useState(false)
@@ -28,10 +26,6 @@ function App() {
             setMouseData(responseData)
         });
     }, [])
-
-    const displayPupsInputs = () => {
-        setsShowPupInputs(!showPupInputs)
-    }
 
     const openModal = () => {
         setPopupModal(true)
@@ -86,6 +80,7 @@ function App() {
             pups_dob: pupsDob,
             pups_strain: pupStrain
         }
+
         fetch('/track-mice/create', {
             method: 'POST',
             body: JSON.stringify(formInputs),
@@ -211,8 +206,6 @@ function App() {
                 setFemaleMouseManualId={setFemaleMouseManualId}
                 matingDate={matingDate}
                 setMatingDate={setMatingDate}
-                displayPupsInputs={displayPupsInputs}
-                showPupInputs={showPupInputs}
                 hasPups={hasPups}
                 setHasPups={setHasPups}
                 pupsDob={pupsDob}
