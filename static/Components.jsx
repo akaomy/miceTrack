@@ -103,7 +103,7 @@ function Table(props) {
                         <td>{props.daysInBreeding(mouse['mating_date'])}</td>
                         <td>{props.needToCheckIfPregnant(mouse['mating_date'], mouse['is_pregnant'])}</td>
                         <td>{mouse['is_pregnant'] ? 'yes' : 'no'}</td>
-                        <td>{mouse['pups_strain'] !== '' ? mouse['pups_strain'] : '-'}</td>
+                        <td>{mouse['pups_strain'] === '' || mouse['pups_strain'] === null ? '_' : mouse['pups_strain']}</td>
                         <td>{mouse['has_pups'] ? 'yes' : 'no'}</td>
                         <td>{props.formatDate(mouse['pups_dob']) === '1980-01-01' || mouse['pups_dob'] === null ? '-' : props.formatDate(mouse['pups_dob'])}</td>
                         <td>{mouse['pups_dob'] == null ? '-' : props.calculatePupsDaysOld(mouse)}</td>
