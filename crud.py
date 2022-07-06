@@ -57,12 +57,19 @@ def delete_female_row_data(mouse_id):
 
     return FemaleMouse.query.filter(FemaleMouse.female_mouse_id == mouse_id).delete()
 
-def convertToBool(prop):
-    """Convert checkbox value into boolean value"""
+def get_mouse_data_list(female_mice):
+    """Parse objects from model.py and return a json like object"""
 
-    if (prop == 'on'):
-        prop = True
-    else:
-        prop = False
+    mouse_data_list = []
+    for mouse in female_mice:
+        mouse_data = {}
+        mouse_data["female_mouse_id"] = mouse.female_mouse_id
+        mouse_data["female_mouse_manual_id"] = mouse.female_mouse_manual_id
+        mouse_data["mating_date"] = mouse.mating_date
+        mouse_data["is_pregnant"] = mouse.is_pregnant
+        mouse_data["has_pups"] = mouse.has_pups
+        mouse_data["pups_dob"] = mouse.pups_dob
+        mouse_data["pups_strain"] = mouse.pups_strain
+        mouse_data_list.append(mouse_data)
 
-    return prop
+    return mouse_data_list

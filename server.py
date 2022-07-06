@@ -25,18 +25,7 @@ def display_mice_micetrack_table_rows():
     """Display micetrack table """
 
     female_mice = crud.get_all_female_mice()
-
-    mouse_data_list = []
-    for mouse in female_mice:
-        mouse_data = {}
-        mouse_data["female_mouse_id"] = mouse.female_mouse_id
-        mouse_data["female_mouse_manual_id"] = mouse.female_mouse_manual_id
-        mouse_data["mating_date"] = mouse.mating_date
-        mouse_data["is_pregnant"] = mouse.is_pregnant
-        mouse_data["has_pups"] = mouse.has_pups
-        mouse_data["pups_dob"] = mouse.pups_dob
-        mouse_data["pups_strain"] = mouse.pups_strain
-        mouse_data_list.append(mouse_data)
+    mouse_data_list = crud.get_mouse_data_list(female_mice)
 
     return json.dumps(mouse_data_list, default=str)
     
@@ -74,19 +63,7 @@ def export_table_data_as_csv():
     """Export csv data"""
 
     female_mice = crud.get_all_female_mice()
-
-    mouse_data_list = []
-    for mouse in female_mice:
-        mouse_data = {}
-        mouse_data["female_mouse_id"] = mouse.female_mouse_id
-        mouse_data["female_mouse_manual_id"] = mouse.female_mouse_manual_id
-        mouse_data["mating_date"] = mouse.mating_date
-        mouse_data["is_pregnant"] = mouse.is_pregnant
-        mouse_data["has_pups"] = mouse.has_pups
-        mouse_data["pups_dob"] = mouse.pups_dob
-        mouse_data["pups_strain"] = mouse.pups_strain
-        mouse_data_list.append(mouse_data)
-
+    mouse_data_list = crud.get_mouse_data_list(female_mice)
     df = pd.DataFrame(mouse_data_list, columns = ['female_mouse_id', 'female_mouse_manual_id', 'mating_date', 'is_pregnant', 'has_pups', 'pups_dob', 'pups_strain'])
     
     # same with to_excel
@@ -101,19 +78,9 @@ def export_table_data_as_xls():
     """Export xls data"""
 
     female_mice = crud.get_all_female_mice()
-    mouse_data_list = []
-    for mouse in female_mice:
-        mouse_data = {}
-        mouse_data["female_mouse_id"] = mouse.female_mouse_id
-        mouse_data["female_mouse_manual_id"] = mouse.female_mouse_manual_id
-        mouse_data["mating_date"] = mouse.mating_date
-        mouse_data["is_pregnant"] = mouse.is_pregnant
-        mouse_data["has_pups"] = mouse.has_pups
-        mouse_data["pups_dob"] = mouse.pups_dob
-        mouse_data["pups_strain"] = mouse.pups_strain
-        mouse_data_list.append(mouse_data)
-
+    mouse_data_list = crud.get_mouse_data_list(female_mice)
     df = pd.DataFrame(mouse_data_list, columns = ['female_mouse_id', 'female_mouse_manual_id', 'mating_date', 'is_pregnant', 'has_pups', 'pups_dob', 'pups_strain'])
+    
     output = BytesIO()
     writer = pd.ExcelWriter(output)
     df.to_excel(writer, startrow = 0, sheet_name = 'Sheet_1')
