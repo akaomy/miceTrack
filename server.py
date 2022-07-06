@@ -49,12 +49,16 @@ def import_table_data():
 
         if match is not None:
             pups_dob = match.group(0)
-            print('match', match)
             
             if match.group(0)=='None':
                 pups_dob = '1980-01-01' # default 
+        
+        if str(each[7]) == 'nan' or str(each[8]) == 'nan':
+            pups_dob = None
+            pups_strain = None
+
         # crud.create_female_mouse(female_mouse_manual_id, mating_date, is_pregnant, has_pups, pups_dob, pups_strain)
-        crud.create_female_mouse(str(each[3]), str(each[4]), bool(each[5]), bool(each[6]), str(each[7]), str(each[8]))
+        crud.create_female_mouse(str(each[3]), str(each[4]), bool(each[5]), bool(each[6]), pups_dob, pups_strain)
     
     return { "status": "File was uploaded successfully" }
 
