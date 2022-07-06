@@ -175,26 +175,28 @@ function App() {
 
     return (
         <div className="container">
-            <h1>MiceTrack</h1>
-            <div className="buttons-wrapper">
-                <button
-                    type="button"
-                    onClick={handleCreateMiceBtn} 
-                    className="btn btn-primary"
-                >
-                    track a mouse
-                </button>
-                <div className="dropdown-wrapper">
-                    <a onClick={toggleUploadCSVFile} className="btn">Import CSV</a>
-                    {uploadCSVFilePopup && <UploadFile toggleUploadCSVFile={toggleUploadCSVFile} />}
-                    <div className="dropdown">
-                        <a className="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                            Export as
-                        </a>
-                        <ul className="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <li><a href="/track-mice/export-csv" className="btn">CSV</a></li>
-                            <li><a href="/track-mice/export-xls" className="btn">XLS</a></li>
-                        </ul>
+            <div>
+                <h1 className="logo">MiceTrack</h1>
+                <div className="buttons-wrapper">
+                    <button
+                        type="button"
+                        onClick={handleCreateMiceBtn} 
+                        className="btn btn-primary"
+                    >
+                        track a mouse
+                    </button>
+                    <div className="dropdown-wrapper">
+                        <a onClick={toggleUploadCSVFile} className="btn">Import CSV</a>
+                        {uploadCSVFilePopup && <UploadFile toggleUploadCSVFile={toggleUploadCSVFile} />}
+                        <div className="dropdown">
+                            <a className="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                Export as
+                            </a>
+                            <ul className="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <li><a href="/track-mice/export-csv" className="btn">CSV</a></li>
+                                <li><a href="/track-mice/export-xls" className="btn">XLS</a></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>

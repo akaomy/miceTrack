@@ -11,6 +11,15 @@
   backdrop-filter: blur(100px);
 }
 
+.logo {
+  border: 2px solid black;
+  width: 192px;
+  padding: 7px;
+  border-radius: 3px;
+  margin: 50px 0 20px 0;
+  font-size: 80px;
+}
+
 .popup {
   position: absolute;
   margin: auto;
@@ -50,8 +59,8 @@
 .buttons-wrapper {
   display: flex;
   justify-content: space-between;
-  width: 99%;
-  margin-bottom: 10px;
+  width: 97%;
+  margin: 91px 0 43px 0;
 }
 
 .dropdown-wrapper {
