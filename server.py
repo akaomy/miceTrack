@@ -43,17 +43,18 @@ def import_table_data():
     data = dataFrame.to_records()
 
     for each in data:
-        reg = r"(\d{4}, \d{1}, \d{2})|(\d{4}, \d{2}, \d{1})|(None)"
+        reg = br"(\d{4}, \d{1}, \d{2})|(\d{4}, \d{2}, \d{1})|(None)"
         match = re.search(reg, each[6])
         pups_dob = ''
 
         if match is not None:
             pups_dob = match.group(0)
+            print('match', match)
             
             if match.group(0)=='None':
                 pups_dob = '1980-01-01' # default 
-        
-        crud.create_female_mouse(str(each[3]), str(each[4]), bool(each[5]), pups_dob)
+        # crud.create_female_mouse(female_mouse_manual_id, mating_date, is_pregnant, has_pups, pups_dob, pups_strain)
+        crud.create_female_mouse(str(each[3]), str(each[4]), bool(each[5]), bool(each[6]), str(each[7]), str(each[8]))
     
     return { "status": "File was uploaded successfully" }
 
