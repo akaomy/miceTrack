@@ -38,18 +38,18 @@ function Modal(props) {
                             id="is-pregnant" 
                             name="is-pregnant"
                             checked={props.isPregnant}
-                            onChange={e => props.setIsPregnant(!props.isPregnant)}
+                            onChange={() => props.setIsPregnant(!props.isPregnant)}
                         /><br/>
-
+                        {console.log('props.isPregnant', props.isPregnant)}
                         <label htmlFor="has-pups">Has pups</label>
                         <input 
-                            type="checkbox" 
+                            type="checkbox"
                             id="has-pups" 
                             name="has-pups"
                             checked={props.hasPups}
-                            onChange={e => props.setHasPups(!props.hasPups)}
+                            onChange={() => props.setHasPups(!props.hasPups)}
                         /><br/>
-                        
+                        {console.log('props.hasPups', props.hasPups)}
                         {props.hasPups && 
                         <React.Fragment>
                             <h2>Pups info</h2>
@@ -104,12 +104,9 @@ function Table(props) {
                         <td>{props.formatDate(mouse['mating_date'])}</td>
                         <td>{props.daysInBreeding(mouse['mating_date'])}</td>
                         <td>{props.needToCheckIfPregnant(mouse['mating_date'])}</td>
-                        {/* vystavlyaetsya rukami chto mysh' beremennaya */}
-                        {/* esli beremennaya check propadaet */}
-                        <td>{props.isPregnant ? 'yes' : 'no'}</td>
+                        <td>{mouse['is_pregnant'] ? 'yes' : 'no'}</td>
                         <td>{mouse['pups_strain'] !== '' ? mouse['pups_strain'] : '-'}</td>
-                        {/* if pregnant has pups but */}
-                        <td>{props.needToCheckIfPregnant(mouse['mating_date']) == 'check' ? 'yes' : props.checkIfHasPups(mouse['has_pups'])}</td>
+                        <td>{mouse['has_pups'] ? mouse['has_pups'] : 'no'}</td>
                         <td>{props.formatDate(mouse['pups_dob']) === '1980-01-01' || mouse['pups_dob'] === null ? '-' : props.formatDate(mouse['pups_dob'])}</td>
                         <td>{mouse['pups_dob'] == null ? '-' : props.calculatePupsDaysOld(mouse)}</td>
                         <div className="btns-wrapper btn">
