@@ -186,6 +186,7 @@ function App() {
                 </button>
                 <div className="dropdown-wrapper">
                     <a onClick={openUploadCSVFile} className="btn">Import as CSV</a>
+                    {uploadCSVFilePopup && <UploadFile openUploadCSVFile={openUploadCSVFile} />}
                     <div className="dropdown">
                         <a className="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                             Export as
@@ -194,7 +195,6 @@ function App() {
                             <li><a href="/track-mice/export-csv" className="btn">CSV</a></li>
                             <li><a href="/track-mice/export-xls" className="btn">XLS</a></li>
                         </ul>
-                        {uploadCSVFilePopup && <UploadFile openUploadCSVFile={openUploadCSVFile} />}
                     </div>
                 </div>
             </div>

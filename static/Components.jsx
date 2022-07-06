@@ -96,7 +96,7 @@ function Table(props) {
                 </tr>
                 {props.mouseData.map(mouse =>
                     <tr key={mouse['female_mouse_id']}>
-                        <td id={mouse['female_mouse_manual_id']} scope="row">
+                        <td id={mouse['female_mouse_manual_id']}>
                             {mouse['female_mouse_manual_id']}
                         </td>
                         <td>{props.formatDate(mouse['mating_date'])}</td>
@@ -159,9 +159,9 @@ function UploadFile(props) {
                         Close
                     </button>
                     </div> : null}
-            <div id="file">
-                <input type="file" name="file" onChange={changeHandler} required />
-                <button onClick={handleSubmission}>Submit</button>
+            <div id="file" className="upload-file__wrapper">
+                <input className="upload-file__input_file" type="file" name="file" onChange={changeHandler} required />
+                <button className="upload-file__btn" onClick={handleSubmission}>Submit</button>
             </div>
         </div>
     )
