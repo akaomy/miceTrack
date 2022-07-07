@@ -42,6 +42,30 @@
   overflow: auto;
 }
 
+.subtitle-pups-hr {
+  margin-top: 37px;
+  width: 135px;
+  color: grey;
+}
+
+.modal-labels {
+  display: inline-block;
+  width: 100px;
+  padding-top: 10px;
+}
+
+.modal-body input {
+  margin: 7px;
+  border: 1px solid;
+  border-radius: 2px;
+  padding: 0.5rem;
+  transition: background-color 0.5s ease-out;
+}
+
+.subtitle-pups-info {
+  padding-top: 25px;
+}
+
 .upload-file {
   position: absolute;
   margin: auto;

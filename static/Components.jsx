@@ -15,7 +15,7 @@ function Modal(props) {
                             <h2 class="modal-title">Female mice info</h2>
                         </div>
                         <div class="modal-body">
-                            <label htmlFor="female-mouse-manual-id">Female ID</label>
+                            <label className="modal-labels" htmlFor="female-mouse-manual-id">Female ID</label>
                             <input 
                                 type="text" 
                                 id="female-mouse-manual-id"
@@ -25,7 +25,7 @@ function Modal(props) {
                                 required
                             /><br/>
 
-                            <label htmlFor="mating-date">Mating date</label>
+                            <label className="modal-labels" htmlFor="mating-date">Mating date</label>
                             <input 
                                 type="date" 
                                 id="mating-date" 
@@ -35,7 +35,7 @@ function Modal(props) {
                                 required
                             /><br/>
 
-                            <label htmlFor="is-pregnant">Pregnant?</label>
+                            <label className="modal-labels" htmlFor="is-pregnant">Pregnant?</label>
                             <input 
                                 type="checkbox" 
                                 id="is-pregnant" 
@@ -43,7 +43,7 @@ function Modal(props) {
                                 checked={props.isPregnant}
                                 onChange={() => props.setIsPregnant(!props.isPregnant)}
                             /><br/>
-                            <label htmlFor="has-pups">Has pups</label>
+                            <label className="modal-labels" htmlFor="has-pups">Has pups</label>
                             <input 
                                 type="checkbox"
                                 id="has-pups" 
@@ -53,8 +53,9 @@ function Modal(props) {
                             /><br/>
                             {props.hasPups && 
                             <React.Fragment>
-                                <h5>Pups info</h5>
-                                <label htmlFor="pups-strain">Pups strain</label>
+                                <hr className="subtitle-pups-hr"/>
+                                <h5 className="subtitle-pups-info">Pups info</h5>
+                                <label className="modal-labels" htmlFor="pups-strain">Pups strain</label>
                                 <input 
                                     type="text" 
                                     name="pups-strain" 
@@ -64,7 +65,7 @@ function Modal(props) {
                                     required
                                 /><br/>
 
-                                <label htmlFor="date-of-birth">Date of birth</label>
+                                <label className="modal-labels" htmlFor="date-of-birth">Date of birth</label>
                                 <input 
                                     type="date" 
                                     id="date-of-birth" 
@@ -120,6 +121,7 @@ function Table(props) {
                             >
                                 edit
                             </button>
+                            {/* todo: add 'mice has been deleted successfully' message once it's been deleted */}
                             <button 
                                 className="btn "
                                 onClick={() => props.deleteRowData(mouse['female_mouse_id'])}
