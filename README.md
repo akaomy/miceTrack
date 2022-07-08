@@ -1,12 +1,18 @@
-# miceTrack
+#miceTrack
 
-Lab mice tracker
+##About:
+- Lab mice breeding tracker where user can create, update, view and delete information about a particular mice and her pups.
 
-to run the project:
+##Technologies used:
+- PostresQL, SQLAlchemy, Flask, React.js, pandas
 
-cd into miceTrack
-pip3 install -r requirements.txt
-source env/bin/activate
-python3 database.py
-python3 server.py
+
+##To run the project:
+- git clone https://github.com/akaomy/miceTrack.git
+- cd into miceTrack
+- pip3 install -r requirements.txt
+- python3 database.py
+- python3 server.py
+
+##Live demo:
 
