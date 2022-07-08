@@ -9,7 +9,7 @@
 
 ## To run the project:
 - git clone https://github.com/akaomy/miceTrack.git
-- cd into miceTrack
+- cd miceTrack
 - pip3 install -r requirements.txt
 - python3 database.py
 - python3 server.py
