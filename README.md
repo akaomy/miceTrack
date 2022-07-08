@@ -1,7 +1,10 @@
 # miceTrack
 
 ## About:
-- Lab mice breeding tracker where user can create, update, view and delete information about a particular mice and her pups.
+- Lab mice breeding tracker
+- Features: create, view, update, delete particular information about mice and her pups
+- Export as .csv and .xls data table
+- Import as .csv data table
 
 ## Technologies used:
 - PostresQL, SQLAlchemy, Flask, React.js, pandas
