@@ -32,8 +32,8 @@
   right: 0;
   bottom: 0;
   left: 0;
-  width: 30%;
-  height: 50%;
+  width: 35%;
+  height: 55%;
   padding: 25px;
   border: 1px solid grey;
   background: #fff;
@@ -54,12 +54,13 @@
   padding-top: 10px;
 }
 
-.modal-body input {
+.modal-body-input {
   margin: 7px;
   border: 1px solid;
   border-radius: 2px;
   padding: 0.5rem;
   transition: background-color 0.5s ease-out;
+  max-width: 150px;
 }
 
 .subtitle-pups-info {
@@ -73,7 +74,7 @@
   right: 0;
   bottom: 0;
   left: 0;
-  width: 70%;
+  width: 45%;
   height: 300px;
   padding: 38px;
   border: 1px solid grey;
@@ -102,6 +103,15 @@
   background-color: lightgrey;
 }
 
+td,
+th {
+  padding: 12px;
+}
+
+button {
+  margin: 5px;
+}
+
 /* responsive data table */
 table { 
   width: 100%; 
@@ -125,6 +135,11 @@ table {
     justify-content: flex-end;
   }
 
+  .popup {
+    width: 65%;
+    height: 45%;
+  }
+
 	thead tr { 
 		position: absolute;
 		top: -9999px;
@@ -133,7 +148,7 @@ table {
 
   tr { 
     border: 1px solid #ccc; 
-    padding: 15px;
+    padding: 55px;
     margin: 25px 0 25px 0;
   }
 

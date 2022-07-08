@@ -4,11 +4,9 @@ function Modal(props) {
       <div className="popup">
         <div>
             {props.status ? 
-                <div className="alert alert-success">{props.status} 
-                    <button onClick={props.closeModal}>
-                        Close
-                    </button>
-                    </div> : null}
+                <div className="alert alert-success"><span>{props.status}</span> 
+                    <button className="btn-close" onClick={props.closeModal}></button>
+                </div> : null}
                 <div className="custom-modal">
                     <form id="track-mice-form" onSubmit={props.submitData}>
                         <div class="modal-header">
@@ -16,7 +14,8 @@ function Modal(props) {
                         </div>
                         <div class="modal-body">
                             <label className="modal-labels" htmlFor="female-mouse-manual-id">Female ID</label>
-                            <input 
+                            <input
+                                className="modal-body-input"
                                 type="text" 
                                 id="female-mouse-manual-id"
                                 name="female-mouse-manual-id" 
@@ -26,7 +25,8 @@ function Modal(props) {
                             /><br/>
 
                             <label className="modal-labels" htmlFor="mating-date">Mating date</label>
-                            <input 
+                            <input
+                                className="modal-body-input" 
                                 type="date" 
                                 id="mating-date" 
                                 name="mating-date" 
@@ -36,7 +36,8 @@ function Modal(props) {
                             /><br/>
 
                             <label className="modal-labels" htmlFor="is-pregnant">Pregnant?</label>
-                            <input 
+                            <input
+                                className="modal-body-input"
                                 type="checkbox" 
                                 id="is-pregnant" 
                                 name="is-pregnant"
@@ -44,7 +45,8 @@ function Modal(props) {
                                 onChange={() => props.setIsPregnant(!props.isPregnant)}
                             /><br/>
                             <label className="modal-labels" htmlFor="has-pups">Has pups</label>
-                            <input 
+                            <input
+                                className="modal-body-input"
                                 type="checkbox"
                                 id="has-pups" 
                                 name="has-pups"
@@ -56,7 +58,8 @@ function Modal(props) {
                                 <hr className="subtitle-pups-hr"/>
                                 <h5 className="subtitle-pups-info">Pups info</h5>
                                 <label className="modal-labels" htmlFor="pups-strain">Pups strain</label>
-                                <input 
+                                <input
+                                    className="modal-body-input"
                                     type="text" 
                                     name="pups-strain" 
                                     id="pups-strain"
@@ -66,7 +69,8 @@ function Modal(props) {
                                 /><br/>
 
                                 <label className="modal-labels" htmlFor="date-of-birth">Date of birth</label>
-                                <input 
+                                <input
+                                    className="modal-body-input" 
                                     type="date" 
                                     id="date-of-birth" 
                                     name="date-of-birth"
@@ -89,7 +93,7 @@ function Modal(props) {
 function Table(props) {
 
     return (
-        <table className="table table-striped">
+        <table className="cust-table">
                 <tr className="table-header" >
                     <th scope="col">female id</th>
                     <th scope="col">mating date</th>
@@ -114,21 +118,19 @@ function Table(props) {
                         <td>{mouse['has_pups'] ? 'yes' : 'no'}</td>
                         <td>{props.formatDate(mouse['pups_dob']) === '1980-01-01' || mouse['pups_dob'] === null ? '-' : props.formatDate(mouse['pups_dob'])}</td>
                         <td>{mouse['pups_dob'] == null ? '-' : props.calculatePupsDaysOld(mouse)}</td>
-                        <div className="btns-wrapper btn">
-                            <button
-                                className="btn " 
-                                onClick={() => props.handleUpdateMiceBtn(mouse)}
-                            >
-                                edit
-                            </button>
-                            {/* todo: add 'mice has been deleted successfully' message once it's been deleted */}
-                            <button 
-                                className="btn "
-                                onClick={() => props.deleteRowData(mouse['female_mouse_id'])}
-                            >
-                                delete
-                            </button>
-                        </div>
+                        <button
+                            className="btn btn-warning" 
+                            onClick={() => props.handleUpdateMiceBtn(mouse)}
+                        >
+                            edit
+                        </button>
+                        {/* todo: add 'mice has been deleted successfully' message once it's been deleted */}
+                        <button 
+                            className="btn btn-danger"
+                            onClick={() => props.deleteRowData(mouse['female_mouse_id'])}
+                        >
+                            delete
+                        </button>
                     </tr>
                     )}
                     
