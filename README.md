@@ -6,7 +6,7 @@
 - Export as .csv and .xls data table
 - Import as .csv data table
 
-[miceTrack](https://drive.google.com/file/d/1CFqEvh6FJ8Phd1wGVrLbX5HZAZeX75tB/view?usp=sharing)
+[miceTrack](![miceTrack](https://user-images.githubusercontent.com/6992753/177911666-dcc6631c-cf76-44d3-a811-99750f1a39ae.png)
 
 ## Technologies used:
 - PostresQL, SQLAlchemy, Flask, React.js, pandas
